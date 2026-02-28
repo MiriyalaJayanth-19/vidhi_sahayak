@@ -51,51 +51,11 @@ VidhiSahayak is a modern, AI-powered legal assistance platform built with Next.j
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-### Environment Variables
-
-Create a `.env.local` file in the root directory and add the following variables:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-# Add other environment variables as needed
-```
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to a GitHub repository
-2. Go to [Vercel](https://vercel.com/new) and import your repository
-3. The project will be automatically detected as a Next.js project
-4. Add your environment variables
-5. Deploy!
-
 ### Build for Production
 
 ```bash
 npm run build
 npm start
-```
-
-## 📂 Project Structure
-
-```
-src/
-├── app/                 # App Router routes
-│   ├── api/            # API routes
-│   ├── categories/      # Category pages
-│   ├── documents/       # Document generation
-│   ├── consultation/    # Lawyer consultation
-│   └── ...
-├── components/          # Reusable UI components
-│   ├── ui/             # shadcn/ui components
-│   ├── navbar.tsx      # Navigation bar
-│   └── ...
-├── lib/                # Utility functions and configs
-│   ├── categories.ts   # Legal categories data
-│   └── ...
-└── styles/             # Global styles
 ```
 
 
