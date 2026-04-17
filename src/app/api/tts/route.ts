@@ -20,10 +20,10 @@ export async function POST(req: Request) {
       audioConfig: { audioEncoding: "MP3" },
     };
 
-    const res = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`,
+    const res = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize`,
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
         body: JSON.stringify(body),
       }
     );

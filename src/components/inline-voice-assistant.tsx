@@ -2,51 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { detectLangFromScript, LANG_OPTIONS } from "@/lib/lang-utils";
+import type { SpeechRecognitionInstance, SpeechRecognitionWindow } from "@/lib/types";
 
 const VOICE_ON = process.env.NEXT_PUBLIC_VOICE_ENABLED === "true";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-type Recognition = {
-  lang: string;
-  interimResults: boolean;
-  maxAlternatives: number;
-  start: () => void;
-  stop: () => void;
-  onresult: (e: { resultIndex: number; results: Array<{ 0: { transcript: string }; isFinal: boolean }> }) => void;
-  onend: () => void;
-  onerror: () => void;
-};
-
-// ─── All supported Indian languages ──────────────────────────────────────────
-const LANG_OPTIONS = [
-  { code: "auto", label: "Auto" },
-  { code: "en-IN", label: "English" },
-  { code: "hi-IN", label: "हिंदी" },
-  { code: "te-IN", label: "తెలుగు" },
-  { code: "ta-IN", label: "தமிழ்" },
-  { code: "bn-IN", label: "বাংলা" },
-  { code: "ml-IN", label: "മലയാളം" },
-  { code: "kn-IN", label: "ಕನ್ನಡ" },
-  { code: "gu-IN", label: "ગુજરાતી" },
-  { code: "pa-IN", label: "ਪੰਜਾਬੀ" },
-  { code: "mr-IN", label: "मराठी" },
-  { code: "ur-IN", label: "اردو" },
-];
-
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-function detectLangFromText(text: string): string {
-  if (/[\u0900-\u097F]/.test(text)) return "hi-IN";
-  if (/[\u0C00-\u0C7F]/.test(text)) return "te-IN";
-  if (/[\u0B80-\u0BFF]/.test(text)) return "ta-IN";
-  if (/[\u0980-\u09FF]/.test(text)) return "bn-IN";
-  if (/[\u0D00-\u0D7F]/.test(text)) return "ml-IN";
-  if (/[\u0C80-\u0CFF]/.test(text)) return "kn-IN";
-  if (/[\u0A80-\u0AFF]/.test(text)) return "gu-IN";
-  if (/[\u0A00-\u0A7F]/.test(text)) return "pa-IN";
-  if (/[\u0600-\u06FF]/.test(text)) return "ur-IN";
-  return "en-IN";
-}
-
 function getVoiceForLang(lang: string, voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
   const base = lang.split("-")[0];
   return (
@@ -69,7 +30,7 @@ export default function InlineVoiceAssistant() {
   const [usedVoice, setUsedVoice] = useState<string>("");
   const [speaking, setSpeaking] = useState<boolean>(false);
   const [manualLang, setManualLang] = useState<string>("auto");
-  const recognitionRef = useRef<Recognition | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
   const sessionRef = useRef<string | null>(null);
   const pathname = usePathname();
 
@@ -92,7 +53,7 @@ export default function InlineVoiceAssistant() {
   // Browser TTS
   const speak = useCallback(async (text: string, preferredLang?: string) => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-    const targetLang = preferredLang || (manualLang !== "auto" ? manualLang : detectLangFromText(text));
+    const targetLang = preferredLang || (manualLang !== "auto" ? manualLang : detectLangFromScript(text));
 
     const doSpeak = () => {
       const voices = window.speechSynthesis.getVoices();
@@ -145,10 +106,7 @@ export default function InlineVoiceAssistant() {
   // Speech recognition
   useEffect(() => {
     if (!VOICE_ON || !listening) return;
-    const SR = window as unknown as {
-      webkitSpeechRecognition?: new () => Recognition;
-      SpeechRecognition?: new () => Recognition;
-    };
+    const SR = window as unknown as SpeechRecognitionWindow;
     const Ctor = SR.webkitSpeechRecognition ?? SR.SpeechRecognition;
     if (!Ctor) return;
     const r = new Ctor();
@@ -164,7 +122,7 @@ export default function InlineVoiceAssistant() {
       }
       if (finalText) {
         setInterim("");
-        const detected = detectLangFromText(finalText);
+        const detected = detectLangFromScript(finalText);
         const chosen = manualLang !== "auto" ? manualLang : detected;
         setLastInputLang(chosen);
         sendToAI(finalText.trim());

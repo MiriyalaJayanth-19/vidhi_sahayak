@@ -3,12 +3,13 @@ import Link from "next/link";
 import { GUIDANCE } from "@/lib/guidance";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default function CategoryDetailPage({ params }: Props) {
-  const category = CATEGORIES.find((c) => c.slug === params.slug);
-  const g = GUIDANCE[params.slug];
+export default async function CategoryDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const category = CATEGORIES.find((c) => c.slug === slug);
+  const g = GUIDANCE[slug];
 
   if (!category) {
     return (

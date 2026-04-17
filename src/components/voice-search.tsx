@@ -2,34 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import type { SpeechRecognitionInstance, SpeechRecognitionWindow } from "@/lib/types";
 
 const VOICE_ON = process.env.NEXT_PUBLIC_VOICE_ENABLED === "true";
-
-type Recognition = {
-  lang: string;
-  interimResults: boolean;
-  maxAlternatives: number;
-  start: () => void;
-  stop: () => void;
-  onresult: (e: { resultIndex: number; results: Array<{ 0: { transcript: string }; isFinal: boolean }> }) => void;
-  onend: () => void;
-  onerror: () => void;
-};
 
 export default function VoiceSearch() {
   const router = useRouter();
   const [lang, setLang] = useState("en-IN");
   const [listening, setListening] = useState(false);
   const [interim, setInterim] = useState("");
-  const recognitionRef = useRef<Recognition | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
 
   useEffect(() => {
     if (!VOICE_ON || !listening) return;
     // inline setup to avoid missing-deps lint
-    const SR = window as unknown as {
-      webkitSpeechRecognition?: new () => Recognition;
-      SpeechRecognition?: new () => Recognition;
-    };
+    const SR = window as unknown as SpeechRecognitionWindow;
     const Ctor = SR.webkitSpeechRecognition ?? SR.SpeechRecognition;
     if (!Ctor) return;
     const r = new Ctor();

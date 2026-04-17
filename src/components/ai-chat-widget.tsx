@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { resolveLanguage, LANG_OPTIONS } from "@/lib/lang-utils";
+import type { SpeechRecognitionInstance, SpeechRecognitionWindow } from "@/lib/types";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Message {
@@ -10,18 +11,6 @@ interface Message {
     content: string;
     lang?: string;
 }
-
-type Recognition = {
-    lang: string;
-    interimResults: boolean;
-    maxAlternatives: number;
-    continuous: boolean;
-    start: () => void;
-    stop: () => void;
-    onresult: (e: { resultIndex: number; results: Array<{ 0: { transcript: string }; isFinal: boolean }> }) => void;
-    onend: () => void;
-    onerror: () => void;
-};
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const VOICE_ON = process.env.NEXT_PUBLIC_VOICE_ENABLED === "true";
@@ -53,7 +42,10 @@ export default function AIChatWidget() {
 
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const recognitionRef = useRef<Recognition | null>(null);
+    const recognitionRef = useRef<SpeechRecognitionInstance | null>(null);
+
+    // Track whether this is the initial render (to avoid counting welcome message as unread)
+    const initialRenderRef = useRef(true);
 
     // Cancel TTS on route change
     useEffect(() => {
@@ -78,6 +70,10 @@ export default function AIChatWidget() {
 
     // Count unread when closed
     useEffect(() => {
+        if (initialRenderRef.current) {
+            initialRenderRef.current = false;
+            return;
+        }
         if (!open && messages.length > 1) {
             setUnread((u) => u + 1);
         }
@@ -148,10 +144,7 @@ export default function AIChatWidget() {
     // ── Voice recognition ────────────────────────────────────────────────────
     useEffect(() => {
         if (!VOICE_ON || !listening) return;
-        const SR = window as unknown as {
-            webkitSpeechRecognition?: new () => Recognition;
-            SpeechRecognition?: new () => Recognition;
-        };
+        const SR = window as unknown as SpeechRecognitionWindow;
         const Ctor = SR.webkitSpeechRecognition ?? SR.SpeechRecognition;
         if (!Ctor) return;
         const r = new Ctor();

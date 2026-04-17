@@ -85,8 +85,8 @@ function categorySpecific(slug: string) {
   }
 }
 
-export default function DocumentDetailsPage({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
+export default async function DocumentDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const cat = CATEGORIES.find((c) => c.slug === slug);
   const base = fallbackDetails(slug);
   const spec = categorySpecific(slug);

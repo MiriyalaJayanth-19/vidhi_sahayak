@@ -3,8 +3,9 @@ import { CATEGORIES } from "@/lib/categories";
 import { LAWYERS } from "@/lib/lawyers";
 import { GUIDANCE } from "@/lib/guidance";
 
-export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
-  const queryRaw = searchParams.q ?? "";
+export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const resolvedParams = await searchParams;
+  const queryRaw = resolvedParams.q ?? "";
   const query = queryRaw.toLowerCase().trim();
 
   const filteredCategories = CATEGORIES.filter((c) => {

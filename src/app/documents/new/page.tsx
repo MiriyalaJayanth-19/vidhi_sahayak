@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { Suspense, useMemo, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
@@ -74,53 +74,54 @@ function Template({
     switch (slug) {
       case "land":
         return [
-          `SALE/TRANSFER AGREEMENT — ${common.city}, dated ${common.date}`,
-          `Seller: ${spec.seller}  Buyer: ${spec.buyer}`,
-          `Property: ${spec.propertyDesc}`,
-          `Consideration: ₹${spec.consideration}`,
+          `SALE/TRANSFER AGREEMENT — ${common.city || ""}, dated ${common.date}`,
+          `Seller: ${spec.seller || ""}  Buyer: ${spec.buyer || ""}`,
+          `Property: ${spec.propertyDesc || ""}`,
+          `Consideration: ₹${spec.consideration || ""}`,
           `Both parties agree to execute and register the final deed at the Sub‑Registrar office.`,
         ];
       case "rental":
         return [
           `RENTAL AGREEMENT — dated ${common.date}`,
-          `Landlord: ${spec.landlord}  Tenant: ${spec.tenant}`,
-          `Premises: ${spec.premises}`,
-          `Term: ${spec.term} months  Rent: ₹${spec.rent}/month`,
+          `Landlord: ${spec.landlord || ""}  Tenant: ${spec.tenant || ""}`,
+          `Premises: ${spec.premises || ""}`,
+          `Term: ${spec.term || ""} months  Rent: ₹${spec.rent || ""}/month`,
           `Tenant shall maintain the premises; either party may terminate with notice as per terms.`,
         ];
       case "affidavit":
         return [
           `AFFIDAVIT — ${common.city || ""}, dated ${common.date}`,
-          `${common.applicantName}, residing at ${common.address}, solemnly declares:`,
-          `1) ${spec.purpose}`,
-          `2) ${spec.statement1}`,
-          `3) ${spec.statement2}`,
+          `${common.applicantName || ""}, residing at ${common.address || ""}, solemnly declares:`,
+          `1) ${spec.purpose || ""}`,
+          `2) ${spec.statement1 || ""}`,
+          `3) ${spec.statement2 || ""}`,
           `I affirm the above are true to the best of my knowledge and belief.`,
         ];
       case "income-declaration":
         return [
           `INCOME SELF‑DECLARATION — dated ${common.date}`,
-          `I, ${common.applicantName}, as ${spec.relation}, declare my/our annual income is ₹${spec.annualIncome}.`,
-          `This declaration is submitted to ${spec.forUse}.`,
+          `I, ${common.applicantName || ""}, as ${spec.relation || ""}, declare my/our annual income is ₹${spec.annualIncome || ""}.`,
+          `This declaration is submitted to ${spec.forUse || ""}.`,
         ];
       case "agreement":
         return [
           `SERVICE AGREEMENT — dated ${common.date}`,
-          `Parties: ${spec.partyA} and ${spec.partyB}`,
-          `Scope: ${spec.scope}`,
-          `Payment: ${spec.payment}`,
+          `Parties: ${spec.partyA || ""} and ${spec.partyB || ""}`,
+          `Scope: ${spec.scope || ""}`,
+          `Payment: ${spec.payment || ""}`,
           `Term & termination as mutually agreed; disputes subject to local jurisdiction.`,
         ];
       case "copyright":
         return [
-          `COPYRIGHT NOTICE — ${spec.year} ${spec.owner}. All rights reserved.`,
-          `This notice covers: ${spec.work}. Unauthorized copying, reproduction or distribution is prohibited.`,
+          `COPYRIGHT NOTICE — ${spec.year || ""} ${spec.owner || ""}. All rights reserved.`,
+          `This notice covers: ${spec.work || ""}. Unauthorized copying, reproduction or distribution is prohibited.`,
         ];
       default:
         return [
           `${titleFor(slug)} — ${common.date}`,
-          `Applicant: ${common.applicantName}, ${common.address}`,
+          `Applicant: ${common.applicantName || ""}, ${common.address || ""}`,
         ];
+
     }
   }, [slug, common, spec]);
 
@@ -131,7 +132,7 @@ function Template({
   );
 }
 
-export default function NewDocumentPage() {
+function NewDocumentContent() {
   const params = useSearchParams();
   const router = useRouter();
   const initialSlug = params.get("category") || "affidavit";
@@ -247,5 +248,20 @@ export default function NewDocumentPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function NewDocumentPage() {
+  return (
+    <Suspense fallback={
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="flex items-center gap-2 text-sm text-slate-500">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          Loading document builder...
+        </div>
+      </div>
+    }>
+      <NewDocumentContent />
+    </Suspense>
   );
 }

@@ -242,7 +242,7 @@ alter table public.payments enable row level security;
 drop policy if exists payments_select_owner on public.payments;
 create policy payments_select_owner on public.payments for select using (auth.uid() = user_id);
 -- Only allow storing payments that are already marked as 'paid'
-drop policy if exists payments_insert_owner on public.payments;
+drop policy if exists payments_insert_paid_owner on public.payments;
 create policy payments_insert_paid_owner on public.payments for insert with check (
   auth.uid() = user_id and status = 'paid'
 );
