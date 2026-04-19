@@ -10,6 +10,7 @@ export default function SignInEntryPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState<"password" | "magic">("password");
 
   async function onSignIn(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -64,93 +65,189 @@ export default function SignInEntryPage() {
     }
     alert("Magic link sent! Check your email to finish signing in.");
   }
+
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
-      <h1 className="text-2xl font-semibold">Welcome to VidhiSahayak</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        Choose how you want to continue. You can create a new account or sign in if you already have one.
-      </p>
+    <div className="min-h-[calc(100vh-64px)] flex">
+      {/* Left Panel — Branding */}
+      <div className="hidden lg:flex lg:w-1/2 gradient-bg-primary relative overflow-hidden items-center justify-center p-12">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* User card */}
-        <div className="rounded-lg border bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-          <h2 className="font-medium">User</h2>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            Get guidance, create documents, and book consultations.
-          </p>
-          <div className="mt-3 flex gap-2">
-            <Link href="/auth/signup?role=user" className="rounded-md bg-black px-3 py-1.5 text-sm text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">
-              Create account
-            </Link>
+        <div className="relative max-w-lg text-white">
+          <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/20 text-white font-bold text-xl mb-8">
+            VS
           </div>
-        </div>
-
-        {/* Lawyer card */}
-        <div className="rounded-lg border bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-          <h2 className="font-medium">Lawyer</h2>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            Provide license, get verified, and offer consultations.
+          <h2 className="text-3xl font-bold leading-tight">
+            Your AI-powered legal assistant for every Indian citizen
+          </h2>
+          <p className="mt-4 text-blue-100/80 leading-relaxed">
+            Generate documents, get legal guidance, and connect with verified lawyers — all in your preferred language.
           </p>
-          <div className="mt-3 flex gap-2">
-            <Link href="/auth/signup?role=lawyer" className="rounded-md bg-black px-3 py-1.5 text-sm text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">
-              Create account
-            </Link>
+
+          {/* Feature list */}
+          <div className="mt-10 space-y-4">
+            {[
+              { icon: "📄", text: "500+ legal document templates" },
+              { icon: "🗣️", text: "12+ Indian languages supported" },
+              { icon: "⚖️", text: "Verified lawyer consultations" },
+              { icon: "🤖", text: "24/7 AI legal assistance" },
+            ].map((f) => (
+              <div key={f.text} className="flex items-center gap-3">
+                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm text-lg">
+                  {f.icon}
+                </span>
+                <span className="text-sm text-blue-50/90">{f.text}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Email / password sign in */}
-      <div className="mt-10 rounded-lg border bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
-        <h2 className="font-medium">Already have an account?</h2>
-        <form onSubmit={onSignIn} className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
-          <input
-            name="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder="Email"
-            className="rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800 md:col-span-1"
-          />
-          <input
-            name="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            placeholder="Password"
-            className="rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800 md:col-span-1"
-          />
-          <button
-            disabled={loading}
-            className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-zinc-200 md:col-span-1"
-          >
-            {loading ? "Signing in…" : "Sign in"}
-          </button>
-        </form>
-        <p className="mt-2 text-xs text-zinc-500">If you just signed up and email confirmation is enabled, please confirm your email before signing in.</p>
-        <div className="mt-4 border-t pt-4">
-          <h3 className="text-sm font-medium">Or get a magic link</h3>
-          <form onSubmit={onMagicLink} className="mt-2 flex gap-2">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Email"
-              className="flex-1 rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
-            />
-            <button
-              disabled={loading}
-              className="rounded-md border px-3 py-2 text-sm hover:bg-zinc-50 disabled:opacity-60 dark:border-zinc-800 dark:hover:bg-zinc-900"
+      {/* Right Panel — Auth Forms */}
+      <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
+        <div className="w-full max-w-md">
+          {/* Mobile brand */}
+          <div className="flex items-center gap-2.5 mb-8 lg:hidden">
+            <span className="inline-flex items-center justify-center h-9 w-9 rounded-xl gradient-bg-primary text-white font-bold text-sm shadow-md shadow-blue-500/20">
+              VS
+            </span>
+            <span className="text-lg font-semibold gradient-text">VidhiSahayak</span>
+          </div>
+
+          <h1 className="text-2xl font-bold">Welcome back</h1>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            Sign in to access your dashboard, documents, and consultations.
+          </p>
+
+          {/* Role Cards */}
+          <div className="mt-8 grid grid-cols-2 gap-3">
+            <Link
+              href="/auth/signup?role=user"
+              className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-4 premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-center"
             >
-              {loading ? "Sending…" : "Send magic link"}
+              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 mb-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+              <p className="text-sm font-semibold">User</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Get guidance &amp; documents</p>
+            </Link>
+            <Link
+              href="/auth/signup?role=lawyer"
+              className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-4 premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-center"
+            >
+              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20 mb-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                </svg>
+              </div>
+              <p className="text-sm font-semibold">Lawyer</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Get verified &amp; consult</p>
+            </Link>
+          </div>
+
+          {/* Divider */}
+          <div className="my-8 flex items-center gap-4">
+            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+            <span className="text-xs text-slate-400 dark:text-slate-500">or sign in</span>
+            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+          </div>
+
+          {/* Tabs */}
+          <div className="flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1 mb-6">
+            <button
+              onClick={() => setTab("password")}
+              className={`flex-1 rounded-lg py-2 text-xs font-medium transition-all duration-300 ${
+                tab === "password"
+                  ? "bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-slate-100"
+                  : "text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              Email & Password
             </button>
-          </form>
+            <button
+              onClick={() => setTab("magic")}
+              className={`flex-1 rounded-lg py-2 text-xs font-medium transition-all duration-300 ${
+                tab === "magic"
+                  ? "bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-slate-100"
+                  : "text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              Magic Link
+            </button>
+          </div>
+
+          {/* Password Form */}
+          {tab === "password" && (
+            <form onSubmit={onSignIn} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1.5">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="you@example.com"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1.5">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="••••••••"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                />
+              </div>
+              <button
+                disabled={loading}
+                className="w-full rounded-xl gradient-bg-primary py-2.5 text-sm font-medium text-white shadow-md shadow-blue-500/25 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60"
+              >
+                {loading ? "Signing in…" : "Sign In"}
+              </button>
+            </form>
+          )}
+
+          {/* Magic Link Form */}
+          {tab === "magic" && (
+            <form onSubmit={onMagicLink} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1.5">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="you@example.com"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                />
+              </div>
+              <button
+                disabled={loading}
+                className="w-full rounded-xl gradient-bg-primary py-2.5 text-sm font-medium text-white shadow-md shadow-blue-500/25 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60"
+              >
+                {loading ? "Sending…" : "Send Magic Link"}
+              </button>
+              <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
+                We&apos;ll send a secure login link to your email.
+              </p>
+            </form>
+          )}
+
+          <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
+            By signing in, you agree to our{" "}
+            <Link href="/terms" className="underline hover:text-blue-600 dark:hover:text-cyan-400">Terms</Link>
+            {" "}and{" "}
+            <Link href="/privacy" className="underline hover:text-blue-600 dark:hover:text-cyan-400">Privacy Policy</Link>.
+          </p>
         </div>
       </div>
-
-      <p className="mt-8 text-xs text-zinc-500">Note: Authentication will be connected in Phase 2 (Supabase Auth). For now, use Create account to proceed to role onboarding.</p>
     </div>
   );
 }
