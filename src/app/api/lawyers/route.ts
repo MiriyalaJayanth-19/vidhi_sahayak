@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { LAWYERS } from "@/lib/lawyers";
-import { getSupabaseClient } from "@/lib/supabase";
+import { createSupabaseServer } from "@/lib/supabase-server";
 
 type LawyerRow = {
   id: string;
@@ -21,13 +21,14 @@ export async function GET(request: Request) {
   const maxFeeNum = maxFee ? Number(maxFee) : null;
 
   // Try Supabase first
-  const supabase = getSupabaseClient();
+  const supabase = await createSupabaseServer();
   if (supabase) {
     const orParts: string[] = [];
-    if (q) {
-      // simple text match on name, location, practices array
-      orParts.push(`full_name.ilike.%${q}%`);
-      orParts.push(`office_location.ilike.%${q}%`);
+    const sanitizedQ = q.replace(/[,()"]/g, "").trim();
+    if (sanitizedQ) {
+      // simple text match on name, location
+      orParts.push(`full_name.ilike.%${sanitizedQ}%`);
+      orParts.push(`office_location.ilike.%${sanitizedQ}%`);
     }
     let queryBuilder = supabase
       .from("lawyer_profiles")
@@ -56,7 +57,10 @@ export async function GET(request: Request) {
         location: d.office_location ?? "",
         fee: d.fee ?? 0,
       }));
-      return NextResponse.json({ items });
+      const response = NextResponse.json({ items });
+      // Add Cache-Control headers for CDN caching (1 minute fresh, 5 mins stale-while-revalidate)
+      response.headers.set("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+      return response;
     }
   }
 

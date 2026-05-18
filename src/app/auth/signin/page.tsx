@@ -35,7 +35,10 @@ export default function SignInEntryPage() {
     if (userId) {
       await sb
         .from("profiles")
-        .upsert({ id: userId, email: data.user.email }, { onConflict: "id" });
+        .upsert(
+          { id: userId, email: data.user.email, role: "user" },
+          { onConflict: "id", ignoreDuplicates: true }
+        );
     }
     router.push("/dashboard");
   }
@@ -51,7 +54,7 @@ export default function SignInEntryPage() {
     const { error } = await sb.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: typeof window !== "undefined" ? `${window.location.origin}/dashboard` : undefined,
+        emailRedirectTo: typeof window !== "undefined" ? `${window.location.origin}/auth/callback` : undefined,
       },
     });
     setLoading(false);

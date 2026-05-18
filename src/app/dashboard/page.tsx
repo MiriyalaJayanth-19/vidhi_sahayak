@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { createSupabaseServer } from "@/lib/supabase-server";
 
 const userActions = [
   {
@@ -65,14 +66,45 @@ const userActions = [
   },
 ];
 
-const stats = [
-  { label: "Documents Created", value: "—", note: "Sign in to track" },
-  { label: "Consultations", value: "—", note: "Sign in to track" },
-  { label: "AI Conversations", value: "∞", note: "Unlimited free" },
-  { label: "Languages Supported", value: "12+", note: "Hindi, Telugu, Tamil…" },
-];
+export default async function DashboardPage() {
+  const supabase = await createSupabaseServer();
+  let docCount = 0;
+  let consultationCount = 0;
+  let chatCount = 0;
+  let isSignedIn = false;
 
-export default function DashboardPage() {
+  if (supabase) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      isSignedIn = true;
+
+      const { count: docs } = await supabase
+        .from("documents")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id);
+      docCount = docs || 0;
+
+      const { count: consults } = await supabase
+        .from("consultations")
+        .select("*", { count: "exact", head: true })
+        .eq("user_email", user.email);
+      consultationCount = consults || 0;
+
+      const { count: chats } = await supabase
+        .from("ai_chat_sessions")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.id);
+      chatCount = chats || 0;
+    }
+  }
+
+  const stats = [
+    { label: "Documents Created", value: isSignedIn ? docCount.toString() : "—", note: isSignedIn ? "Saved to your account" : "Sign in to track" },
+    { label: "Consultations", value: isSignedIn ? consultationCount.toString() : "—", note: isSignedIn ? "Booked sessions" : "Sign in to track" },
+    { label: "AI Conversations", value: isSignedIn ? chatCount.toString() : "∞", note: isSignedIn ? "Your active sessions" : "Unlimited free" },
+    { label: "Languages Supported", value: "12+", note: "Hindi, Telugu, Tamil…" },
+  ];
+
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       {/* Header */}

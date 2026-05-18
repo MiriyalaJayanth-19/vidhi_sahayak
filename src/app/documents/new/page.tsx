@@ -4,6 +4,7 @@ import { Suspense, useMemo, useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
+import { supabaseBrowser } from "@/lib/supabase-browser";
 
 type CommonFields = {
   applicantName: string;
@@ -170,6 +171,41 @@ function NewDocumentContent() {
     }));
   };
 
+  const [isSaving, setIsSaving] = useState(false);
+  const saveDocument = async () => {
+    setIsSaving(true);
+    try {
+      const sb = supabaseBrowser();
+      if (!sb) {
+        alert("Supabase not configured.");
+        return;
+      }
+      const { data: { user } } = await sb.auth.getUser();
+      if (!user) {
+        alert("Please sign in to save documents.");
+        router.push("/auth/signin?redirectTo=/documents/new?category=" + slug);
+        return;
+      }
+
+      const { data: catData } = await sb.from("categories").select("id").eq("slug", slug).single();
+      
+      const { error } = await sb.from("documents").insert({
+        user_id: user.id,
+        category_id: catData?.id || null,
+        title: `${titleFor(slug)} - ${common.applicantName || 'Untitled'}`,
+        content: { common, spec: specState },
+        status: "draft"
+      });
+
+      if (error) throw error;
+      alert("Document saved to your dashboard!");
+    } catch (e: any) {
+      alert("Error saving document: " + e.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const categoryOptions = CATEGORIES.map((c) => (
     <option key={c.slug} value={c.slug}>
       {c.name}
@@ -223,7 +259,7 @@ function NewDocumentContent() {
               </label>
             ))}
 
-            <div className="mt-3 flex gap-2">
+            <div className="mt-3 flex flex-wrap gap-2 items-center">
               <button
                 type="button"
                 className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
@@ -231,7 +267,15 @@ function NewDocumentContent() {
               >
                 Print / Save PDF
               </button>
-              <Link href={`/documents/${slug}`} className="text-sm underline underline-offset-4">View category details</Link>
+              <button
+                type="button"
+                className="rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-zinc-900 px-4 py-2 text-sm font-medium hover:bg-slate-50 dark:hover:bg-zinc-800 disabled:opacity-50 transition-colors"
+                onClick={saveDocument}
+                disabled={isSaving}
+              >
+                {isSaving ? "Saving..." : "Save Draft"}
+              </button>
+              <Link href={`/documents/${slug}`} className="ml-auto text-sm underline underline-offset-4 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">View details</Link>
             </div>
           </div>
         </div>

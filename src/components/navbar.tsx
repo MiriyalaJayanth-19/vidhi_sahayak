@@ -22,10 +22,14 @@ export function Navbar() {
   useEffect(() => {
     const sb = supabaseBrowser();
     if (!sb) return;
-    sb.auth.getUser().then(({ data }) => {
+
+    const init = async () => {
+      const { data } = await sb.auth.getUser();
       setUserEmail(data.user?.email ?? null);
-    });
-    const { data: sub } = sb.auth.onAuthStateChange((_e, session) => {
+    };
+    init();
+
+    const { data: sub } = sb.auth.onAuthStateChange((_e: any, session: any) => {
       setUserEmail(session?.user?.email ?? null);
     });
     return () => {

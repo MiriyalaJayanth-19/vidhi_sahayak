@@ -1,8 +1,10 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-
-export function getSupabaseClient(): SupabaseClient | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) return null;
-  return createClient(url, anonKey, { auth: { persistSession: false } });
-}
+/**
+ * Re-export the secure server client.
+ *
+ * Old code imported `getSupabaseClient()` from here — this wrapper
+ * keeps backward compatibility while routing to the new cookie-aware
+ * server client under the hood.
+ *
+ * Prefer importing from `@/lib/supabase-server` directly in new code.
+ */
+export { createSupabaseServer as getSupabaseClient } from "./supabase-server";

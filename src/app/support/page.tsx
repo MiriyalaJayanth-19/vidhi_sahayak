@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { supabaseBrowser } from "@/lib/supabase-browser";
 
 const faqs = [
   {
@@ -79,8 +80,34 @@ export default function SupportPage() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget as HTMLFormElement;
-    setStatus("Thanks! We will get back to you within 24 hours.");
-    form.reset();
+    const fd = new FormData(form);
+    const name = String(fd.get("name") || "");
+    const email = String(fd.get("email") || "");
+    const message = String(fd.get("message") || "");
+
+    const sb = supabaseBrowser();
+    if (!sb) {
+      setStatus("Error: Supabase is not configured.");
+      return;
+    }
+
+    const { data: { user } } = await sb.auth.getUser();
+    const userId = user?.id ?? null;
+
+    const { error } = await sb.from("support_tickets").insert({
+      user_id: userId,
+      email: email,
+      subject: `Support Request from ${name}`,
+      message: message,
+      status: "open",
+    });
+
+    if (error) {
+      setStatus(`Error sending message: ${error.message}`);
+    } else {
+      setStatus("Thanks! We will get back to you within 24 hours.");
+      form.reset();
+    }
   }
 
   return (

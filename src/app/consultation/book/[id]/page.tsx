@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { LAWYERS } from "@/lib/lawyers";
 import { useState } from "react";
+import { supabaseBrowser } from "@/lib/supabase-browser";
 
 export default function BookConsultationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
@@ -26,11 +27,52 @@ export default function BookConsultationPage({ params }: { params: Promise<{ id:
     if (submitting) return;
     setSubmitting(true);
     setSuccess(null);
-    // Simulate booking API latency
-    await new Promise((r) => setTimeout(r, 900));
-    const code = Math.random().toString(36).slice(2, 8).toUpperCase();
-    setSuccess(`Booking confirmed with ${lawyer.name}. Reference: BK-${code}`);
-    setSubmitting(false);
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const email = String(fd.get("email") || "");
+    const date = String(fd.get("date") || "");
+    
+    // Convert time string like "10:00 AM" to "10:00:00"
+    let timeStr = "10:00:00";
+    const rawTime = String(fd.get("time") || "");
+    if (rawTime.includes("11:30")) timeStr = "11:30:00";
+    if (rawTime.includes("2:00")) timeStr = "14:00:00";
+    if (rawTime.includes("4:00")) timeStr = "16:00:00";
+
+    // Create ISO string for timestamp
+    const scheduledAt = new Date(`${date}T${timeStr}`).toISOString();
+
+    try {
+      const sb = supabaseBrowser();
+      if (!sb) {
+        // Fallback if no supabase
+        const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+        setSuccess(`Booking simulated (Supabase not configured). Ref: BK-${code}`);
+        setSubmitting(false);
+        return;
+      }
+
+      // Supabase strictly expects a UUID for foreign keys. If this is a dummy lawyer id like 'l1', pass null.
+      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+
+      const { error } = await sb.from("consultations").insert({
+        user_email: email,
+        lawyer_id: isUUID ? id : null,
+        scheduled_at: scheduledAt,
+        fee: lawyer.fee,
+        status: "pending"
+      });
+
+      if (error) throw error;
+      
+      const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+      setSuccess(`Booking confirmed with ${lawyer.name}. Reference: BK-${code}`);
+    } catch (err: any) {
+      alert("Booking failed: " + err.message);
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -55,21 +97,21 @@ export default function BookConsultationPage({ params }: { params: Promise<{ id:
         <div className="grid gap-3 md:grid-cols-2">
           <div>
             <label className="block text-xs font-medium">Name</label>
-            <input required className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" placeholder="Your full name" />
+            <input required name="name" className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" placeholder="Your full name" />
           </div>
           <div>
             <label className="block text-xs font-medium">Email</label>
-            <input required type="email" className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" placeholder="you@example.com" />
+            <input required name="email" type="email" className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" placeholder="you@example.com" />
           </div>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           <div>
             <label className="block text-xs font-medium">Date</label>
-            <input required type="date" className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" />
+            <input required name="date" type="date" className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" />
           </div>
           <div>
             <label className="block text-xs font-medium">Time</label>
-            <select required className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800">
+            <select required name="time" className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800">
               <option>10:00 AM</option>
               <option>11:30 AM</option>
               <option>2:00 PM</option>
@@ -79,14 +121,13 @@ export default function BookConsultationPage({ params }: { params: Promise<{ id:
         </div>
         <div>
           <label className="block text-xs font-medium">Issue summary</label>
-          <textarea required rows={4} className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" placeholder="Briefly describe your issue" />
+          <textarea required name="summary" rows={4} className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" placeholder="Briefly describe your issue" />
         </div>
         <div className="flex items-center gap-2">
           <button type="submit" disabled={submitting} className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-zinc-200">
             {submitting ? "Confirming…" : "Confirm booking"}
           </button>
           <Link href={`/lawyers/${lawyer.id}`} className="text-xs underline underline-offset-4">View profile</Link>
-          <span className="ml-auto text-xs text-zinc-500">Demo only</span>
         </div>
       </form>
     </div>

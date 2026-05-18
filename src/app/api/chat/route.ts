@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseClient } from "@/lib/supabase";
+import { createSupabaseServer } from "@/lib/supabase-server";
 import { GUIDANCE } from "@/lib/guidance";
 import { CATEGORIES } from "@/lib/categories";
 import { resolveLanguage, detectExplicitLang, detectLangFromScript, LANG_NAMES } from "@/lib/lang-utils";
@@ -93,21 +93,59 @@ PLATFORM CAPABILITIES TO MENTION WHEN RELEVANT:
 }
 
 // ──────────────────────────────────────────────────────────────────────────────
+// Rate Limiter
+// ──────────────────────────────────────────────────────────────────────────────
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 15;
+const rateLimitMap = new Map<string, { count: number, resetTime: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+  
+  // Cleanup old entries randomly to prevent memory leak
+  if (Math.random() < 0.05) {
+    for (const [key, val] of rateLimitMap.entries()) {
+      if (val.resetTime < now) rateLimitMap.delete(key);
+    }
+  }
+
+  if (!record || record.resetTime < now) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return false;
+  }
+  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
+    return true;
+  }
+  record.count++;
+  return false;
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
 // Main POST handler
 // ──────────────────────────────────────────────────────────────────────────────
 export async function POST(request: Request) {
+  const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ reply: "⚠️ You are sending too many messages. Please wait a minute before trying again." }, { status: 429 });
+  }
+
   const { message, sessionId, lang: clientLang } = await request.json();
-  const supabase = getSupabaseClient();
+  const supabase = await createSupabaseServer();
 
   // Prepare session if Supabase is available (else stateless)
   let session = sessionId as string | null | undefined;
   const userText = String(message ?? "");
 
   if (supabase) {
+    // Get the authenticated user (if any)
+    const { data: { user } } = await supabase.auth.getUser();
+    const userId = user?.id ?? null;
+
     if (!session) {
       const { data: created } = await supabase
         .from("ai_chat_sessions")
-        .insert({ user_id: null })
+        .insert({ user_id: userId })
         .select("id")
         .single();
       session = created?.id as string | undefined;

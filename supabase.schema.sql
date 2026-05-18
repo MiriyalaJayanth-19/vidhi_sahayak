@@ -41,7 +41,10 @@ create policy categories_read on public.categories for select using (true);
 drop policy if exists lawyers_read on public.lawyers;
 create policy lawyers_read on public.lawyers for select using (true);
 drop policy if exists consultations_read on public.consultations;
-create policy consultations_read on public.consultations for select using (true);
+create policy consultations_read on public.consultations for select using (
+  (auth.jwt() ->> 'email') = user_email
+  or auth.uid() = lawyer_id
+);
 
 -- Write policies can be added later for authenticated users/admins
 
@@ -246,3 +249,18 @@ drop policy if exists payments_insert_paid_owner on public.payments;
 create policy payments_insert_paid_owner on public.payments for insert with check (
   auth.uid() = user_id and status = 'paid'
 );
+
+-- =============================
+-- Performance Indexes
+-- =============================
+create index if not exists idx_documents_user_id on public.documents(user_id);
+create index if not exists idx_consultations_user_email on public.consultations(user_email);
+create index if not exists idx_lawyer_profiles_location on public.lawyer_profiles(office_location);
+create index if not exists idx_search_logs_user_id on public.search_logs(user_id);
+create index if not exists idx_ai_chat_sessions_user_id on public.ai_chat_sessions(user_id);
+create index if not exists idx_ai_chat_messages_session_id on public.ai_chat_messages(session_id);
+create index if not exists idx_support_tickets_user_id on public.support_tickets(user_id);
+create index if not exists idx_payments_user_id on public.payments(user_id);
+
+-- Lawyer search indexes (GIN for practices array)
+create index if not exists idx_lawyer_profiles_practices on public.lawyer_profiles using gin (practices);
