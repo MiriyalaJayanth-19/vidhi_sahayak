@@ -1,6 +1,6 @@
 # VidhiSahayak - Your Legal Assistant
 
-VidhiSahayak is a modern, AI-powered legal assistance platform built with Next.js 14, TypeScript, and Tailwind CSS. It provides users with legal guidance, document generation, and lawyer consultation services through an intuitive interface.
+VidhiSahayak is a modern, AI-powered legal assistance platform built with Next.js (App Router), TypeScript, and Tailwind CSS. It provides users with legal guidance, document generation, and lawyer consultation services through an intuitive interface.
 
 ## ✨ Features
 
@@ -14,7 +14,7 @@ VidhiSahayak is a modern, AI-powered legal assistance platform built with Next.j
 
 ## 🚀 Tech Stack
 
-- **Frontend**: Next.js 14 (App Router)
+- **Frontend**: Next.js (App Router)
 - **Styling**: Tailwind CSS with dark mode support
 - **UI Components**: shadcn/ui
 - **Type Safety**: TypeScript
@@ -58,6 +58,23 @@ npm run build
 npm start
 ```
 
+### Deploy on Vercel
+
+1. Import the repository in Vercel.
+2. Set the build command to `npm run build` and the output to default (Next.js).
+3. Add the environment variables listed below.
+4. Deploy.
+
+**Required environment variables (minimum):**
+- `GEMINI_API_KEY`
+
+**Optional environment variables (feature-specific):**
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `OPENAI_API_KEY`
+- `PERPLEXITY_API_KEY`
+- `GOOGLE_TTS_API_KEY`
+- `NEXT_PUBLIC_VOICE_ENABLED`
 
 ## 🙏 Acknowledgments
 

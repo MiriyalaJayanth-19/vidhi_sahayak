@@ -210,7 +210,7 @@ export default function SignInEntryPage() {
               </div>
               <button
                 disabled={loading}
-                className="w-full rounded-xl gradient-bg-primary py-2.5 text-sm font-medium text-white shadow-md shadow-blue-500/25 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60"
+                className="w-full btn-primary py-2.5 text-sm font-medium"
               >
                 {loading ? "Signing in…" : "Sign In"}
               </button>
@@ -233,7 +233,7 @@ export default function SignInEntryPage() {
               </div>
               <button
                 disabled={loading}
-                className="w-full rounded-xl gradient-bg-primary py-2.5 text-sm font-medium text-white shadow-md shadow-blue-500/25 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-60"
+                className="w-full btn-primary py-2.5 text-sm font-medium"
               >
                 {loading ? "Sending…" : "Send Magic Link"}
               </button>

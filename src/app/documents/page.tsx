@@ -4,20 +4,20 @@ import { CATEGORIES } from "@/lib/categories";
 
 export default function DocumentsIndexPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+    <div className="section-shell">
       {/* Header */}
-      <div className="mb-10">
+      <div className="section-header">
         <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">Document Center</p>
-        <h1 className="text-3xl md:text-4xl font-bold">
+        <h1 className="section-title">
           Legal <span className="gradient-text">Documents</span>
         </h1>
-        <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl">
+        <p className="section-lead">
           Choose a category to view detailed guidance or start creating a document. All templates follow Indian legal standards.
         </p>
       </div>
 
       {/* Quick Create Bar */}
-      <div className="mb-10 rounded-2xl gradient-bg-primary p-6 premium-shadow-lg relative overflow-hidden">
+      <div className="mb-10 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 p-6 premium-shadow-lg relative overflow-hidden">
         <div className="absolute -top-12 -right-12 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none" />
         <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
@@ -44,7 +44,7 @@ export default function DocumentsIndexPage() {
         {CATEGORIES.map((c) => (
           <div
             key={c.slug}
-            className="group overflow-hidden rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300"
+            className="group overflow-hidden card-surface"
           >
             {c.image && (
               <div className="relative h-36 w-full overflow-hidden">
@@ -76,13 +76,13 @@ export default function DocumentsIndexPage() {
               <div className="flex gap-2">
                 <Link
                   href={`/documents/${c.slug}`}
-                  className="flex-1 text-center rounded-xl border border-slate-200 dark:border-slate-600 px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-300"
+                  className="flex-1 text-center btn-outline py-2 text-xs font-medium"
                 >
                   View Details
                 </Link>
                 <Link
                   href={`/documents/new?category=${encodeURIComponent(c.slug)}`}
-                  className="flex-1 text-center rounded-xl gradient-bg-primary px-3 py-2 text-xs font-medium text-white shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/25 transition-all duration-300"
+                  className="flex-1 text-center btn-primary py-2 text-xs font-medium"
                 >
                   Create
                 </Link>

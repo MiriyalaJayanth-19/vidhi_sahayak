@@ -4,14 +4,14 @@ import Image from "next/image";
 
 export default function CategoriesPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+    <div className="section-shell">
       {/* Header */}
-      <div className="mb-10">
+      <div className="section-header">
         <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">Legal Topics</p>
-        <h1 className="text-3xl md:text-4xl font-bold">
+        <h1 className="section-title">
           All <span className="gradient-text">Categories</span>
         </h1>
-        <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl">
+        <p className="section-lead">
           Browse legal topics to find guidance, templates, and submission steps.
         </p>
       </div>
@@ -19,7 +19,7 @@ export default function CategoriesPage() {
       {/* Grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {CATEGORIES.map((c) => (
-          <div key={c.slug} id={c.slug} className="group overflow-hidden rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <div key={c.slug} id={c.slug} className="group overflow-hidden card-surface hover:-translate-y-1 transition-all duration-300">
             {c.image && (
               <div className="relative h-32 w-full overflow-hidden">
                 <Image src={c.image} alt={c.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" sizes="(max-width: 768px) 100vw, 33vw" />
@@ -35,10 +35,10 @@ export default function CategoriesPage() {
                 {c.createHint || "Guidance, templates, and where to submit."}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <Link href={`/documents/${c.slug}`} className="rounded-xl gradient-bg-primary px-3.5 py-1.5 text-xs font-medium text-white shadow-sm shadow-blue-500/20 hover:shadow-md transition-all duration-300">
+                <Link href={`/documents/${c.slug}`} className="btn-primary px-3.5 py-1.5 text-xs font-medium">
                   View Details
                 </Link>
-                <Link href={`/documents/new?category=${encodeURIComponent(c.slug)}`} className="rounded-xl border border-slate-200 dark:border-slate-600 px-3.5 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-300">
+                <Link href={`/documents/new?category=${encodeURIComponent(c.slug)}`} className="btn-outline px-3.5 py-1.5 text-xs font-medium">
                   Create Document
                 </Link>
               </div>

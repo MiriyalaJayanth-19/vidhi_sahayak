@@ -1,26 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import AIChatWidget from "@/components/ai-chat-widget";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "VidhiSahayak",
-    template: "%s • VidhiSahayak",
+    default: "VidhiSahayak | AI-Powered Legal Copilot Platform",
+    template: "%s | VidhiSahayak",
   },
-  description: "Legal assistant for guidance, documents, and consultations.",
+  description:
+    "VidhiSahayak — India's AI-powered legal assistance copilot. Get legal guidance, generate ready-to-print documents, and consult verified lawyers in any Indian language.",
+  keywords: [
+    "legal assistant",
+    "India",
+    "legal documents",
+    "lawyer consultation",
+    "affidavit",
+    "rental agreement",
+    "AI legal help",
+  ],
 };
 
 export default function RootLayout({
@@ -30,8 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="flex min-h-screen flex-col gradient-bg-soft">
+      <body className={`${plusJakarta.variable} font-sans antialiased text-slate-900 bg-slate-50`}>
+        {/* Tricolor stripe — Brand Gradient */}
+        <div className="tricolor-stripe" aria-hidden="true" />
+
+        <div className="flex min-h-screen flex-col bg-slate-50">
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />

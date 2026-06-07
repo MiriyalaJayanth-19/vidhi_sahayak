@@ -106,14 +106,14 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+    <div className="section-shell">
       {/* Header */}
-      <div className="mb-10">
+      <div className="section-header">
         <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">Welcome Back</p>
-        <h1 className="text-3xl md:text-4xl font-bold">
+        <h1 className="section-title">
           Your <span className="gradient-text">Dashboard</span>
         </h1>
-        <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl">
+        <p className="section-lead">
           Access your documents, consultations, AI chat, and legal resources — all in one place.
         </p>
       </div>
@@ -121,7 +121,7 @@ export default async function DashboardPage() {
       {/* Stats Row */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mb-10">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-5 premium-shadow">
+          <div key={s.label} className="card-surface p-5">
             <p className="text-2xl font-bold gradient-text">{s.value}</p>
             <p className="mt-1 text-sm font-medium text-slate-700 dark:text-slate-300">{s.label}</p>
             <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{s.note}</p>
@@ -136,7 +136,7 @@ export default async function DashboardPage() {
           <Link
             key={a.href}
             href={a.href}
-            className="group overflow-hidden rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-6 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300"
+            className="group overflow-hidden card-surface p-6 hover:-translate-y-1 transition-all duration-300"
           >
             <div className={`inline-flex items-center justify-center w-11 h-11 rounded-xl ${a.bgLight} border ${a.borderLight} mb-4`}>
               <span className={`bg-gradient-to-br ${a.color} bg-clip-text text-transparent`}>
@@ -161,7 +161,7 @@ export default async function DashboardPage() {
       <h2 className="text-lg font-semibold mb-5">Role-Based Access</h2>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* User Dashboard */}
-        <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-6 premium-shadow">
+        <div className="relative overflow-hidden card-surface p-6">
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-400/5 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center gap-3 mb-4">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20">
@@ -189,14 +189,14 @@ export default async function DashboardPage() {
               Saved AI chat history
             </li>
           </ul>
-          <Link href="/dashboard/user" className="inline-flex items-center gap-2 rounded-xl gradient-bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/25 transition-all duration-300">
+          <Link href="/dashboard/user" className="inline-flex items-center gap-2 btn-primary px-5 py-2.5 text-sm font-medium">
             Open User Dashboard
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>
         </div>
 
         {/* Lawyer Dashboard */}
-        <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-6 premium-shadow">
+        <div className="relative overflow-hidden card-surface p-6">
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-400/5 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center gap-3 mb-4">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20">
@@ -223,7 +223,7 @@ export default async function DashboardPage() {
               Verification and profile management
             </li>
           </ul>
-          <Link href="/dashboard/lawyer" className="inline-flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-600 px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-300">
+          <Link href="/dashboard/lawyer" className="inline-flex items-center gap-2 btn-outline px-5 py-2.5 text-sm font-medium">
             Open Lawyer Dashboard
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
           </Link>
