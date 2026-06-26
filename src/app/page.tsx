@@ -23,7 +23,7 @@ export default function Home() {
             <div className="space-y-6 animate-[fade-in-up_0.5s_ease-out_both]">
               <div className="inline-flex items-center gap-2 rounded-full bg-white/70 border border-violet-200 px-4 py-1.5 text-xs font-semibold text-violet-700 backdrop-blur-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse" />
-                India's AI-Powered Legal Assistant
+                India&apos;s AI-Powered Legal Assistant
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black text-slate-900 leading-[1.15] tracking-tight">
@@ -383,7 +383,7 @@ export default function Home() {
                       style={{ background: "hsl(252,100%,62%)" }}>
                       Book Call
                     </Link>
-                    <Link href="/lawyers"
+                    <Link href="/consultation"
                       className="flex-1 text-center rounded-full py-2 text-xs font-semibold text-slate-600 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all duration-200">
                       View Profile
                     </Link>

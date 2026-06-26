@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { supabaseBrowser } from "@/lib/supabase-browser";
 
 const navItems = [
@@ -29,7 +30,7 @@ export function Navbar() {
       setUserEmail(data.user?.email ?? null);
     };
     init();
-    const { data: sub } = sb.auth.onAuthStateChange((_e: any, session: any) => {
+    const { data: sub } = sb.auth.onAuthStateChange((_e: AuthChangeEvent, session: Session | null) => {
       setUserEmail(session?.user?.email ?? null);
     });
     return () => { sub.subscription.unsubscribe(); };
