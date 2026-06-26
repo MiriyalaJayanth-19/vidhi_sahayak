@@ -17,12 +17,6 @@ const quickLinks = [
   { href: "/categories/agreement", label: "Agreements" },
 ];
 
-const policyLinks = [
-  { href: "/privacy", label: "Privacy Policy" },
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/support", label: "Contact Us" },
-];
-
 export function Footer() {
   return (
     <footer className="govt-footer bg-slate-950 text-slate-400 border-t border-slate-900">

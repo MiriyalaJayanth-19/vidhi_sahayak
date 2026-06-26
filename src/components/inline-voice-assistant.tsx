@@ -138,7 +138,7 @@ export default function InlineVoiceAssistant() {
   function toggleMic() {
     if (!VOICE_ON) return;
     if (listening) {
-      try { recognitionRef.current && recognitionRef.current.stop(); } catch { }
+      try { if (recognitionRef.current) recognitionRef.current.stop(); } catch { }
       setListening(false);
     } else {
       setListening(true);

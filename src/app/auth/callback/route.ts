@@ -37,7 +37,7 @@ export async function GET(request: Request) {
               );
             } catch {
               // Cookies can't be set in certain contexts — this is handled
-              // by the middleware on the next request.
+              // by the proxy on the next request.
             }
           },
         },

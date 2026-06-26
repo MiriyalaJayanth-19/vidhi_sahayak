@@ -12,7 +12,7 @@ const PROTECTED_PREFIXES = ["/dashboard", "/documents"];
  */
 const AUTH_ROUTES = ["/auth/signin", "/auth/signup"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -74,7 +74,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Run middleware on all routes EXCEPT:
+     * Run the proxy on all routes EXCEPT:
      *  - _next/static (static files)
      *  - _next/image (image optimization)
      *  - favicon.ico, icon.svg, sitemap, robots

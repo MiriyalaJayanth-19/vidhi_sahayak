@@ -68,8 +68,8 @@ export default function BookConsultationPage({ params }: { params: Promise<{ id:
       
       const code = Math.random().toString(36).slice(2, 8).toUpperCase();
       setSuccess(`Booking confirmed with ${lawyer.name}. Reference: BK-${code}`);
-    } catch (err: any) {
-      alert("Booking failed: " + err.message);
+    } catch (err: unknown) {
+      alert("Booking failed: " + (err instanceof Error ? err.message : String(err)));
     } finally {
       setSubmitting(false);
     }

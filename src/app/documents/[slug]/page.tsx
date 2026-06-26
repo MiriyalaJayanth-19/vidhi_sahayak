@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { CATEGORIES } from "@/lib/categories";
 
-function fallbackDetails(slug: string) {
+function fallbackDetails() {
   // Generic guidance derived from legaltech.txt
   return {
     guidance: [
@@ -88,7 +88,7 @@ function categorySpecific(slug: string) {
 export default async function DocumentDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const cat = CATEGORIES.find((c) => c.slug === slug);
-  const base = fallbackDetails(slug);
+  const base = fallbackDetails();
   const spec = categorySpecific(slug);
   const details = {
     guidance: spec.guidance || base.guidance,

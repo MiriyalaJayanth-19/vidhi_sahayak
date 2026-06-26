@@ -199,8 +199,8 @@ function NewDocumentContent() {
 
       if (error) throw error;
       alert("Document saved to your dashboard!");
-    } catch (e: any) {
-      alert("Error saving document: " + e.message);
+    } catch (e: unknown) {
+      alert("Error saving document: " + (e instanceof Error ? e.message : String(e)));
     } finally {
       setIsSaving(false);
     }
