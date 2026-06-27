@@ -5,7 +5,7 @@ import VoiceSearch from "@/components/voice-search";
 
 export default function Home() {
   return (
-    <div id="main-content" className="bg-white text-slate-800">
+    <div className="bg-white text-slate-800">
 
       {/* ═══════════════════════════════════════════════════════════════════
           HERO — Clean Light Purple Background

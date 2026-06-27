@@ -44,12 +44,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${plusJakarta.variable} ${inter.variable} font-sans antialiased text-slate-800 bg-white`}>
+        {/* Skip to main content — keyboard/screen-reader accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-violet-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
+
         {/* Tricolor stripe — Brand Gradient */}
         <div className="tricolor-stripe" aria-hidden="true" />
 
         <div className="flex min-h-screen flex-col bg-white">
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main id="main-content" className="flex-1">{children}</main>
           <Footer />
           <AIChatWidget />
         </div>

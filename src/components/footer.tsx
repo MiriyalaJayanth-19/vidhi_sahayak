@@ -123,7 +123,7 @@ export function Footer() {
             {/* Support Box */}
             <div className="rounded-xl border border-slate-900 bg-slate-950/40 p-4">
               <p className="text-xs font-bold text-white mb-1">Need Legal Guidance?</p>
-              <p className="text-[11px] text-slate-500">support@vidhisahayak.in</p>
+              <p className="text-[11px] text-slate-400">support@vidhisahayak.in</p>
               <Link href="/chat" className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-violet-400 hover:text-violet-300">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
@@ -137,16 +137,16 @@ export function Footer() {
         {/* ─── Bottom Bar ──────────────────────────────────────────────── */}
         <div className="border-t border-slate-900 py-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-[11px] text-slate-600 text-center md:text-left leading-relaxed">
+            <p className="text-[11px] text-slate-400 text-center md:text-left leading-relaxed">
               © {new Date().getFullYear()} VidhiSahayak Technologies Private Limited. All rights reserved.<br />
               Disclaimer: VidhiSahayak is an AI legal copilot providing general informational guidance under Indian laws. We are not a law firm and do not provide direct legal advice.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-600">
-              <Link href="/privacy" className="hover:text-slate-400">Privacy</Link>
-              <span>•</span>
-              <Link href="/terms" className="hover:text-slate-400">Terms</Link>
-              <span>•</span>
-              <span className="font-semibold text-slate-500">Powered by Gemini AI</span>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400">
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <span aria-hidden="true" className="text-slate-600">•</span>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <span aria-hidden="true" className="text-slate-600">•</span>
+              <span className="font-semibold text-slate-300">Powered by Gemini AI</span>
             </div>
           </div>
         </div>

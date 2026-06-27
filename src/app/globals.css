@@ -451,9 +451,9 @@
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Focus */
+/* Focus — visible keyboard ring on every interactive element */
 *:focus-visible {
-  outline: 2px solid hsl(252, 100%, 62%);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 

@@ -57,7 +57,7 @@ export function Navbar() {
     >
       {/* ── Top Announcement Bar ─────────────────────────────────── */}
       <div className="bg-violet-600 text-white text-xs font-medium py-1.5 px-4 text-center">
-        🎉 New: Generate ready-to-print Indian legal documents with AI — &nbsp;
+        <span aria-hidden="true">🎉</span> New: Generate ready-to-print Indian legal documents with AI — &nbsp;
         <Link href="/documents/new" className="underline font-semibold hover:text-violet-200 transition-colors">
           Try it free →
         </Link>
@@ -93,6 +93,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 prefetch={true}
+                aria-current={pathname === item.href ? "page" : undefined}
                 className={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   pathname === item.href
                     ? "text-violet-700 bg-violet-50"
@@ -183,6 +184,7 @@ export function Navbar() {
                 href={item.href}
                 prefetch={true}
                 onClick={() => setMobileOpen(false)}
+                aria-current={pathname === item.href ? "page" : undefined}
                 className={`flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   pathname === item.href
                     ? "bg-violet-50 text-violet-700 font-semibold"
