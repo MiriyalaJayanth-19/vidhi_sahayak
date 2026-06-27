@@ -71,7 +71,7 @@ export default function VoiceSearch() {
       <select
         value={lang}
         onChange={(e) => setLang(e.target.value)}
-        className="rounded-md border bg-transparent px-2 py-2 text-sm outline-none dark:border-zinc-800"
+        className="rounded-md border bg-transparent px-2 py-2 text-sm outline-none"
       >
         <option value="en-IN">English (India)</option>
         <option value="hi-IN">Hindi</option>
@@ -81,7 +81,7 @@ export default function VoiceSearch() {
         className={
           listening
             ? "inline-flex items-center gap-2 rounded-md border bg-red-600 px-3 py-2 text-sm text-white"
-            : "inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900"
+            : "inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm hover:bg-zinc-50"
         }
         aria-pressed={listening}
         title="Voice search"

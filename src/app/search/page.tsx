@@ -33,7 +33,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       {/* Header */}
       <div className="mb-10">
-        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Search Results</p>
+        <p className="text-sm font-medium text-violet-600 mb-2">Search Results</p>
         <h1 className="text-3xl md:text-4xl font-bold">
           Results for: <span className="gradient-text">{queryRaw || "(empty)"}</span>
         </h1>
@@ -62,23 +62,23 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                 <Link
                   key={c.slug}
                   href={`/categories/${c.slug}`}
-                  className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-5 text-sm premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+                  className="group rounded-2xl bg-white border border-slate-200/60 p-5 text-sm premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300"
                 >
                   <div className="flex items-center justify-between">
                     <p className="font-semibold">{c.name}</p>
-                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 transition-transform duration-300 group-hover:translate-x-1">
+                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-violet-50 text-violet-600 transition-transform duration-300 group-hover:translate-x-1">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />
                       </svg>
                     </span>
                   </div>
-                  <p className="mt-1.5 text-slate-500 dark:text-slate-400 leading-relaxed">{snippet}</p>
+                  <p className="mt-1.5 text-slate-500 leading-relaxed">{snippet}</p>
                 </Link>
               );
             })}
             {filteredCategories.length === 0 && (
-              <div className="rounded-2xl glass-card p-6 text-center text-sm text-slate-500 dark:text-slate-400">
+              <div className="rounded-2xl glass-card p-6 text-center text-sm text-slate-500">
                 No matching categories.
               </div>
             )}
@@ -99,19 +99,19 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           </div>
           <div className="grid grid-cols-1 gap-3">
             {filteredLawyers.map((l) => (
-              <div key={l.id} className="rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-5 text-sm premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+              <div key={l.id} className="rounded-2xl bg-white border border-slate-200/60 p-5 text-sm premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-semibold flex items-center gap-2">
                       {l.name}
-                      <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-green-600 dark:text-green-400">
+                      <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-green-600">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M20 6 9 17l-5-5" />
                         </svg>
                         Verified
                       </span>
                     </p>
-                    <p className="mt-1 text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                    <p className="mt-1 text-slate-500 flex items-center gap-1">
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                         <circle cx="12" cy="10" r="3" />
@@ -124,7 +124,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               </div>
             ))}
             {filteredLawyers.length === 0 && (
-              <div className="rounded-2xl glass-card p-6 text-center text-sm text-slate-500 dark:text-slate-400">
+              <div className="rounded-2xl glass-card p-6 text-center text-sm text-slate-500">
                 No matching lawyers.
               </div>
             )}

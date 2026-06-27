@@ -18,10 +18,10 @@ export default function LawyerProfilePage({ params }: { params: Promise<{ id: st
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-2xl font-semibold">{lawyer.name}</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">{lawyer.location} • {lawyer.practices.join(", ")} • {lawyer.experienceYears}+ yrs</p>
+      <p className="mt-2 text-sm text-zinc-600">{lawyer.location} • {lawyer.practices.join(", ")} • {lawyer.experienceYears}+ yrs</p>
       <div className="mt-6 flex gap-2">
-        <Link href="/consultation" className="rounded-md border px-3 py-1.5 text-sm hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900">Back</Link>
-        <Link href={`/consultation/book/${lawyer.id}`} className="rounded-md bg-black px-3 py-1.5 text-sm text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">Book</Link>
+        <Link href="/consultation" className="rounded-md border px-3 py-1.5 text-sm hover:bg-zinc-50">Back</Link>
+        <Link href={`/consultation/book/${lawyer.id}`} className="rounded-md bg-black px-3 py-1.5 text-sm text-white hover:bg-zinc-800">Book</Link>
       </div>
     </div>
   );

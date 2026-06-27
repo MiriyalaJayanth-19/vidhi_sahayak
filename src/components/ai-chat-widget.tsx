@@ -220,7 +220,7 @@ export default function AIChatWidget() {
             {open && (
                 <div
                     id="ai-chat-widget-panel"
-                    className="fixed bottom-0 right-0 z-50 flex flex-col overflow-hidden rounded-t-2xl border border-zinc-200/60 bg-white shadow-2xl dark:border-zinc-700/50 dark:bg-zinc-900 sm:bottom-6 sm:right-6 sm:rounded-2xl"
+                    className="fixed bottom-0 right-0 z-50 flex flex-col overflow-hidden rounded-t-2xl border border-zinc-200/60 bg-white shadow-2xl sm:bottom-6 sm:right-6 sm:rounded-2xl"
                     style={{ width: "min(420px, 100vw)", height: "min(600px, 100dvh)" }}
                 >
                     {/* Header */}
@@ -262,14 +262,14 @@ export default function AIChatWidget() {
                                 className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start"}`}
                             >
                                 {m.role === "assistant" && (
-                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm dark:bg-violet-950">
+                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm">
                                         ⚖️
                                     </div>
                                 )}
                                 <div
                                     className={`max-w-[82%] rounded-2xl px-3 py-2 text-sm leading-relaxed shadow-sm ${m.role === "user"
                                         ? "bg-violet-600 text-white rounded-br-sm"
-                                        : "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 rounded-bl-sm"
+                                        : "bg-zinc-100 text-zinc-900 rounded-bl-sm"
                                         }`}
                                     style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
                                 >
@@ -279,8 +279,8 @@ export default function AIChatWidget() {
                         ))}
                         {loading && (
                             <div className="flex justify-start gap-2">
-                                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm dark:bg-violet-950">⚖️</div>
-                                <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-3 dark:bg-zinc-800">
+                                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm">⚖️</div>
+                                <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-3">
                                     {[0, 150, 300].map((delay) => (
                                         <span
                                             key={delay}
@@ -302,9 +302,9 @@ export default function AIChatWidget() {
                     </div>
 
                     {/* Input area */}
-                    <div className="border-t border-zinc-200 bg-white p-3 dark:border-zinc-700 dark:bg-zinc-900">
+                    <div className="border-t border-zinc-200 bg-white p-3">
                         {speaking && (
-                            <div className="mb-2 flex items-center justify-between rounded-lg bg-violet-50 px-3 py-1.5 text-xs text-violet-700 dark:bg-violet-950 dark:text-violet-300">
+                            <div className="mb-2 flex items-center justify-between rounded-lg bg-violet-50 px-3 py-1.5 text-xs text-violet-700">
                                 <span className="flex items-center gap-1.5">
                                     <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-violet-500" />
                                     Speaking in {LANG_OPTIONS.find((o) => o.code === lang)?.label ?? "your language"}…
@@ -320,7 +320,7 @@ export default function AIChatWidget() {
                                     onClick={toggleMic}
                                     className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-base transition ${listening
                                         ? "bg-red-500 text-white animate-pulse"
-                                        : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                                        : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
                                         }`}
                                     aria-pressed={listening}
                                     aria-label={listening ? "Stop listening" : "Start voice input"}
@@ -336,7 +336,7 @@ export default function AIChatWidget() {
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
                                 placeholder="Type in any Indian language…"
-                                className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-violet-400 focus:ring-1 focus:ring-violet-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500"
+                                className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-violet-400 focus:ring-1 focus:ring-violet-400"
                                 disabled={loading}
                             />
                             <button
@@ -351,7 +351,7 @@ export default function AIChatWidget() {
                                 </svg>
                             </button>
                         </div>
-                        <p className="mt-1.5 text-center text-[10px] text-zinc-400 dark:text-zinc-600">
+                        <p className="mt-1.5 text-center text-[10px] text-zinc-400">
                             General legal information only — not a substitute for professional legal advice
                         </p>
                     </div>

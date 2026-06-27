@@ -104,13 +104,13 @@ export default async function DocumentDetailsPage({ params }: { params: Promise<
     <div className="mx-auto max-w-4xl px-4 py-10">
       <div className="flex items-start gap-4">
         {cat?.image && (
-          <div className="relative h-24 w-36 overflow-hidden rounded-md border dark:border-zinc-800">
+          <div className="relative h-24 w-36 overflow-hidden rounded-md border">
             <Image src={cat.image} alt={cat.name} fill className="object-cover" />
           </div>
         )}
         <div>
           <h1 className="text-2xl font-semibold">{cat?.name || slug}</h1>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{cat?.createHint || "Guidance and templates."}</p>
+          <p className="mt-1 text-sm text-zinc-600">{cat?.createHint || "Guidance and templates."}</p>
           <div className="mt-3 flex gap-3 text-sm">
             <Link className="underline underline-offset-4" href={`/documents/new?category=${encodeURIComponent(slug)}`}>Create document</Link>
             <Link className="underline underline-offset-4" href="/documents">Back to Documents</Link>
@@ -121,8 +121,8 @@ export default async function DocumentDetailsPage({ params }: { params: Promise<
       {cat?.image && (
         <div className="mt-6">
           <h2 className="text-lg font-medium">Template preview</h2>
-          <a href={cat.image} target="_blank" rel="noreferrer" className="mt-2 block overflow-hidden rounded-md border dark:border-zinc-800">
-            <div className="relative h-[420px] w-full bg-zinc-50 dark:bg-zinc-900">
+          <a href={cat.image} target="_blank" rel="noreferrer" className="mt-2 block overflow-hidden rounded-md border">
+            <div className="relative h-[420px] w-full bg-zinc-50">
               <Image src={cat.image} alt={`${cat.name} template`} fill className="object-contain" />
             </div>
           </a>
@@ -147,7 +147,7 @@ function Section({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
       <h2 className="text-lg font-medium">{title}</h2>
-      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-700 dark:text-zinc-300">
+      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-zinc-700">
         {items.map((t, i) => (
           <li key={i}>{t}</li>
         ))}

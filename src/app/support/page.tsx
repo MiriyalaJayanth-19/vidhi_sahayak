@@ -114,11 +114,11 @@ export default function SupportPage() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       {/* Header */}
       <div className="mb-12 text-center max-w-2xl mx-auto">
-        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">We&apos;re Here to Help</p>
+        <p className="text-sm font-medium text-violet-600 mb-2">We&apos;re Here to Help</p>
         <h1 className="text-3xl md:text-4xl font-bold">
           Support <span className="gradient-text">Center</span>
         </h1>
-        <p className="mt-3 text-base text-slate-600 dark:text-slate-400">
+        <p className="mt-3 text-base text-slate-600">
           Get help with documents, guidance, consultations, or anything else. We&apos;re available 24/7 through AI chat.
         </p>
       </div>
@@ -129,14 +129,14 @@ export default function SupportPage() {
           <Link
             key={c.title}
             href={c.href}
-            className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-6 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300 text-center"
+            className="group rounded-2xl bg-white border border-slate-200/60 p-6 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300 text-center"
           >
             <div className={`mx-auto inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br ${c.gradient} text-white mb-4 shadow-lg shadow-violet-500/10`}>
               {c.icon}
             </div>
             <h3 className="font-semibold text-base">{c.title}</h3>
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{c.description}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-violet-600 dark:text-violet-400 group-hover:gap-2.5 transition-all duration-300">
+            <p className="mt-2 text-sm text-slate-500 leading-relaxed">{c.description}</p>
+            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-violet-600 group-hover:gap-2.5 transition-all duration-300">
               {c.cta}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </span>
@@ -148,15 +148,15 @@ export default function SupportPage() {
         {/* Contact Form */}
         <div>
           <h2 className="text-xl font-bold mb-1">Send a Message</h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">We typically respond within 24 hours.</p>
+          <p className="text-sm text-slate-500 mb-6">We typically respond within 24 hours.</p>
 
-          <form onSubmit={onSubmit} className="space-y-4 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-6 premium-shadow">
+          <form onSubmit={onSubmit} className="space-y-4 rounded-2xl bg-white border border-slate-200/60 p-6 premium-shadow">
             <div>
               <label className="block text-sm font-medium mb-1.5">Full Name</label>
               <input
                 name="name"
                 required
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 placeholder="Your name"
               />
             </div>
@@ -166,7 +166,7 @@ export default function SupportPage() {
                 name="email"
                 type="email"
                 required
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 placeholder="you@example.com"
               />
             </div>
@@ -176,7 +176,7 @@ export default function SupportPage() {
                 name="message"
                 required
                 rows={5}
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300 resize-none"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300 resize-none"
                 placeholder="Describe how we can help..."
               />
             </div>
@@ -188,7 +188,7 @@ export default function SupportPage() {
                 Send Message
               </button>
               {status && (
-                <span className="flex items-center gap-1.5 text-sm text-green-600 dark:text-green-400">
+                <span className="flex items-center gap-1.5 text-sm text-green-600">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
                   {status}
                 </span>
@@ -200,13 +200,13 @@ export default function SupportPage() {
         {/* FAQs */}
         <div>
           <h2 className="text-xl font-bold mb-1">Frequently Asked Questions</h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Quick answers to common questions.</p>
+          <p className="text-sm text-slate-500 mb-6">Quick answers to common questions.</p>
 
           <div className="space-y-3">
             {faqs.map((faq, i) => (
               <div
                 key={i}
-                className="rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 overflow-hidden transition-all duration-300"
+                className="rounded-2xl bg-white border border-slate-200/60 overflow-hidden transition-all duration-300"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -232,7 +232,7 @@ export default function SupportPage() {
                     openFaq === i ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
                   }`}
                 >
-                  <p className="px-5 pb-5 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{faq.a}</p>
+                  <p className="px-5 pb-5 text-sm text-slate-500 leading-relaxed">{faq.a}</p>
                 </div>
               </div>
             ))}

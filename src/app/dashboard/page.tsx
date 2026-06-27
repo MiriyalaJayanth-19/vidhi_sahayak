@@ -16,8 +16,8 @@ const userActions = [
       </svg>
     ),
     color: "from-blue-500 to-cyan-500",
-    bgLight: "bg-blue-50 dark:bg-blue-500/10",
-    borderLight: "border-blue-200/60 dark:border-blue-500/20",
+    bgLight: "bg-blue-50",
+    borderLight: "border-blue-200/60",
   },
   {
     title: "Consultations",
@@ -32,8 +32,8 @@ const userActions = [
       </svg>
     ),
     color: "from-emerald-500 to-teal-500",
-    bgLight: "bg-emerald-50 dark:bg-emerald-500/10",
-    borderLight: "border-emerald-200/60 dark:border-emerald-500/20",
+    bgLight: "bg-emerald-50",
+    borderLight: "border-emerald-200/60",
   },
   {
     title: "AI Legal Chat",
@@ -45,8 +45,8 @@ const userActions = [
       </svg>
     ),
     color: "from-violet-500 to-purple-500",
-    bgLight: "bg-violet-50 dark:bg-violet-500/10",
-    borderLight: "border-violet-200/60 dark:border-violet-500/20",
+    bgLight: "bg-violet-50",
+    borderLight: "border-violet-200/60",
   },
   {
     title: "Browse Categories",
@@ -61,8 +61,8 @@ const userActions = [
       </svg>
     ),
     color: "from-amber-500 to-orange-500",
-    bgLight: "bg-amber-50 dark:bg-amber-500/10",
-    borderLight: "border-amber-200/60 dark:border-amber-500/20",
+    bgLight: "bg-amber-50",
+    borderLight: "border-amber-200/60",
   },
 ];
 
@@ -109,7 +109,7 @@ export default async function DashboardPage() {
     <div className="section-shell">
       {/* Header */}
       <div className="section-header">
-        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Welcome Back</p>
+        <p className="text-sm font-medium text-violet-600 mb-2">Welcome Back</p>
         <h1 className="section-title">
           Your <span className="gradient-text">Dashboard</span>
         </h1>
@@ -123,8 +123,8 @@ export default async function DashboardPage() {
         {stats.map((s) => (
           <div key={s.label} className="card-surface p-5">
             <p className="text-2xl font-bold gradient-text">{s.value}</p>
-            <p className="mt-1 text-sm font-medium text-slate-700 dark:text-slate-300">{s.label}</p>
-            <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{s.note}</p>
+            <p className="mt-1 text-sm font-medium text-slate-700">{s.label}</p>
+            <p className="mt-0.5 text-xs text-slate-400">{s.note}</p>
           </div>
         ))}
       </div>
@@ -152,7 +152,7 @@ export default async function DashboardPage() {
                 </svg>
               </span>
             </h3>
-            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{a.description}</p>
+            <p className="mt-2 text-sm text-slate-500 leading-relaxed">{a.description}</p>
           </Link>
         ))}
       </div>
@@ -164,7 +164,7 @@ export default async function DashboardPage() {
         <div className="relative overflow-hidden card-surface p-6">
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-violet-400/5 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-500/10 border border-violet-200/60 dark:border-violet-500/20">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-violet-50 border border-violet-200/60">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
@@ -172,10 +172,10 @@ export default async function DashboardPage() {
             </div>
             <div>
               <h3 className="font-semibold">User Dashboard</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Documents, bookings, and templates</p>
+              <p className="text-xs text-slate-500">Documents, bookings, and templates</p>
             </div>
           </div>
-          <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400 mb-5">
+          <ul className="space-y-2 text-sm text-slate-600 mb-5">
             <li className="flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
               My documents and templates
@@ -199,17 +199,17 @@ export default async function DashboardPage() {
         <div className="relative overflow-hidden card-surface p-6">
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-400/5 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
               </svg>
             </div>
             <div>
               <h3 className="font-semibold">Lawyer Dashboard</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Cases, payments, and verification</p>
+              <p className="text-xs text-slate-500">Cases, payments, and verification</p>
             </div>
           </div>
-          <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400 mb-5">
+          <ul className="space-y-2 text-sm text-slate-600 mb-5">
             <li className="flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
               Cases: open, in progress, attention needed

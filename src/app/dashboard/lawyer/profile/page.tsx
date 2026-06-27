@@ -10,12 +10,12 @@ export default function LawyerProfileSettingsPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10">
       <h1 className="text-2xl font-semibold">Lawyer Profile</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Review and update your public profile details.</p>
+      <p className="mt-2 text-sm text-zinc-600">Review and update your public profile details.</p>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-lg border bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="rounded-lg border bg-white p-4">
           <h2 className="font-medium">Current details</h2>
-          <ul className="mt-3 space-y-1 text-sm text-zinc-700 dark:text-zinc-300">
+          <ul className="mt-3 space-y-1 text-sm text-zinc-700">
             <li><span className="text-zinc-500">Name:</span> {mock.name}</li>
             <li><span className="text-zinc-500">License:</span> {mock.license}</li>
             <li><span className="text-zinc-500">Location:</span> {mock.location}</li>
@@ -26,27 +26,27 @@ export default function LawyerProfileSettingsPage() {
           </ul>
         </div>
 
-        <form className="rounded-lg border bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+        <form className="rounded-lg border bg-white p-4">
           <h2 className="font-medium">Edit profile</h2>
           <div className="mt-3 grid gap-3">
             <div>
               <label className="block text-xs font-medium">Name</label>
-              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" defaultValue={mock.name} />
+              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none" defaultValue={mock.name} />
             </div>
             <div>
               <label className="block text-xs font-medium">License number</label>
-              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" defaultValue={mock.license} />
+              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none" defaultValue={mock.license} />
             </div>
             <div>
               <label className="block text-xs font-medium">Location</label>
-              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" defaultValue={mock.location} />
+              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none" defaultValue={mock.location} />
             </div>
             <div>
               <label className="block text-xs font-medium">Practice areas (comma separated)</label>
-              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800" defaultValue={mock.practices.join(", ")} />
+              <input className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none" defaultValue={mock.practices.join(", ")} />
             </div>
             <div className="flex items-center gap-2">
-              <button type="button" className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">Save</button>
+              <button type="button" className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800">Save</button>
               <span className="text-xs text-zinc-500">Demo only</span>
             </div>
           </div>

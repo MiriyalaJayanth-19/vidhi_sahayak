@@ -218,40 +218,40 @@ function NewDocumentContent() {
         <h1 className="text-2xl font-semibold">Create a Document</h1>
         <Link href="/documents" className="text-sm underline underline-offset-4">Back to Documents</Link>
       </div>
-      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Select a category and fill in the details. A live preview is shown on the right. Use Print to save as PDF.</p>
+      <p className="mt-1 text-sm text-zinc-600">Select a category and fill in the details. A live preview is shown on the right. Use Print to save as PDF.</p>
 
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Left: Form */}
-        <div className="rounded-lg border bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="rounded-lg border bg-white p-4">
           <div className="grid grid-cols-1 gap-3">
             <label className="text-sm">Category
-              <select className="mt-1 w-full rounded-md border px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900" value={slug} onChange={(e) => resetForSlug(e.target.value)}>
+              <select className="mt-1 w-full rounded-md border px-3 py-2" value={slug} onChange={(e) => resetForSlug(e.target.value)}>
                 {categoryOptions}
               </select>
             </label>
 
             <label className="text-sm">Applicant/Party Name
-              <input className="mt-1 w-full rounded-md border px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900" value={common.applicantName} onChange={(e) => setCommon({ ...common, applicantName: e.target.value })} />
+              <input className="mt-1 w-full rounded-md border px-3 py-2" value={common.applicantName} onChange={(e) => setCommon({ ...common, applicantName: e.target.value })} />
             </label>
             <label className="text-sm">Address
-              <input className="mt-1 w-full rounded-md border px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900" value={common.address} onChange={(e) => setCommon({ ...common, address: e.target.value })} />
+              <input className="mt-1 w-full rounded-md border px-3 py-2" value={common.address} onChange={(e) => setCommon({ ...common, address: e.target.value })} />
             </label>
             <div className="grid grid-cols-2 gap-3">
               <label className="text-sm">City
-                <input className="mt-1 w-full rounded-md border px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900" value={common.city} onChange={(e) => setCommon({ ...common, city: e.target.value })} />
+                <input className="mt-1 w-full rounded-md border px-3 py-2" value={common.city} onChange={(e) => setCommon({ ...common, city: e.target.value })} />
               </label>
               <label className="text-sm">Date
-                <input type="date" className="mt-1 w-full rounded-md border px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900" value={common.date} onChange={(e) => setCommon({ ...common, date: e.target.value })} />
+                <input type="date" className="mt-1 w-full rounded-md border px-3 py-2" value={common.date} onChange={(e) => setCommon({ ...common, date: e.target.value })} />
               </label>
             </div>
 
             {/* Category-specific */}
-            {fields.length > 0 && <div className="mt-2 border-t pt-3 text-sm dark:border-zinc-800">Category fields</div>}
+            {fields.length > 0 && <div className="mt-2 border-t pt-3 text-sm">Category fields</div>}
             {fields.map((f) => (
               <label key={f.key} className="text-sm">
                 {f.label}
                 <input
-                  className="mt-1 w-full rounded-md border px-3 py-2 dark:border-zinc-800 dark:bg-zinc-900"
+                  className="mt-1 w-full rounded-md border px-3 py-2"
                   placeholder={f.placeholder}
                   value={specState[f.key] || ""}
                   onChange={(e) => setSpecValue(f.key, e.target.value)}
@@ -262,31 +262,31 @@ function NewDocumentContent() {
             <div className="mt-3 flex flex-wrap gap-2 items-center">
               <button
                 type="button"
-                className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+                className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
                 onClick={() => window.print()}
               >
                 Print / Save PDF
               </button>
               <button
                 type="button"
-                className="rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-zinc-900 px-4 py-2 text-sm font-medium hover:bg-slate-50 dark:hover:bg-zinc-800 disabled:opacity-50 transition-colors"
+                className="rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50 disabled:opacity-50 transition-colors"
                 onClick={saveDocument}
                 disabled={isSaving}
               >
                 {isSaving ? "Saving..." : "Save Draft"}
               </button>
-              <Link href={`/documents/${slug}`} className="ml-auto text-sm underline underline-offset-4 text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">View details</Link>
+              <Link href={`/documents/${slug}`} className="ml-auto text-sm underline underline-offset-4 text-zinc-600 hover:text-zinc-900">View details</Link>
             </div>
           </div>
         </div>
 
         {/* Right: Preview */}
-        <div className="rounded-lg border bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="rounded-lg border bg-white p-4">
           <h2 className="mb-2 text-lg font-medium">Preview — {titleFor(slug)}</h2>
-          <div className="rounded-md border p-3 text-sm leading-6 dark:border-zinc-800">
+          <div className="rounded-md border p-3 text-sm leading-6">
             <Template slug={slug} common={common} spec={specState} />
           </div>
-          <p className="mt-3 text-xs text-zinc-600 dark:text-zinc-400">
+          <p className="mt-3 text-xs text-zinc-600">
             Note: This is a basic template for guidance only. For critical matters, consult a verified lawyer.
           </p>
         </div>

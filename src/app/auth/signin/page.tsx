@@ -119,7 +119,7 @@ export default function SignInEntryPage() {
           </div>
 
           <h1 className="text-2xl font-bold">Welcome back</h1>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-2 text-sm text-slate-500">
             Sign in to access your dashboard, documents, and consultations.
           </p>
 
@@ -127,46 +127,46 @@ export default function SignInEntryPage() {
           <div className="mt-8 grid grid-cols-2 gap-3">
             <Link
               href="/auth/signup?role=user"
-              className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-4 premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-center"
+              className="group rounded-2xl bg-white border border-slate-200/60 p-4 premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-center"
             >
-              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-500/10 border border-violet-200/60 dark:border-violet-500/20 mb-3">
+              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-violet-50 border border-violet-200/60 mb-3">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </div>
               <p className="text-sm font-semibold">User</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Get guidance &amp; documents</p>
+              <p className="text-xs text-slate-500 mt-1">Get guidance &amp; documents</p>
             </Link>
             <Link
               href="/auth/signup?role=lawyer"
-              className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-4 premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-center"
+              className="group rounded-2xl bg-white border border-slate-200/60 p-4 premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-center"
             >
-              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20 mb-3">
+              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 mb-3">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
                 </svg>
               </div>
               <p className="text-sm font-semibold">Lawyer</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Get verified &amp; consult</p>
+              <p className="text-xs text-slate-500 mt-1">Get verified &amp; consult</p>
             </Link>
           </div>
 
           {/* Divider */}
           <div className="my-8 flex items-center gap-4">
-            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
-            <span className="text-xs text-slate-400 dark:text-slate-500">or sign in</span>
-            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700" />
+            <div className="flex-1 h-px bg-slate-200" />
+            <span className="text-xs text-slate-400">or sign in</span>
+            <div className="flex-1 h-px bg-slate-200" />
           </div>
 
           {/* Tabs */}
-          <div className="flex rounded-xl bg-slate-100 dark:bg-slate-800 p-1 mb-6">
+          <div className="flex rounded-xl bg-slate-100 p-1 mb-6">
             <button
               onClick={() => setTab("password")}
               className={`flex-1 rounded-lg py-2 text-xs font-medium transition-all duration-300 ${
                 tab === "password"
-                  ? "bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-slate-100"
-                  : "text-slate-500 dark:text-slate-400"
+                  ? "bg-white shadow-sm text-slate-900"
+                  : "text-slate-500"
               }`}
             >
               Email & Password
@@ -175,8 +175,8 @@ export default function SignInEntryPage() {
               onClick={() => setTab("magic")}
               className={`flex-1 rounded-lg py-2 text-xs font-medium transition-all duration-300 ${
                 tab === "magic"
-                  ? "bg-white dark:bg-slate-700 shadow-sm text-slate-900 dark:text-slate-100"
-                  : "text-slate-500 dark:text-slate-400"
+                  ? "bg-white shadow-sm text-slate-900"
+                  : "text-slate-500"
               }`}
             >
               Magic Link
@@ -194,7 +194,7 @@ export default function SignInEntryPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 />
               </div>
               <div>
@@ -205,7 +205,7 @@ export default function SignInEntryPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 />
               </div>
               <button
@@ -228,7 +228,7 @@ export default function SignInEntryPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 />
               </div>
               <button
@@ -237,17 +237,17 @@ export default function SignInEntryPage() {
               >
                 {loading ? "Sending…" : "Send Magic Link"}
               </button>
-              <p className="text-xs text-slate-400 dark:text-slate-500 text-center">
+              <p className="text-xs text-slate-400 text-center">
                 We&apos;ll send a secure login link to your email.
               </p>
             </form>
           )}
 
-          <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
+          <p className="mt-6 text-center text-xs text-slate-400">
             By signing in, you agree to our{" "}
-            <Link href="/terms" className="underline hover:text-violet-600 dark:hover:text-violet-400">Terms</Link>
+            <Link href="/terms" className="underline hover:text-violet-600">Terms</Link>
             {" "}and{" "}
-            <Link href="/privacy" className="underline hover:text-violet-600 dark:hover:text-violet-400">Privacy Policy</Link>.
+            <Link href="/privacy" className="underline hover:text-violet-600">Privacy Policy</Link>.
           </p>
         </div>
       </div>

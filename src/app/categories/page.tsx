@@ -7,7 +7,7 @@ export default function CategoriesPage() {
     <div className="section-shell">
       {/* Header */}
       <div className="section-header">
-        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Legal Topics</p>
+        <p className="text-sm font-medium text-violet-600 mb-2">Legal Topics</p>
         <h1 className="section-title">
           All <span className="gradient-text">Categories</span>
         </h1>
@@ -29,9 +29,9 @@ export default function CategoriesPage() {
             <div className="p-5">
               <div className="flex items-center justify-between">
                 <h2 className="font-semibold text-base">{c.name}</h2>
-                <span className="text-xs text-slate-400 dark:text-slate-500">#{c.slug}</span>
+                <span className="text-xs text-slate-400">#{c.slug}</span>
               </div>
-              <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="mt-2 text-sm text-slate-500 leading-relaxed">
                 {c.createHint || "Guidance, templates, and where to submit."}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">

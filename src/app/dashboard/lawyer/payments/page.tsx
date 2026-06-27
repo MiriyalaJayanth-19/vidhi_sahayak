@@ -11,18 +11,18 @@ export default function LawyerPaymentsPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
       <h1 className="text-2xl font-semibold">Payments</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Track pending and completed payouts.</p>
+      <p className="mt-2 text-sm text-zinc-600">Track pending and completed payouts.</p>
 
       <div className="mt-6 grid gap-4 md:grid-cols-3">
-        <div className="rounded-lg border bg-white p-4 text-sm dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="rounded-lg border bg-white p-4 text-sm">
           <div className="text-zinc-500">Pending amount</div>
           <div className="mt-1 text-xl font-semibold">₹{totalPending}</div>
         </div>
-        <div className="rounded-lg border bg-white p-4 text-sm dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="rounded-lg border bg-white p-4 text-sm">
           <div className="text-zinc-500">Completed payouts</div>
           <div className="mt-1 text-xl font-semibold">₹{totalCompleted}</div>
         </div>
-        <div className="rounded-lg border bg-white p-4 text-sm dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="rounded-lg border bg-white p-4 text-sm">
           <div className="text-zinc-500">Next payout</div>
           <div className="mt-1 text-xl font-semibold">In 3 days</div>
         </div>
@@ -34,7 +34,7 @@ export default function LawyerPaymentsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b bg-zinc-50 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                <tr className="border-b bg-zinc-50 text-zinc-600">
                   <th className="px-3 py-2">ID</th>
                   <th className="px-3 py-2">Client</th>
                   <th className="px-3 py-2">Service</th>
@@ -44,7 +44,7 @@ export default function LawyerPaymentsPage() {
               </thead>
               <tbody>
                 {pending.map((p) => (
-                  <tr key={p.id} className="border-b last:border-0 dark:border-zinc-800">
+                  <tr key={p.id} className="border-b last:border-0">
                     <td className="px-3 py-2 font-mono text-xs">{p.id}</td>
                     <td className="px-3 py-2">{p.client}</td>
                     <td className="px-3 py-2">{p.service}</td>
@@ -61,7 +61,7 @@ export default function LawyerPaymentsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b bg-zinc-50 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                <tr className="border-b bg-zinc-50 text-zinc-600">
                   <th className="px-3 py-2">ID</th>
                   <th className="px-3 py-2">Client</th>
                   <th className="px-3 py-2">Service</th>
@@ -71,7 +71,7 @@ export default function LawyerPaymentsPage() {
               </thead>
               <tbody>
                 {completed.map((p) => (
-                  <tr key={p.id} className="border-b last:border-0 dark:border-zinc-800">
+                  <tr key={p.id} className="border-b last:border-0">
                     <td className="px-3 py-2 font-mono text-xs">{p.id}</td>
                     <td className="px-3 py-2">{p.client}</td>
                     <td className="px-3 py-2">{p.service}</td>

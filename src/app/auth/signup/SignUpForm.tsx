@@ -108,7 +108,7 @@ export default function SignUpForm() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-2xl font-semibold">{title}</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="mt-2 text-sm text-zinc-600">
         {role === "user" && "Fill basic details, set a password, and choose your preferred language."}
         {role === "lawyer" && "Provide license and profile details for verification before listing."}
       </p>
@@ -117,7 +117,7 @@ export default function SignUpForm() {
         <button
           onClick={() => setRole("user")}
           className={`rounded-md border px-3 py-1.5 text-sm ${
-            role === "user" ? "bg-zinc-100 dark:bg-zinc-900" : ""
+            role === "user" ? "bg-zinc-100" : ""
           }`}
         >
           User
@@ -125,7 +125,7 @@ export default function SignUpForm() {
         <button
           onClick={() => setRole("lawyer")}
           className={`rounded-md border px-3 py-1.5 text-sm ${
-            role === "lawyer" ? "bg-zinc-100 dark:bg-zinc-900" : ""
+            role === "lawyer" ? "bg-zinc-100" : ""
           }`}
         >
           Lawyer
@@ -135,14 +135,14 @@ export default function SignUpForm() {
       {role === "user" && (
         <form
           onSubmit={onSubmitUser}
-          className="mt-6 space-y-3 rounded-lg border bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950"
+          className="mt-6 space-y-3 rounded-lg border bg-white p-4"
         >
           <div>
             <label className="block text-sm font-medium">Full name</label>
             <input
               name="full_name"
               required
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
           <div>
@@ -151,7 +151,7 @@ export default function SignUpForm() {
               name="email"
               type="email"
               required
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
           <div>
@@ -160,21 +160,21 @@ export default function SignUpForm() {
               name="password"
               type="password"
               required
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
           <div>
             <label className="block text-sm font-medium">Preferred language</label>
             <select
               name="preferred_language"
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             >
               {LANGS.map((l) => (
                 <option key={l}>{l}</option>
               ))}
             </select>
           </div>
-          <button className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">
+          <button className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
             Continue
           </button>
         </form>
@@ -183,14 +183,14 @@ export default function SignUpForm() {
       {role === "lawyer" && (
         <form
           onSubmit={onSubmitLawyer}
-          className="mt-6 space-y-3 rounded-lg border bg-white p-4 dark:border-zinc-800 dark:bg-zinc-950"
+          className="mt-6 space-y-3 rounded-lg border bg-white p-4"
         >
           <div>
             <label className="block text-sm font-medium">Full name</label>
             <input
               name="full_name"
               required
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
           <div>
@@ -199,7 +199,7 @@ export default function SignUpForm() {
               name="email"
               type="email"
               required
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
           <div>
@@ -208,7 +208,7 @@ export default function SignUpForm() {
               name="password"
               type="password"
               required
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
           <div>
@@ -216,7 +216,7 @@ export default function SignUpForm() {
             <input
               name="license_number"
               required
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -224,7 +224,7 @@ export default function SignUpForm() {
               <label className="block text-sm font-medium">Education</label>
               <input
                 name="education"
-                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
               />
             </div>
             <div>
@@ -233,21 +233,21 @@ export default function SignUpForm() {
                 name="experience_years"
                 type="number"
                 min={0}
-                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
               />
             </div>
             <div>
               <label className="block text-sm font-medium">Practicing court</label>
               <input
                 name="practicing_court"
-                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
               />
             </div>
             <div>
               <label className="block text-sm font-medium">Office location</label>
               <input
                 name="office_location"
-                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+                className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
               />
             </div>
           </div>
@@ -255,10 +255,10 @@ export default function SignUpForm() {
             <label className="block text-sm font-medium">Contact information</label>
             <input
               name="contact_info"
-              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none dark:border-zinc-800"
+              className="mt-1 w-full rounded-md border bg-transparent px-3 py-2 text-sm outline-none"
             />
           </div>
-          <button className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200">
+          <button className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
             Continue
           </button>
         </form>

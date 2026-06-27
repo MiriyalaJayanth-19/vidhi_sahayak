@@ -196,9 +196,9 @@ function ChatPageContent() {
   }
 
   return (
-    <div className="flex h-[calc(100dvh-64px)] flex-col bg-slate-50/50 dark:bg-slate-950/50">
+    <div className="flex h-[calc(100dvh-64px)] flex-col bg-slate-50/50">
       {/* ── Top bar ────────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-700/40 glass px-4 py-2.5">
+      <div className="flex items-center justify-between border-b border-slate-200/60 glass px-4 py-2.5">
         <div className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl gradient-bg-primary text-white shadow-sm shadow-violet-500/20">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -207,21 +207,21 @@ function ChatPageContent() {
           </div>
           <div>
             <h1 className="text-sm font-semibold leading-tight">VidhiSahayak AI</h1>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">Indian Legal Assistant · Any Language</p>
+            <p className="text-[11px] text-slate-500">Indian Legal Assistant · Any Language</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <select
             value={lang}
             onChange={(e) => setLang(e.target.value)}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-xs outline-none focus:border-violet-400 transition-colors"
+            className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs outline-none focus:border-violet-400 transition-colors"
             aria-label="Select language"
           >
             {LANG_OPTIONS.map((o) => (
               <option key={o.code} value={o.code}>{o.label}</option>
             ))}
           </select>
-          <label className="flex cursor-pointer items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+          <label className="flex cursor-pointer items-center gap-1.5 text-xs text-slate-500">
             <input
               type="checkbox"
               checked={speakBack}
@@ -236,7 +236,7 @@ function ChatPageContent() {
           </label>
           <button
             onClick={clearChat}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-50 transition-colors"
             title="Clear chat"
           >
             Clear
@@ -246,14 +246,14 @@ function ChatPageContent() {
 
       {/* ── Quick prompts ──────────────────────────────────────────────────── */}
       {messages.length <= 1 && (
-        <div className="border-b border-slate-200/60 dark:border-slate-700/40 glass px-4 py-3">
-          <p className="mb-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">Quick questions:</p>
+        <div className="border-b border-slate-200/60 glass px-4 py-3">
+          <p className="mb-2 text-[11px] font-medium text-slate-500">Quick questions:</p>
           <div className="flex flex-wrap gap-2">
             {QUICK_PROMPTS.map((p) => (
               <button
                 key={p.label}
                 onClick={() => onSend(p.text)}
-                className="rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-1.5 text-xs font-medium text-slate-600 dark:text-slate-300 transition-all duration-300 hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700 dark:hover:border-violet-500 dark:hover:bg-violet-950 dark:hover:text-violet-300"
+                className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-medium text-slate-600 transition-all duration-300 hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700"
               >
                 {p.label}
               </button>
@@ -277,7 +277,7 @@ function ChatPageContent() {
               <div
                 className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${m.role === "user"
                   ? "rounded-br-sm gradient-bg-primary text-white shadow-md shadow-violet-500/20"
-                  : "rounded-bl-sm bg-white text-slate-900 dark:bg-slate-800 dark:text-slate-100 premium-shadow"
+                  : "rounded-bl-sm bg-white text-slate-900 premium-shadow"
                   }`}
                 style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
               >
@@ -293,7 +293,7 @@ function ChatPageContent() {
               )}
             </div>
             {m.role === "user" && (
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-sm dark:bg-slate-700">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-sm">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
@@ -311,7 +311,7 @@ function ChatPageContent() {
                 <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
               </svg>
             </div>
-            <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-white px-4 py-3 premium-shadow dark:bg-slate-800">
+            <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-white px-4 py-3 premium-shadow">
               {[0, 150, 300].map((delay) => (
                 <span
                   key={delay}
@@ -326,7 +326,7 @@ function ChatPageContent() {
         {/* Interim transcript */}
         {interim && (
           <div className="flex justify-end gap-3">
-            <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-violet-400/30 px-4 py-2.5 text-sm italic text-violet-700 dark:text-violet-300">
+            <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-violet-400/30 px-4 py-2.5 text-sm italic text-violet-700">
               {interim}…
             </div>
           </div>
@@ -337,14 +337,14 @@ function ChatPageContent() {
 
       {/* ── Speaking indicator ─────────────────────────────────────────────── */}
       {speaking && (
-        <div className="flex items-center justify-between bg-violet-50 dark:bg-violet-950 border-t border-violet-100 dark:border-violet-900 px-4 py-2 text-xs text-violet-700 dark:text-violet-300">
+        <div className="flex items-center justify-between bg-violet-50 border-t border-violet-100 px-4 py-2 text-xs text-violet-700">
           <span className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-violet-500" />
             Speaking — AI is reading the response aloud
           </span>
           <button
             onClick={() => { window.speechSynthesis?.cancel(); setSpeaking(false); }}
-            className="font-medium text-violet-600 dark:text-violet-400 underline underline-offset-2"
+            className="font-medium text-violet-600 underline underline-offset-2"
           >
             Stop
           </button>
@@ -352,14 +352,14 @@ function ChatPageContent() {
       )}
 
       {/* ── Input bar ──────────────────────────────────────────────────────── */}
-      <div className="border-t border-slate-200/60 dark:border-slate-700/40 glass px-4 py-3">
+      <div className="border-t border-slate-200/60 glass px-4 py-3">
         <div className="flex items-end gap-2">
           {VOICE_ON && (
             <button
               onClick={toggleMic}
               className={`mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg transition-all duration-300 ${listening
                 ? "animate-pulse bg-red-500 text-white shadow-md shadow-red-500/30"
-                : "bg-slate-100 text-slate-500 hover:bg-violet-50 hover:text-violet-600 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-violet-900/30 dark:hover:text-violet-400"
+                : "bg-slate-100 text-slate-500 hover:bg-violet-50 hover:text-violet-600"
                 }`}
               aria-pressed={listening}
               aria-label={listening ? "Stop voice input" : "Start voice input"}
@@ -384,7 +384,7 @@ function ChatPageContent() {
             }}
             placeholder={`Type in any Indian language… (Enter to send, Shift+Enter for new line)`}
             rows={1}
-            className="flex-1 resize-none rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none placeholder:text-slate-400 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 dark:text-slate-100 dark:placeholder:text-slate-500 transition-all duration-300"
+            className="flex-1 resize-none rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none placeholder:text-slate-400 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
             style={{ maxHeight: "120px", overflowY: "auto" }}
             disabled={loading}
           />
@@ -400,7 +400,7 @@ function ChatPageContent() {
             </svg>
           </button>
         </div>
-        <p className="mt-1.5 text-center text-[10px] text-slate-400 dark:text-slate-500">
+        <p className="mt-1.5 text-center text-[10px] text-slate-400">
           General legal information only · Not a substitute for professional legal advice
         </p>
       </div>

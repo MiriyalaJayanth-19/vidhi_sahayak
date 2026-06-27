@@ -164,20 +164,20 @@ export default function InlineVoiceAssistant() {
       </button>
 
       {/* Status */}
-      <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+      <p className="text-sm font-medium text-zinc-700">
         {listening ? "Listening… speak now" : speaking ? "Speaking…" : "Tap mic and speak in your language"}
       </p>
 
       {/* Interim transcript */}
       {interim && (
-        <div className="rounded-lg bg-violet-50 px-4 py-2 text-sm text-violet-700 dark:bg-violet-950 dark:text-violet-300">
+        <div className="rounded-lg bg-violet-50 px-4 py-2 text-sm text-violet-700">
           {interim}…
         </div>
       )}
 
       {/* AI reply */}
       {lastReply && (
-        <div className="max-w-xl rounded-xl border bg-white p-4 text-sm leading-relaxed text-zinc-800 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200" style={{ whiteSpace: "pre-wrap" }}>
+        <div className="max-w-xl rounded-xl border bg-white p-4 text-sm leading-relaxed text-zinc-800 shadow-sm" style={{ whiteSpace: "pre-wrap" }}>
           {lastReply}
         </div>
       )}
@@ -186,13 +186,13 @@ export default function InlineVoiceAssistant() {
       <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
         {/* Playback controls */}
         <div className="flex items-center gap-1">
-          <button onClick={onPause} className="rounded-md border px-2 py-1 hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800">⏸ Pause</button>
-          <button onClick={onResume} className="rounded-md border px-2 py-1 hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800">▶ Play</button>
-          <button onClick={onStop} className="rounded-md border px-2 py-1 hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800">⏹ Stop</button>
+          <button onClick={onPause} className="rounded-md border px-2 py-1 hover:bg-zinc-50">⏸ Pause</button>
+          <button onClick={onResume} className="rounded-md border px-2 py-1 hover:bg-zinc-50">▶ Play</button>
+          <button onClick={onStop} className="rounded-md border px-2 py-1 hover:bg-zinc-50">⏹ Stop</button>
         </div>
 
         {/* Language selector */}
-        <label className="flex items-center gap-1.5 rounded-md border px-2 py-1 dark:border-zinc-700">
+        <label className="flex items-center gap-1.5 rounded-md border px-2 py-1">
           <span>🌐</span>
           <select
             value={manualLang}
@@ -207,9 +207,9 @@ export default function InlineVoiceAssistant() {
       </div>
 
       {/* Metadata */}
-      <div className="text-[11px] text-zinc-500 dark:text-zinc-500 space-y-0.5">
-        <p>Detected language: <span className="font-medium text-zinc-700 dark:text-zinc-300">{labelForLang(manualLang !== "auto" ? manualLang : lastInputLang)}</span></p>
-        {usedVoice && <p>Voice: <span className="font-medium text-zinc-700 dark:text-zinc-300">{usedVoice}</span></p>}
+      <div className="text-[11px] text-zinc-500 space-y-0.5">
+        <p>Detected language: <span className="font-medium text-zinc-700">{labelForLang(manualLang !== "auto" ? manualLang : lastInputLang)}</span></p>
+        {usedVoice && <p>Voice: <span className="font-medium text-zinc-700">{usedVoice}</span></p>}
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export default function DocumentsIndexPage() {
     <div className="section-shell">
       {/* Header */}
       <div className="section-header">
-        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Document Center</p>
+        <p className="text-sm font-medium text-violet-600 mb-2">Document Center</p>
         <h1 className="section-title">
           Legal <span className="gradient-text">Documents</span>
         </h1>
@@ -68,9 +68,9 @@ export default function DocumentsIndexPage() {
             <div className="p-5">
               <div className="flex items-center justify-between mb-2">
                 <h2 className="font-semibold text-base">{c.name}</h2>
-                <span className="text-xs text-slate-400 dark:text-slate-500 font-mono">#{c.slug}</span>
+                <span className="text-xs text-slate-400 font-mono">#{c.slug}</span>
               </div>
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
+              <p className="text-sm text-slate-500 leading-relaxed mb-4">
                 {c.createHint || "Guidance, templates, and step-by-step instructions."}
               </p>
               <div className="flex gap-2">

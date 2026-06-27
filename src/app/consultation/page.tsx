@@ -49,11 +49,11 @@ export default function ConsultationPage() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       {/* Header */}
       <div className="mb-10">
-        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Trusted Professionals</p>
+        <p className="text-sm font-medium text-violet-600 mb-2">Trusted Professionals</p>
         <h1 className="text-3xl md:text-4xl font-bold">
           Lawyer <span className="gradient-text">Consultation</span>
         </h1>
-        <p className="mt-3 text-base text-slate-600 dark:text-slate-400 max-w-xl">
+        <p className="mt-3 text-base text-slate-600 max-w-xl">
           Browse verified lawyers by practice area, location, and fees. Booking and payments coming soon.
         </p>
       </div>
@@ -117,7 +117,7 @@ export default function ConsultationPage() {
           ];
           const img = demoImgs[idx % demoImgs.length];
           return (
-            <div key={l.id} className="group overflow-hidden rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div key={l.id} className="group overflow-hidden rounded-2xl bg-white border border-slate-200/60 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="relative h-48 w-full overflow-hidden">
                 <Image src={img} alt={l.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
@@ -135,7 +135,7 @@ export default function ConsultationPage() {
               </div>
               <div className="p-5">
                 <h2 className="font-semibold text-base">{l.name}</h2>
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                <p className="mt-1 text-xs text-slate-500 flex items-center gap-1.5">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                     <circle cx="12" cy="10" r="3" />
@@ -143,7 +143,7 @@ export default function ConsultationPage() {
                   {l.location} • {l.practices.join(", ")} • {l.experienceYears}+ yrs
                 </p>
                 <div className="mt-4 flex gap-2">
-                  <Link href={`/lawyers/${l.id}`} className="flex-1 text-center rounded-xl border border-slate-200 dark:border-slate-600 px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-300">
+                  <Link href={`/lawyers/${l.id}`} className="flex-1 text-center rounded-xl border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-all duration-300">
                     Profile
                   </Link>
                   <Link href={`/consultation/book/${l.id}`} className="flex-1 text-center rounded-xl gradient-bg-primary px-3 py-2 text-xs font-medium text-white shadow-sm shadow-violet-500/20 hover:shadow-md hover:shadow-violet-500/25 transition-all duration-300">
@@ -157,8 +157,8 @@ export default function ConsultationPage() {
       </div>
 
       {!loading && items.length === 0 && (
-        <div className="rounded-2xl glass-card p-8 text-center text-sm text-slate-500 dark:text-slate-400 premium-shadow mt-4">
-          <svg className="mx-auto mb-3 text-slate-300 dark:text-slate-600" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className="rounded-2xl glass-card p-8 text-center text-sm text-slate-500 premium-shadow mt-4">
+          <svg className="mx-auto mb-3 text-slate-300" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.3-4.3" />
           </svg>

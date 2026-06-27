@@ -7,12 +7,12 @@ export default function LawyerInvoicesPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
       <h1 className="text-2xl font-semibold">Invoices</h1>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">View and download your invoices.</p>
+      <p className="mt-2 text-sm text-zinc-600">View and download your invoices.</p>
 
       <div className="mt-6 overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b bg-zinc-50 text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+            <tr className="border-b bg-zinc-50 text-zinc-600">
               <th className="px-3 py-2">Invoice #</th>
               <th className="px-3 py-2">Date</th>
               <th className="px-3 py-2">Client</th>
@@ -24,7 +24,7 @@ export default function LawyerInvoicesPage() {
           </thead>
           <tbody>
             {invoices.map((inv) => (
-              <tr key={inv.no} className="border-b last:border-0 dark:border-zinc-800">
+              <tr key={inv.no} className="border-b last:border-0">
                 <td className="px-3 py-2 font-mono text-xs">{inv.no}</td>
                 <td className="px-3 py-2">{inv.date}</td>
                 <td className="px-3 py-2">{inv.client}</td>
@@ -32,7 +32,7 @@ export default function LawyerInvoicesPage() {
                 <td className="px-3 py-2">₹{inv.amount}</td>
                 <td className="px-3 py-2">{inv.status}</td>
                 <td className="px-3 py-2">
-                  <button className="rounded border px-2 py-1 text-xs hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900">Download</button>
+                  <button className="rounded border px-2 py-1 text-xs hover:bg-zinc-50">Download</button>
                 </td>
               </tr>
             ))}
