@@ -69,14 +69,14 @@ export default function ConsultationPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search name, practice, location"
-            className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 pl-10 pr-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+            className="field pl-10"
             aria-label="Search lawyers"
           />
         </div>
         <select
           value={practice}
           onChange={(e) => setPractice(e.target.value)}
-          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+          className="field cursor-pointer"
           aria-label="Filter by practice area"
         >
           {practices.map((p) => (
@@ -86,7 +86,7 @@ export default function ConsultationPage() {
         <select
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+          className="field cursor-pointer"
           aria-label="Filter by location"
         >
           {locations.map((l) => (
@@ -99,7 +99,7 @@ export default function ConsultationPage() {
           placeholder="Max fee (₹)"
           value={maxFee ?? ""}
           onChange={(e) => setMaxFee(e.target.value ? Number(e.target.value) : null)}
-          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
+          className="field"
           aria-label="Maximum fee filter"
         />
       </div>
