@@ -109,7 +109,7 @@ export default async function DashboardPage() {
     <div className="section-shell">
       {/* Header */}
       <div className="section-header">
-        <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">Welcome Back</p>
+        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Welcome Back</p>
         <h1 className="section-title">
           Your <span className="gradient-text">Dashboard</span>
         </h1>
@@ -162,10 +162,10 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {/* User Dashboard */}
         <div className="relative overflow-hidden card-surface p-6">
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-400/5 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-violet-400/5 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-500/10 border border-violet-200/60 dark:border-violet-500/20">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>

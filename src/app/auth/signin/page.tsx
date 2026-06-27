@@ -74,7 +74,7 @@ export default function SignInEntryPage() {
       {/* Left Panel — Branding */}
       <div className="hidden lg:flex lg:w-1/2 gradient-bg-primary relative overflow-hidden items-center justify-center p-12">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-violet-400/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
         <div className="relative max-w-lg text-white">
@@ -84,7 +84,7 @@ export default function SignInEntryPage() {
           <h2 className="text-3xl font-bold leading-tight">
             Your AI-powered legal assistant for every Indian citizen
           </h2>
-          <p className="mt-4 text-blue-100/80 leading-relaxed">
+          <p className="mt-4 text-violet-100/80 leading-relaxed">
             Generate documents, get legal guidance, and connect with verified lawyers — all in your preferred language.
           </p>
 
@@ -100,7 +100,7 @@ export default function SignInEntryPage() {
                 <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm text-lg">
                   {f.icon}
                 </span>
-                <span className="text-sm text-blue-50/90">{f.text}</span>
+                <span className="text-sm text-violet-50/90">{f.text}</span>
               </div>
             ))}
           </div>
@@ -112,7 +112,7 @@ export default function SignInEntryPage() {
         <div className="w-full max-w-md">
           {/* Mobile brand */}
           <div className="flex items-center gap-2.5 mb-8 lg:hidden">
-            <span className="inline-flex items-center justify-center h-9 w-9 rounded-xl gradient-bg-primary text-white font-bold text-sm shadow-md shadow-blue-500/20">
+            <span className="inline-flex items-center justify-center h-9 w-9 rounded-xl gradient-bg-primary text-white font-bold text-sm shadow-md shadow-violet-500/20">
               VS
             </span>
             <span className="text-lg font-semibold gradient-text">VidhiSahayak</span>
@@ -129,7 +129,7 @@ export default function SignInEntryPage() {
               href="/auth/signup?role=user"
               className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-4 premium-shadow hover:premium-shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-center"
             >
-              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 mb-3">
+              <div className="mx-auto flex items-center justify-center w-10 h-10 rounded-xl bg-violet-50 dark:bg-violet-500/10 border border-violet-200/60 dark:border-violet-500/20 mb-3">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
@@ -194,7 +194,7 @@ export default function SignInEntryPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 />
               </div>
               <div>
@@ -205,7 +205,7 @@ export default function SignInEntryPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••"
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 />
               </div>
               <button
@@ -228,7 +228,7 @@ export default function SignInEntryPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 />
               </div>
               <button
@@ -245,9 +245,9 @@ export default function SignInEntryPage() {
 
           <p className="mt-6 text-center text-xs text-slate-400 dark:text-slate-500">
             By signing in, you agree to our{" "}
-            <Link href="/terms" className="underline hover:text-blue-600 dark:hover:text-cyan-400">Terms</Link>
+            <Link href="/terms" className="underline hover:text-violet-600 dark:hover:text-violet-400">Terms</Link>
             {" "}and{" "}
-            <Link href="/privacy" className="underline hover:text-blue-600 dark:hover:text-cyan-400">Privacy Policy</Link>.
+            <Link href="/privacy" className="underline hover:text-violet-600 dark:hover:text-violet-400">Privacy Policy</Link>.
           </p>
         </div>
       </div>

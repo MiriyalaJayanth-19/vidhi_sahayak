@@ -7,7 +7,7 @@ export default function CategoriesPage() {
     <div className="section-shell">
       {/* Header */}
       <div className="section-header">
-        <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">Legal Topics</p>
+        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Legal Topics</p>
         <h1 className="section-title">
           All <span className="gradient-text">Categories</span>
         </h1>
@@ -23,7 +23,7 @@ export default function CategoriesPage() {
             {c.image && (
               <div className="relative h-32 w-full overflow-hidden">
                 <Image src={c.image} alt={c.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" sizes="(max-width: 768px) 100vw, 33vw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-violet-600/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             )}
             <div className="p-5">

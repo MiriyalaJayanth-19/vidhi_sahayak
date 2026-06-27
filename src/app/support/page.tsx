@@ -42,7 +42,7 @@ const contactCards = [
         <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
       </svg>
     ),
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-violet-500 to-violet-500",
   },
   {
     title: "Email Support",
@@ -114,7 +114,7 @@ export default function SupportPage() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       {/* Header */}
       <div className="mb-12 text-center max-w-2xl mx-auto">
-        <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">We&apos;re Here to Help</p>
+        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">We&apos;re Here to Help</p>
         <h1 className="text-3xl md:text-4xl font-bold">
           Support <span className="gradient-text">Center</span>
         </h1>
@@ -131,12 +131,12 @@ export default function SupportPage() {
             href={c.href}
             className="group rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700/40 p-6 premium-shadow hover:premium-shadow-lg hover:-translate-y-1 transition-all duration-300 text-center"
           >
-            <div className={`mx-auto inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br ${c.gradient} text-white mb-4 shadow-lg shadow-blue-500/10`}>
+            <div className={`mx-auto inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-br ${c.gradient} text-white mb-4 shadow-lg shadow-violet-500/10`}>
               {c.icon}
             </div>
             <h3 className="font-semibold text-base">{c.title}</h3>
             <p className="mt-2 text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{c.description}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 dark:text-cyan-400 group-hover:gap-2.5 transition-all duration-300">
+            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-violet-600 dark:text-violet-400 group-hover:gap-2.5 transition-all duration-300">
               {c.cta}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
             </span>
@@ -156,7 +156,7 @@ export default function SupportPage() {
               <input
                 name="name"
                 required
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 placeholder="Your name"
               />
             </div>
@@ -166,7 +166,7 @@ export default function SupportPage() {
                 name="email"
                 type="email"
                 required
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
                 placeholder="you@example.com"
               />
             </div>
@@ -176,14 +176,14 @@ export default function SupportPage() {
                 name="message"
                 required
                 rows={5}
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300 resize-none"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300 resize-none"
                 placeholder="Describe how we can help..."
               />
             </div>
             <div className="flex items-center gap-3">
               <button
                 type="submit"
-                className="rounded-xl gradient-bg-primary px-6 py-2.5 text-sm font-medium text-white shadow-md shadow-blue-500/25 hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300"
+                className="rounded-xl gradient-bg-primary px-6 py-2.5 text-sm font-medium text-white shadow-md shadow-violet-500/25 hover:shadow-lg hover:shadow-violet-500/30 hover:-translate-y-0.5 transition-all duration-300"
               >
                 Send Message
               </button>

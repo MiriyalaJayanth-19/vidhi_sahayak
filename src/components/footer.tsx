@@ -21,7 +21,7 @@ export function Footer() {
   return (
     <footer className="govt-footer bg-slate-950 text-slate-400 border-t border-slate-900">
       {/* Sleek brand gradient indicator line at top */}
-      <div className="h-[3px] bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" aria-hidden="true" />
+      <div className="h-[3px] bg-gradient-to-r from-violet-500 via-purple-500 to-violet-500" aria-hidden="true" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* ─── Main Footer Grid ────────────────────────────────────────── */}
@@ -30,13 +30,13 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-5">
               {/* Premium geometric shield icon */}
-              <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md shadow-indigo-500/10">
+              <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-md shadow-violet-500/10">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
               <div>
-                <span className="block text-lg font-black text-white tracking-tight">Vidhi<span className="text-indigo-400">Sahayak</span></span>
+                <span className="block text-lg font-black text-white tracking-tight">Vidhi<span className="text-violet-400">Sahayak</span></span>
                 <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">AI Legal Assistant</span>
               </div>
             </div>
@@ -51,7 +51,7 @@ export function Footer() {
                 </svg>
                 Verified Counsel
               </div>
-              <div className="flex items-center gap-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/5 px-3 py-1 text-xs font-semibold text-indigo-400">
+              <div className="flex items-center gap-1.5 rounded-full border border-violet-500/20 bg-violet-500/5 px-3 py-1 text-xs font-semibold text-violet-400">
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
@@ -63,7 +63,7 @@ export function Footer() {
           {/* Services */}
           <div>
             <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-4 h-[2px] bg-indigo-500 inline-block" />
+              <span className="w-4 h-[2px] bg-violet-500 inline-block" />
               Services
             </h3>
             <ul className="space-y-3">
@@ -83,7 +83,7 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-4 h-[2px] bg-indigo-500 inline-block" />
+              <span className="w-4 h-[2px] bg-violet-500 inline-block" />
               Quick Links
             </h3>
             <ul className="space-y-3">
@@ -103,7 +103,7 @@ export function Footer() {
           {/* SaaS Newsletter signup & Policies */}
           <div>
             <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-4 h-[2px] bg-indigo-500 inline-block" />
+              <span className="w-4 h-[2px] bg-violet-500 inline-block" />
               Join Newsletter
             </h3>
             <p className="text-xs text-slate-500 leading-relaxed mb-4">
@@ -113,9 +113,9 @@ export function Footer() {
               <input
                 type="email"
                 placeholder="Enter email"
-                className="w-full bg-slate-900 border border-slate-800 rounded-full px-4.5 py-2 text-xs text-white placeholder:text-slate-600 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20"
+                className="w-full bg-slate-900 border border-slate-800 rounded-full px-4.5 py-2 text-xs text-white placeholder:text-slate-600 outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500/20"
               />
-              <button className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 cursor-pointer">
+              <button className="bg-violet-600 hover:bg-violet-500 text-white rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 cursor-pointer">
                 Join
               </button>
             </div>
@@ -124,7 +124,7 @@ export function Footer() {
             <div className="rounded-xl border border-slate-900 bg-slate-950/40 p-4">
               <p className="text-xs font-bold text-white mb-1">Need Legal Guidance?</p>
               <p className="text-[11px] text-slate-500">support@vidhisahayak.in</p>
-              <Link href="/chat" className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 hover:text-indigo-300">
+              <Link href="/chat" className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-violet-400 hover:text-violet-300">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
                 </svg>

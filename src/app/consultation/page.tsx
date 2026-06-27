@@ -49,7 +49,7 @@ export default function ConsultationPage() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       {/* Header */}
       <div className="mb-10">
-        <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">Trusted Professionals</p>
+        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Trusted Professionals</p>
         <h1 className="text-3xl md:text-4xl font-bold">
           Lawyer <span className="gradient-text">Consultation</span>
         </h1>
@@ -69,14 +69,14 @@ export default function ConsultationPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search name, practice, location"
-            className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 pl-10 pr-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+            className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 pl-10 pr-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
             aria-label="Search lawyers"
           />
         </div>
         <select
           value={practice}
           onChange={(e) => setPractice(e.target.value)}
-          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
           aria-label="Filter by practice area"
         >
           {practices.map((p) => (
@@ -86,7 +86,7 @@ export default function ConsultationPage() {
         <select
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
           aria-label="Filter by location"
         >
           {locations.map((l) => (
@@ -99,7 +99,7 @@ export default function ConsultationPage() {
           placeholder="Max fee (₹)"
           value={maxFee ?? ""}
           onChange={(e) => setMaxFee(e.target.value ? Number(e.target.value) : null)}
-          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300"
+          className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 px-4 py-2.5 text-sm outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
           aria-label="Maximum fee filter"
         />
       </div>
@@ -146,7 +146,7 @@ export default function ConsultationPage() {
                   <Link href={`/lawyers/${l.id}`} className="flex-1 text-center rounded-xl border border-slate-200 dark:border-slate-600 px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-all duration-300">
                     Profile
                   </Link>
-                  <Link href={`/consultation/book/${l.id}`} className="flex-1 text-center rounded-xl gradient-bg-primary px-3 py-2 text-xs font-medium text-white shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/25 transition-all duration-300">
+                  <Link href={`/consultation/book/${l.id}`} className="flex-1 text-center rounded-xl gradient-bg-primary px-3 py-2 text-xs font-medium text-white shadow-sm shadow-violet-500/20 hover:shadow-md hover:shadow-violet-500/25 transition-all duration-300">
                     Book
                   </Link>
                 </div>
@@ -167,7 +167,7 @@ export default function ConsultationPage() {
       )}
       {loading && (
         <div className="mt-8 flex items-center justify-center gap-2 text-sm text-slate-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
           Loading lawyers...
         </div>
       )}

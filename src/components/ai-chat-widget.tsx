@@ -201,7 +201,7 @@ export default function AIChatWidget() {
                 <button
                     id="ai-chat-widget-trigger"
                     onClick={handleOpen}
-                    className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-xl ring-2 ring-indigo-400/30 transition hover:scale-105 hover:shadow-indigo-500/40 active:scale-95"
+                    className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-violet-600 text-white shadow-xl ring-2 ring-violet-400/30 transition hover:scale-105 hover:shadow-violet-500/40 active:scale-95"
                     aria-label="Open AI Legal Assistant"
                     title="Ask VidhiSahayak"
                 >
@@ -224,11 +224,11 @@ export default function AIChatWidget() {
                     style={{ width: "min(420px, 100vw)", height: "min(600px, 100dvh)" }}
                 >
                     {/* Header */}
-                    <div className="flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3">
+                    <div className="flex items-center gap-3 bg-gradient-to-r from-violet-600 to-violet-600 px-4 py-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-lg">⚖️</div>
                         <div className="flex-1 min-w-0">
                             <p className="font-semibold text-white text-sm leading-tight">VidhiSahayak AI</p>
-                            <p className="text-indigo-200 text-[11px] leading-tight">
+                            <p className="text-violet-200 text-[11px] leading-tight">
                                 {speaking ? "Speaking…" : loading ? "Thinking…" : "Legal Assistant · Any Indian Language"}
                             </p>
                         </div>
@@ -262,13 +262,13 @@ export default function AIChatWidget() {
                                 className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start"}`}
                             >
                                 {m.role === "assistant" && (
-                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm dark:bg-indigo-950">
+                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm dark:bg-violet-950">
                                         ⚖️
                                     </div>
                                 )}
                                 <div
                                     className={`max-w-[82%] rounded-2xl px-3 py-2 text-sm leading-relaxed shadow-sm ${m.role === "user"
-                                        ? "bg-indigo-600 text-white rounded-br-sm"
+                                        ? "bg-violet-600 text-white rounded-br-sm"
                                         : "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 rounded-bl-sm"
                                         }`}
                                     style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
@@ -279,12 +279,12 @@ export default function AIChatWidget() {
                         ))}
                         {loading && (
                             <div className="flex justify-start gap-2">
-                                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm dark:bg-indigo-950">⚖️</div>
+                                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm dark:bg-violet-950">⚖️</div>
                                 <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-3 dark:bg-zinc-800">
                                     {[0, 150, 300].map((delay) => (
                                         <span
                                             key={delay}
-                                            className="inline-block h-2 w-2 animate-bounce rounded-full bg-indigo-400"
+                                            className="inline-block h-2 w-2 animate-bounce rounded-full bg-violet-400"
                                             style={{ animationDelay: `${delay}ms` }}
                                         />
                                     ))}
@@ -293,7 +293,7 @@ export default function AIChatWidget() {
                         )}
                         {interim && (
                             <div className="flex justify-end">
-                                <div className="max-w-[82%] rounded-2xl rounded-br-sm bg-indigo-500/50 px-3 py-2 text-sm italic text-white">
+                                <div className="max-w-[82%] rounded-2xl rounded-br-sm bg-violet-500/50 px-3 py-2 text-sm italic text-white">
                                     {interim}…
                                 </div>
                             </div>
@@ -304,9 +304,9 @@ export default function AIChatWidget() {
                     {/* Input area */}
                     <div className="border-t border-zinc-200 bg-white p-3 dark:border-zinc-700 dark:bg-zinc-900">
                         {speaking && (
-                            <div className="mb-2 flex items-center justify-between rounded-lg bg-indigo-50 px-3 py-1.5 text-xs text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                            <div className="mb-2 flex items-center justify-between rounded-lg bg-violet-50 px-3 py-1.5 text-xs text-violet-700 dark:bg-violet-950 dark:text-violet-300">
                                 <span className="flex items-center gap-1.5">
-                                    <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-indigo-500" />
+                                    <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-violet-500" />
                                     Speaking in {LANG_OPTIONS.find((o) => o.code === lang)?.label ?? "your language"}…
                                 </span>
                                 <button onClick={stopSpeaking} className="font-medium underline underline-offset-2 hover:opacity-75">
@@ -336,13 +336,13 @@ export default function AIChatWidget() {
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
                                 placeholder="Type in any Indian language…"
-                                className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500"
+                                className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-violet-400 focus:ring-1 focus:ring-violet-400 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500"
                                 disabled={loading}
                             />
                             <button
                                 onClick={() => sendMessage()}
                                 disabled={loading || !input.trim()}
-                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white transition hover:bg-indigo-700 disabled:opacity-40"
+                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white transition hover:bg-violet-700 disabled:opacity-40"
                                 aria-label="Send message"
                             >
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

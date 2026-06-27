@@ -33,7 +33,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
       {/* Header */}
       <div className="mb-10">
-        <p className="text-sm font-medium text-blue-600 dark:text-cyan-400 mb-2">Search Results</p>
+        <p className="text-sm font-medium text-violet-600 dark:text-violet-400 mb-2">Search Results</p>
         <h1 className="text-3xl md:text-4xl font-bold">
           Results for: <span className="gradient-text">{queryRaw || "(empty)"}</span>
         </h1>
@@ -43,7 +43,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         {/* Categories */}
         <div>
           <div className="flex items-center gap-2 mb-5">
-            <svg className="text-blue-500" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="text-violet-500" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="7" height="7" x="3" y="3" rx="1" />
               <rect width="7" height="7" x="14" y="3" rx="1" />
               <rect width="7" height="7" x="14" y="14" rx="1" />
@@ -66,7 +66,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                 >
                   <div className="flex items-center justify-between">
                     <p className="font-semibold">{c.name}</p>
-                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-400 transition-transform duration-300 group-hover:translate-x-1">
+                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 transition-transform duration-300 group-hover:translate-x-1">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />
@@ -88,7 +88,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         {/* Lawyers */}
         <div>
           <div className="flex items-center gap-2 mb-5">
-            <svg className="text-cyan-500" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg className="text-violet-500" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
               <path d="M22 21v-2a4 4 0 0 0-3-3.87" />

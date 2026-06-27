@@ -300,7 +300,7 @@ export default function NewDocumentPage() {
     <Suspense fallback={
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="flex items-center gap-2 text-sm text-slate-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
           Loading document builder...
         </div>
       </div>

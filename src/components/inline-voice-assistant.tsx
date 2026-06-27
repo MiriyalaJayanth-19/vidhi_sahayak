@@ -155,7 +155,7 @@ export default function InlineVoiceAssistant() {
         className={
           listening
             ? "inline-flex h-20 w-20 items-center justify-center rounded-full bg-red-500 text-3xl text-white shadow-lg shadow-red-500/40 animate-pulse"
-            : "inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-3xl text-white shadow-lg shadow-indigo-500/30 hover:scale-105 transition"
+            : "inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-violet-600 text-3xl text-white shadow-lg shadow-violet-500/30 hover:scale-105 transition"
         }
         aria-pressed={listening}
         title="Speak with AI"
@@ -170,7 +170,7 @@ export default function InlineVoiceAssistant() {
 
       {/* Interim transcript */}
       {interim && (
-        <div className="rounded-lg bg-indigo-50 px-4 py-2 text-sm text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+        <div className="rounded-lg bg-violet-50 px-4 py-2 text-sm text-violet-700 dark:bg-violet-950 dark:text-violet-300">
           {interim}…
         </div>
       )}
