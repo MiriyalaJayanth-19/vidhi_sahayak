@@ -201,7 +201,7 @@ export default function AIChatWidget() {
                 <button
                     id="ai-chat-widget-trigger"
                     onClick={handleOpen}
-                    className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-violet-600 text-white shadow-xl ring-2 ring-violet-400/30 transition hover:scale-105 hover:shadow-violet-500/40 active:scale-95"
+                    className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#0E1116] text-white shadow-[0_8px_30px_rgba(14,17,22,.28)] transition hover:scale-105 hover:bg-[#23282F] active:scale-95"
                     aria-label="Open AI Legal Assistant"
                     title="Ask VidhiSahayak"
                 >
@@ -220,15 +220,15 @@ export default function AIChatWidget() {
             {open && (
                 <div
                     id="ai-chat-widget-panel"
-                    className="fixed bottom-0 right-0 z-50 flex flex-col overflow-hidden rounded-t-2xl border border-zinc-200/60 bg-white shadow-2xl sm:bottom-6 sm:right-6 sm:rounded-2xl"
+                    className="fixed bottom-0 right-0 z-50 flex flex-col overflow-hidden rounded-t-2xl border border-[#E8EAEE] bg-white shadow-[0_18px_50px_rgba(14,17,22,.18)] sm:bottom-6 sm:right-6 sm:rounded-2xl"
                     style={{ width: "min(420px, 100vw)", height: "min(600px, 100dvh)" }}
                 >
                     {/* Header */}
-                    <div className="flex items-center gap-3 bg-gradient-to-r from-violet-600 to-violet-600 px-4 py-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-lg">⚖️</div>
+                    <div className="flex items-center gap-3 bg-[#0E1116] px-4 py-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-lg">⚖️</div>
                         <div className="flex-1 min-w-0">
                             <p className="font-semibold text-white text-sm leading-tight">VidhiSahayak AI</p>
-                            <p className="text-violet-200 text-[11px] leading-tight">
+                            <p className="text-[#9AA2AF] text-[11px] leading-tight">
                                 {speaking ? "Speaking…" : loading ? "Thinking…" : "Legal Assistant · Any Indian Language"}
                             </p>
                         </div>
@@ -262,14 +262,14 @@ export default function AIChatWidget() {
                                 className={`flex gap-2 ${m.role === "user" ? "justify-end" : "justify-start"}`}
                             >
                                 {m.role === "assistant" && (
-                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm">
+                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#DCE7FD] bg-[#ECF2FE] text-sm">
                                         ⚖️
                                     </div>
                                 )}
                                 <div
-                                    className={`max-w-[82%] rounded-2xl px-3 py-2 text-sm leading-relaxed shadow-sm ${m.role === "user"
-                                        ? "bg-violet-600 text-white rounded-br-sm"
-                                        : "bg-zinc-100 text-zinc-900 rounded-bl-sm"
+                                    className={`max-w-[82%] rounded-2xl px-3 py-2 text-sm leading-relaxed ${m.role === "user"
+                                        ? "bg-[#0E1116] text-white rounded-br-sm"
+                                        : "border border-[#EEF0F3] bg-[#F7F8FA] text-[#1B2027] rounded-bl-sm"
                                         }`}
                                     style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
                                 >
@@ -279,12 +279,12 @@ export default function AIChatWidget() {
                         ))}
                         {loading && (
                             <div className="flex justify-start gap-2">
-                                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-100 text-sm">⚖️</div>
-                                <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-3">
+                                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#DCE7FD] bg-[#ECF2FE] text-sm">⚖️</div>
+                                <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-[#F7F8FA] px-4 py-3">
                                     {[0, 150, 300].map((delay) => (
                                         <span
                                             key={delay}
-                                            className="inline-block h-2 w-2 animate-bounce rounded-full bg-violet-400"
+                                            className="inline-block h-2 w-2 animate-bounce rounded-full bg-[#9AA2AF]"
                                             style={{ animationDelay: `${delay}ms` }}
                                         />
                                     ))}
@@ -293,7 +293,7 @@ export default function AIChatWidget() {
                         )}
                         {interim && (
                             <div className="flex justify-end">
-                                <div className="max-w-[82%] rounded-2xl rounded-br-sm bg-violet-500/50 px-3 py-2 text-sm italic text-white">
+                                <div className="max-w-[82%] rounded-2xl rounded-br-sm bg-[#ECF2FE] px-3 py-2 text-sm italic text-[#1856C9]">
                                     {interim}…
                                 </div>
                             </div>
@@ -304,9 +304,9 @@ export default function AIChatWidget() {
                     {/* Input area */}
                     <div className="border-t border-zinc-200 bg-white p-3">
                         {speaking && (
-                            <div className="mb-2 flex items-center justify-between rounded-lg bg-violet-50 px-3 py-1.5 text-xs text-violet-700">
+                            <div className="mb-2 flex items-center justify-between rounded-lg bg-[#ECF2FE] px-3 py-1.5 text-xs text-[#1856C9]">
                                 <span className="flex items-center gap-1.5">
-                                    <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-violet-500" />
+                                    <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-[#1F6FEB]" />
                                     Speaking in {LANG_OPTIONS.find((o) => o.code === lang)?.label ?? "your language"}…
                                 </span>
                                 <button onClick={stopSpeaking} className="font-medium underline underline-offset-2 hover:opacity-75">
@@ -336,13 +336,13 @@ export default function AIChatWidget() {
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
                                 placeholder="Type in any Indian language…"
-                                className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2 text-sm outline-none placeholder:text-zinc-400 focus:border-violet-400 focus:ring-1 focus:ring-violet-400"
+                                className="flex-1 rounded-xl border border-[#E1E4E9] bg-white px-3 py-2 text-sm text-[#0E1116] outline-none placeholder:text-[#9AA2AF] focus:border-[#1F6FEB] focus:ring-2 focus:ring-[#1F6FEB]/15"
                                 disabled={loading}
                             />
                             <button
                                 onClick={() => sendMessage()}
                                 disabled={loading || !input.trim()}
-                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-violet-600 text-white transition hover:bg-violet-700 disabled:opacity-40"
+                                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0E1116] text-white transition hover:bg-[#23282F] disabled:opacity-40"
                                 aria-label="Send message"
                             >
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
