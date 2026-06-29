@@ -7,14 +7,26 @@ import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { supabaseBrowser } from "@/lib/supabase-browser";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/categories", label: "Legal Topics" },
-  { href: "/consultation", label: "Talk to Lawyer" },
-  { href: "/documents", label: "Documents" },
   { href: "/chat", label: "AI Counsel" },
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/support", label: "Help" },
+  { href: "/consultation", label: "Find a Lawyer" },
+  { href: "/documents", label: "Documents" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/categories", label: "Topics" },
 ];
+
+// Scales-of-justice mark used across the redesign
+function Logo({ size = 34, rounded = 9 }: { size?: number; rounded?: number }) {
+  return (
+    <div
+      className="flex shrink-0 items-center justify-center bg-[#0E1116] text-white shadow-[0_1px_2px_rgba(14,17,22,.18)]"
+      style={{ width: size, height: size, borderRadius: rounded }}
+    >
+      <svg width={size * 0.56} height={size * 0.56} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3v18" /><path d="M6 7h12" /><path d="m4 7-2.5 6a3 3 0 0 0 6 0L5 7" /><path d="m19 7-2.5 6a3 3 0 0 0 6 0L20 7" /><path d="M7 21h10" />
+      </svg>
+    </div>
+  );
+}
 
 export function Navbar() {
   const pathname = usePathname();
@@ -48,163 +60,104 @@ export function Navbar() {
   }
 
   return (
-    <header
-      className={`w-full sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white shadow-md shadow-slate-200/60"
-          : "bg-white border-b border-slate-100"
-      }`}
-    >
-      {/* ── Top Announcement Bar ─────────────────────────────────── */}
-      <div className="bg-violet-600 text-white text-xs font-medium py-1.5 px-4 text-center">
-        <span aria-hidden="true">🎉</span> New: Generate ready-to-print Indian legal documents with AI — &nbsp;
-        <Link href="/documents/new" className="underline font-semibold hover:text-violet-200 transition-colors">
-          Try it free →
-        </Link>
+    <header className="sticky top-0 z-50 w-full">
+      {/* ── Announcement ───────────────────────────────────────── */}
+      <div className="border-b border-[#ECEEF2] bg-[#F6F7F9]">
+        <div className="mx-auto flex max-w-[1200px] items-center justify-center gap-2.5 px-6 py-[9px] text-[13px] text-[#5A6472]">
+          <span className="rounded-[5px] border border-[#DCE7FD] bg-[#ECF2FE] px-[7px] py-0.5 font-mono text-[10px] font-semibold tracking-[.08em] text-[#1856C9]">NEW</span>
+          <span className="hidden sm:inline">Draft court-ready Indian legal documents with AI in minutes.</span>
+          <span className="sm:hidden">AI-drafted legal documents.</span>
+          <Link href="/documents/new" className="cursor-pointer font-medium text-[#0E1116] underline decoration-[#C9CDD4] underline-offset-[3px] hover:decoration-[#0E1116]">Try it free →</Link>
+        </div>
       </div>
 
-      {/* ── Main Header ─────────────────────────────────────────── */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-4">
-
+      {/* ── Main bar ───────────────────────────────────────────── */}
+      <div className={`border-b border-[#ECEEF2] backdrop-blur-[14px] transition-shadow ${scrolled ? "bg-white/90 shadow-[0_1px_0_rgba(14,17,22,.04)]" : "bg-white/[.82]"}`}>
+        <div className="mx-auto flex h-[62px] max-w-[1200px] items-center justify-between gap-6 px-6">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-            <div className="flex items-center justify-center h-9 w-9 rounded-lg text-white transition-transform duration-300 group-hover:scale-105"
-              style={{ background: "linear-gradient(135deg, hsl(252,100%,62%), hsl(285,70%,55%))" }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <path d="M9 12l2 2 4-4" />
-              </svg>
-            </div>
-            <div>
-              <span className="block text-lg font-black text-slate-900 leading-none tracking-tight">
-                Vidhi<span className="gradient-text">Sahayak</span>
-              </span>
-              <span className="block text-[9px] font-semibold text-slate-400 uppercase tracking-widest mt-0.5">
-                AI Legal Copilot
-              </span>
+          <Link href="/" className="flex items-center gap-[11px]">
+            <Logo />
+            <div className="leading-[1.1]">
+              <div className="text-[16px] font-semibold tracking-[-.01em] text-[#0E1116]">Vidhi<span className="font-medium text-[#5A6472]">Sahayak</span></div>
+              <div className="font-mono text-[9px] font-medium uppercase tracking-[.14em] text-[#9AA2AF]">AI Legal Counsel</div>
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+          {/* Desktop links */}
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 prefetch={true}
                 aria-current={pathname === item.href ? "page" : undefined}
-                className={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === item.href
-                    ? "text-violet-700 bg-violet-50"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
+                className={`rounded-[8px] px-[13px] py-2 text-[14px] font-medium transition-colors hover:bg-[#F4F5F7] hover:text-[#0E1116] ${pathname === item.href ? "bg-[#F4F5F7] text-[#0E1116]" : "text-[#5A6472]"}`}
               >
                 {item.label}
-                {pathname === item.href && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-violet-600" />
-                )}
               </Link>
             ))}
           </nav>
 
-          {/* Auth Actions */}
-          <div className="flex items-center gap-2 shrink-0">
+          {/* Right actions */}
+          <div className="flex items-center gap-2">
             {userEmail ? (
               <>
-                <span className="hidden md:block text-sm text-slate-500 font-medium truncate max-w-[160px]">
-                  {userEmail}
-                </span>
+                <span className="hidden max-w-[160px] truncate text-[13px] font-medium text-[#5A6472] md:block">{userEmail}</span>
                 <button
                   onClick={onSignOut}
-                  className="rounded-full border border-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 cursor-pointer"
+                  className="rounded-[8px] border border-[#E1E4E9] bg-white px-3.5 py-2 text-[13.5px] font-medium text-[#0E1116] transition hover:bg-[#F7F8FA]"
                 >
-                  Sign Out
+                  Sign out
                 </button>
               </>
             ) : (
               <>
-                <Link
-                  href="/auth/signin"
-                  className="hidden sm:inline-flex items-center rounded-full border border-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/consultation"
-                  className="hidden sm:inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-bold text-white transition-all duration-200 shadow-sm cursor-pointer"
-                  style={{ background: "hsl(252,100%,62%)" }}
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                  </svg>
-                  Talk to Lawyer
-                </Link>
-                <Link
-                  href="/auth/signup"
-                  className="hidden md:inline-flex items-center rounded-full border border-slate-200 px-4 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-all duration-200"
-                >
-                  Register Free
+                <Link href="/auth/signin" className="hidden rounded-[8px] px-3 py-2 text-[14px] font-medium text-[#0E1116] transition hover:bg-[#F4F5F7] sm:inline-flex">Sign in</Link>
+                <Link href="/dashboard" className="inline-flex items-center gap-[7px] rounded-[9px] bg-[#0E1116] px-4 py-[9px] text-[14px] font-medium text-white shadow-[0_1px_2px_rgba(14,17,22,.2)] transition hover:bg-[#23282F]">
+                  Open app
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                 </Link>
               </>
             )}
 
-            {/* Mobile menu toggle */}
+            {/* Mobile toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden rounded-lg p-2 text-slate-600 hover:bg-slate-100 transition-colors"
+              className="flex h-[38px] w-[38px] items-center justify-center rounded-[9px] border border-[#E5E8EC] bg-white text-[#0E1116] transition hover:bg-[#F7F8FA] lg:hidden"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                {mobileOpen ? (
-                  <>
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </>
-                ) : (
-                  <>
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <line x1="3" y1="12" x2="21" y2="12" />
-                    <line x1="3" y1="18" x2="21" y2="18" />
-                  </>
-                )}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                {mobileOpen ? (<><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>) : (<path d="M4 6h16M4 12h16M4 18h16" />)}
               </svg>
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Nav Dropdown */}
-      {mobileOpen && (
-        <nav className="lg:hidden border-t border-slate-100 bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-3 space-y-0.5">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                prefetch={true}
-                onClick={() => setMobileOpen(false)}
-                aria-current={pathname === item.href ? "page" : undefined}
-                className={`flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === item.href
-                    ? "bg-violet-50 text-violet-700 font-semibold"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <div className="pt-2 pb-1 px-3 flex gap-2">
-              <Link href="/auth/signin" className="flex-1 text-center rounded-full border border-slate-200 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors">
-                Sign In
-              </Link>
-              <Link href="/consultation" className="flex-1 text-center rounded-full py-2 text-xs font-bold text-white transition-colors" style={{ background: "hsl(252,100%,62%)" }}>
-                Talk to Lawyer
-              </Link>
+        {/* Mobile sheet */}
+        {mobileOpen && (
+          <nav className="border-t border-[#ECEEF2] bg-white px-4 pb-4 pt-2.5 lg:hidden">
+            <div className="flex flex-col gap-0.5">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  prefetch={true}
+                  onClick={() => setMobileOpen(false)}
+                  aria-current={pathname === item.href ? "page" : undefined}
+                  className={`rounded-[9px] px-3 py-3 text-[15px] font-medium transition-colors hover:bg-[#F4F5F7] ${pathname === item.href ? "bg-[#F4F5F7] text-[#0E1116]" : "text-[#1B2027]"}`}
+                >
+                  {item.label}
+                </Link>
+              ))}
             </div>
-          </div>
-        </nav>
-      )}
+            <div className="mt-3 flex gap-2.5 border-t border-[#EEF0F3] pt-3.5">
+              <Link href="/auth/signin" onClick={() => setMobileOpen(false)} className="flex-1 rounded-[9px] border border-[#E1E4E9] bg-white py-[11px] text-center text-[14.5px] font-medium text-[#0E1116]">Sign in</Link>
+              <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex-1 rounded-[9px] bg-[#0E1116] py-[11px] text-center text-[14.5px] font-medium text-white">Open app</Link>
+            </div>
+          </nav>
+        )}
+      </div>
     </header>
   );
 }

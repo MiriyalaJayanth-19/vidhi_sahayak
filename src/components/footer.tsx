@@ -1,154 +1,71 @@
 import Link from "next/link";
 
-const serviceLinks = [
-  { href: "/documents/new", label: "Create Legal Document" },
+const productLinks = [
+  { href: "/chat", label: "AI Counsel" },
   { href: "/consultation", label: "Find a Lawyer" },
-  { href: "/chat", label: "AI Legal Assistant" },
-  { href: "/categories", label: "Legal Categories" },
-  { href: "/templates", label: "Document Templates" },
-  { href: "/search", label: "Search" },
+  { href: "/documents", label: "Documents" },
 ];
 
-const quickLinks = [
-  { href: "/dashboard", label: "My Dashboard" },
-  { href: "/categories/land", label: "Property & Land" },
-  { href: "/categories/rental", label: "Rental Agreements" },
-  { href: "/categories/affidavit", label: "Affidavits" },
-  { href: "/categories/agreement", label: "Agreements" },
+const legalLinks = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
+  { href: "/terms", label: "Disclaimer" },
 ];
 
 export function Footer() {
   return (
-    <footer className="govt-footer bg-slate-950 text-slate-400 border-t border-slate-900">
-      {/* Sleek brand gradient indicator line at top */}
-      <div className="h-[3px] bg-gradient-to-r from-violet-500 via-purple-500 to-violet-500" aria-hidden="true" />
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* ─── Main Footer Grid ────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4">
-          {/* About Column */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-2.5 mb-5">
-              {/* Premium geometric shield icon */}
-              <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-md shadow-violet-500/10">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    <footer className="bg-[#0B0D11] text-[#9AA2AF]">
+      <div className="mx-auto max-w-[1200px] px-6 pb-[30px] pt-[52px]">
+        <div className="vs-footer grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-8">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-1">
+            <div className="flex items-center gap-[11px]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-white">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B0D11" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3v18" /><path d="M6 7h12" /><path d="m4 7-2.5 6a3 3 0 0 0 6 0L5 7" /><path d="m19 7-2.5 6a3 3 0 0 0 6 0L20 7" /><path d="M7 21h10" />
                 </svg>
               </div>
-              <div>
-                <span className="block text-lg font-black text-white tracking-tight">Vidhi<span className="text-violet-400">Sahayak</span></span>
-                <span className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">AI Legal Assistant</span>
-              </div>
+              <span className="text-[15px] font-semibold text-white">VidhiSahayak</span>
             </div>
-            <p className="text-sm leading-relaxed text-slate-400 max-w-xs">
-              Empowering individuals and businesses across India with instant AI legal guidance, automated ready-to-print contracts, and verified lawyer consultation scheduling.
+            <p className="mt-3.5 max-w-[280px] text-[13px] leading-[1.6] text-[#7A828F]">
+              India&apos;s AI-powered legal platform. General legal information — not a substitute for professional advice.
             </p>
-            {/* Trust Indicators */}
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs font-semibold text-emerald-400">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 6 9 17l-5-5" />
-                </svg>
-                Verified Counsel
-              </div>
-              <div className="flex items-center gap-1.5 rounded-full border border-violet-500/20 bg-violet-500/5 px-3 py-1 text-xs font-semibold text-violet-400">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-                Secure & Private
-              </div>
+          </div>
+
+          {/* Product */}
+          <div>
+            <div className="font-mono text-[10.5px] uppercase tracking-[.1em] text-[#5E6571]">Product</div>
+            <div className="mt-3.5 flex flex-col gap-2.5 text-[13.5px]">
+              {productLinks.map((l) => (
+                <Link key={l.label} href={l.href} className="text-[#9AA2AF] transition-colors hover:text-white">{l.label}</Link>
+              ))}
             </div>
           </div>
 
-          {/* Services */}
+          {/* Company */}
           <div>
-            <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-4 h-[2px] bg-violet-500 inline-block" />
-              Services
-            </h3>
-            <ul className="space-y-3">
-              {serviceLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm hover:text-white hover:translate-x-0.5 transition-all duration-200 flex items-center gap-2">
-                    <svg className="opacity-40" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <path d="m9 18 6-6-6-6" />
-                    </svg>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-4 h-[2px] bg-violet-500 inline-block" />
-              Quick Links
-            </h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm hover:text-white hover:translate-x-0.5 transition-all duration-200 flex items-center gap-2">
-                    <svg className="opacity-40" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <path d="m9 18 6-6-6-6" />
-                    </svg>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* SaaS Newsletter signup & Policies */}
-          <div>
-            <h3 className="text-xs font-bold text-white uppercase tracking-widest mb-5 flex items-center gap-2">
-              <span className="w-4 h-[2px] bg-violet-500 inline-block" />
-              Join Newsletter
-            </h3>
-            <p className="text-xs text-slate-500 leading-relaxed mb-4">
-              Get monthly updates on important Indian legal reforms, document templates, and compliance updates.
-            </p>
-            <div className="flex gap-2 mb-6">
-              <input
-                type="email"
-                placeholder="Enter email"
-                className="w-full bg-slate-900 border border-slate-800 rounded-full px-4.5 py-2 text-xs text-white placeholder:text-slate-600 outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500/20"
-              />
-              <button className="bg-violet-600 hover:bg-violet-500 text-white rounded-full px-4 py-2 text-xs font-bold transition-all duration-200 cursor-pointer">
-                Join
-              </button>
+            <div className="font-mono text-[10.5px] uppercase tracking-[.1em] text-[#5E6571]">Company</div>
+            <div className="mt-3.5 flex flex-col gap-2.5 text-[13.5px]">
+              <span className="text-[#9AA2AF]">About</span>
+              <span className="text-[#9AA2AF]">Careers</span>
+              <Link href="/support" className="text-[#9AA2AF] transition-colors hover:text-white">Support</Link>
             </div>
+          </div>
 
-            {/* Support Box */}
-            <div className="rounded-xl border border-slate-900 bg-slate-950/40 p-4">
-              <p className="text-xs font-bold text-white mb-1">Need Legal Guidance?</p>
-              <p className="text-[11px] text-slate-400">support@vidhisahayak.in</p>
-              <Link href="/chat" className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-violet-400 hover:text-violet-300">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
-                </svg>
-                Open Virtual Assistant
-              </Link>
+          {/* Legal */}
+          <div>
+            <div className="font-mono text-[10.5px] uppercase tracking-[.1em] text-[#5E6571]">Legal</div>
+            <div className="mt-3.5 flex flex-col gap-2.5 text-[13.5px]">
+              {legalLinks.map((l) => (
+                <Link key={l.label} href={l.href} className="text-[#9AA2AF] transition-colors hover:text-white">{l.label}</Link>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* ─── Bottom Bar ──────────────────────────────────────────────── */}
-        <div className="border-t border-slate-900 py-6">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-[11px] text-slate-400 text-center md:text-left leading-relaxed">
-              © {new Date().getFullYear()} VidhiSahayak Technologies Private Limited. All rights reserved.<br />
-              Disclaimer: VidhiSahayak is an AI legal copilot providing general informational guidance under Indian laws. We are not a law firm and do not provide direct legal advice.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400">
-              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-              <span aria-hidden="true" className="text-slate-600">•</span>
-              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-              <span aria-hidden="true" className="text-slate-600">•</span>
-              <span className="font-semibold text-slate-300">Powered by Gemini AI</span>
-            </div>
-          </div>
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-[#1C2027] pt-[22px] text-[12.5px] text-[#5E6571] sm:flex-row">
+          <span>© {new Date().getFullYear()} VidhiSahayak. All rights reserved.</span>
+          <span className="font-mono">Made in India <span aria-hidden="true">🇮🇳</span></span>
         </div>
       </div>
     </footer>
