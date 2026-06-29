@@ -2,7 +2,9 @@
 
 import { Suspense, useEffect, useRef, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { resolveLanguage, LANG_OPTIONS } from "@/lib/lang-utils";
+import { AppShell } from "@/components/app-shell";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const VOICE_ON = process.env.NEXT_PUBLIC_VOICE_ENABLED === "true";
@@ -196,215 +198,219 @@ function ChatPageContent() {
   }
 
   return (
-    <div className="flex h-[calc(100dvh-64px)] flex-col bg-slate-50/50">
-      {/* ── Top bar ────────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between border-b border-slate-200/60 glass px-4 py-2.5">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl gradient-bg-primary text-white shadow-sm shadow-violet-500/20">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
-            </svg>
-          </div>
-          <div>
-            <h1 className="text-sm font-semibold leading-tight">VidhiSahayak AI</h1>
-            <p className="text-[11px] text-slate-500">Indian Legal Assistant · Any Language</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <select
-            value={lang}
-            onChange={(e) => setLang(e.target.value)}
-            className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs outline-none focus:border-violet-400 transition-colors"
-            aria-label="Select language"
-          >
-            {LANG_OPTIONS.map((o) => (
-              <option key={o.code} value={o.code}>{o.label}</option>
-            ))}
-          </select>
-          <label className="flex cursor-pointer items-center gap-1.5 text-xs text-slate-500">
-            <input
-              type="checkbox"
-              checked={speakBack}
-              onChange={(e) => setSpeakBack(e.target.checked)}
-              className="h-3.5 w-3.5 rounded accent-violet-600"
-            />
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-            </svg>
-          </label>
-          <button
-            onClick={clearChat}
-            className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-50 transition-colors"
-            title="Clear chat"
-          >
-            Clear
-          </button>
-        </div>
-      </div>
-
-      {/* ── Quick prompts ──────────────────────────────────────────────────── */}
-      {messages.length <= 1 && (
-        <div className="border-b border-slate-200/60 glass px-4 py-3">
-          <p className="mb-2 text-[11px] font-medium text-slate-500">Quick questions:</p>
-          <div className="flex flex-wrap gap-2">
-            {QUICK_PROMPTS.map((p) => (
-              <button
-                key={p.label}
-                onClick={() => onSend(p.text)}
-                className="rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-medium text-slate-600 transition-all duration-300 hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700"
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ── Messages ───────────────────────────────────────────────────────── */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-        {messages.map((m, i) => (
-          <div key={i} className={`flex gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-            {m.role === "assistant" && (
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl gradient-bg-primary text-sm text-white shadow-sm shadow-violet-500/20">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
-                </svg>
-              </div>
-            )}
-            <div className="max-w-[80%] space-y-1">
-              <div
-                className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${m.role === "user"
-                  ? "rounded-br-sm gradient-bg-primary text-white shadow-md shadow-violet-500/20"
-                  : "rounded-bl-sm bg-white text-slate-900 premium-shadow"
-                  }`}
-                style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}
-              >
-                {m.content}
-              </div>
-              {m.role === "assistant" && m.category && (
-                <p className="px-1 text-[10px] text-slate-400 flex items-center gap-1">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="m22 19-9-15-9 15Z" />
-                  </svg>
-                  Category: {m.category}
-                </p>
-              )}
+    <AppShell active="chat" title="AI Counsel" desc="General legal information · cite-checked · any Indian language">
+      <div className="flex h-full bg-white">
+        {/* ── Conversation column ──────────────────────────────────────────── */}
+        <div className="flex min-w-0 flex-1 flex-col">
+          {/* sub-header */}
+          <div className="flex flex-shrink-0 flex-wrap items-center gap-2 border-b border-[#EEF0F3] bg-[#FCFCFD] px-4 py-2.5">
+            <div className="inline-flex items-center gap-[7px] rounded-[8px] border border-[#E5E8EC] bg-white px-2.5 py-[5px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#16A34A]" />
+              <span className="text-[12.5px] font-semibold text-[#0E1116]">Gemini 1.5 Pro</span>
             </div>
-            {m.role === "user" && (
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-slate-200 text-sm">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </div>
-            )}
-          </div>
-        ))}
-
-        {/* Typing indicator */}
-        {loading && (
-          <div className="flex gap-3 justify-start">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl gradient-bg-primary text-sm text-white shadow-sm shadow-violet-500/20">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
-              </svg>
-            </div>
-            <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm bg-white px-4 py-3 premium-shadow">
-              {[0, 150, 300].map((delay) => (
-                <span
-                  key={delay}
-                  className="inline-block h-2 w-2 animate-bounce rounded-full bg-violet-400"
-                  style={{ animationDelay: `${delay}ms` }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Interim transcript */}
-        {interim && (
-          <div className="flex justify-end gap-3">
-            <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-violet-400/30 px-4 py-2.5 text-sm italic text-violet-700">
-              {interim}…
-            </div>
-          </div>
-        )}
-
-        <div ref={bottomRef} />
-      </div>
-
-      {/* ── Speaking indicator ─────────────────────────────────────────────── */}
-      {speaking && (
-        <div className="flex items-center justify-between bg-violet-50 border-t border-violet-100 px-4 py-2 text-xs text-violet-700">
-          <span className="flex items-center gap-2">
-            <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-violet-500" />
-            Speaking — AI is reading the response aloud
-          </span>
-          <button
-            onClick={() => { window.speechSynthesis?.cancel(); setSpeaking(false); }}
-            className="font-medium text-violet-600 underline underline-offset-2"
-          >
-            Stop
-          </button>
-        </div>
-      )}
-
-      {/* ── Input bar ──────────────────────────────────────────────────────── */}
-      <div className="border-t border-slate-200/60 glass px-4 py-3">
-        <div className="flex items-end gap-2">
-          {VOICE_ON && (
-            <button
-              onClick={toggleMic}
-              className={`mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg transition-all duration-300 ${listening
-                ? "animate-pulse bg-red-500 text-white shadow-md shadow-red-500/30"
-                : "bg-slate-100 text-slate-500 hover:bg-violet-50 hover:text-violet-600"
-                }`}
-              aria-pressed={listening}
-              aria-label={listening ? "Stop voice input" : "Start voice input"}
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              className="cursor-pointer rounded-[8px] border border-[#E5E8EC] bg-white px-2.5 py-1.5 text-[12.5px] text-[#1B2027] outline-none"
+              aria-label="Select language"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                <line x1="12" y1="19" x2="12" y2="22" />
-              </svg>
+              {LANG_OPTIONS.map((o) => (
+                <option key={o.code} value={o.code}>{o.label}</option>
+              ))}
+            </select>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={speakBack}
+              onClick={() => setSpeakBack((v) => !v)}
+              className="ml-0.5 inline-flex items-center gap-1.5 text-[12.5px] text-[#5A6472]"
+            >
+              <span className={`relative inline-block h-[18px] w-[30px] rounded-full transition-colors ${speakBack ? "bg-[#1F6FEB]" : "bg-[#CBD2DC]"}`}>
+                <span className={`absolute top-0.5 h-[14px] w-[14px] rounded-full bg-white transition-all ${speakBack ? "left-[14px]" : "left-0.5"}`} />
+              </span>
+              Read aloud
             </button>
+            <div className="ml-auto flex items-center gap-2">
+              <span className="hidden rounded-[6px] border border-[#EAECEF] bg-[#F4F5F7] px-2 py-[3px] font-mono text-[10.5px] text-[#9AA2AF] sm:inline">Saved to history</span>
+              <button
+                onClick={clearChat}
+                className="inline-flex items-center gap-1.5 rounded-[8px] border border-[#E5E8EC] bg-white px-2.5 py-1.5 text-[12.5px] font-medium text-[#5A6472] transition hover:bg-[#F7F8FA] hover:text-[#0E1116]"
+                title="Start a new chat"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+                New
+              </button>
+            </div>
+          </div>
+
+          {/* messages */}
+          <div className="vs-scroll min-h-0 flex-1 overflow-y-auto">
+            <div className="mx-auto flex max-w-[768px] flex-col gap-[22px] px-6 pb-2 pt-[26px]">
+              {messages.map((m, i) =>
+                m.role === "user" ? (
+                  <div key={i} className="max-w-[80%] self-end whitespace-pre-wrap break-words rounded-[14px_14px_4px_14px] bg-[#0E1116] px-[15px] py-[11px] text-[14px] leading-[1.6] text-white">
+                    {m.content}
+                  </div>
+                ) : (
+                  <div key={i} className="flex gap-3">
+                    <div className="flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center rounded-[8px] border border-[#DCE7FD] bg-[#ECF2FE]">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1856C9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" /></svg>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="whitespace-pre-wrap break-words rounded-[4px_14px_14px_14px] border border-[#EEF0F3] bg-[#F7F8FA] px-[15px] py-[13px] text-[14px] leading-[1.65] text-[#1B2027]">
+                        {m.content}
+                      </div>
+                      {m.category && (
+                        <div className="mt-2.5 flex items-center gap-3">
+                          <span className="inline-flex items-center gap-1.5 text-[11.5px] text-[#8B93A1]">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 19-9-15-9 15Z" /></svg>
+                            {m.category}
+                          </span>
+                          <button onClick={() => navigator.clipboard?.writeText(m.content)} className="inline-flex items-center gap-1.5 text-[11.5px] text-[#8B93A1] transition-colors hover:text-[#1856C9]">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" /></svg>
+                            Copy
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )
+              )}
+
+              {/* Typing indicator */}
+              {loading && (
+                <div className="flex gap-3">
+                  <div className="flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center rounded-[8px] border border-[#DCE7FD] bg-[#ECF2FE]">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1856C9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" /></svg>
+                  </div>
+                  <div className="inline-flex items-center gap-[5px] rounded-[4px_14px_14px_14px] border border-[#EEF0F3] bg-[#F7F8FA] px-4 py-3.5">
+                    {[0, 200, 400].map((delay) => (
+                      <span key={delay} className="h-[7px] w-[7px] rounded-full bg-[#9AA2AF]" style={{ animation: `vsBlink 1.2s ${delay}ms infinite` }} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Interim transcript */}
+              {interim && (
+                <div className="max-w-[80%] self-end rounded-[14px_14px_4px_14px] bg-[#ECF2FE] px-[15px] py-[11px] text-[14px] italic text-[#1856C9]">
+                  {interim}…
+                </div>
+              )}
+
+              {/* Empty state */}
+              {messages.length <= 1 && (
+                <div className="pt-1.5">
+                  <div className="mb-[11px] font-mono text-[10.5px] uppercase tracking-[.08em] text-[#A6ADB8]">Try asking</div>
+                  <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                    {QUICK_PROMPTS.map((p) => (
+                      <button
+                        key={p.label}
+                        onClick={() => onSend(p.text)}
+                        className="flex items-center justify-between gap-2.5 rounded-[11px] border border-[#E8EAEE] bg-white px-[15px] py-[13px] text-left transition hover:border-[#C9CFD8] hover:bg-[#FCFCFD] hover:shadow-[0_2px_8px_rgba(14,17,22,.04)]"
+                      >
+                        <span className="text-[13.5px] font-medium text-[#1B2027]">{p.label}</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C2C8D0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div ref={bottomRef} />
+            </div>
+          </div>
+
+          {/* Speaking indicator */}
+          {speaking && (
+            <div className="flex flex-shrink-0 items-center justify-between border-t border-[#DCE7FD] bg-[#ECF2FE] px-4 py-2 text-[12.5px] text-[#1856C9]">
+              <span className="flex items-center gap-2">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-[#1F6FEB]" />
+                Speaking — reading the response aloud
+              </span>
+              <button onClick={() => { window.speechSynthesis?.cancel(); setSpeaking(false); }} className="font-medium text-[#1856C9] underline underline-offset-2">Stop</button>
+            </div>
           )}
-          <textarea
-            ref={inputRef}
-            id="chat-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                onSend();
-              }
-            }}
-            placeholder={`Type in any Indian language… (Enter to send, Shift+Enter for new line)`}
-            rows={1}
-            className="flex-1 resize-none rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm outline-none placeholder:text-slate-400 focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 transition-all duration-300"
-            style={{ maxHeight: "120px", overflowY: "auto" }}
-            disabled={loading}
-          />
-          <button
-            onClick={() => onSend()}
-            disabled={loading || !input.trim()}
-            className="mb-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl gradient-bg-primary text-white shadow-md shadow-violet-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/30 disabled:opacity-40"
-            aria-label="Send message"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
+
+          {/* composer */}
+          <div className="flex-shrink-0 border-t border-[#EEF0F3] bg-white px-6 pb-4 pt-3.5">
+            <div className="mx-auto max-w-[768px]">
+              <div className="flex items-end gap-2.5 rounded-[13px] border border-[#E1E4E9] bg-white px-3.5 py-2.5 shadow-[0_1px_3px_rgba(14,17,22,.05)] focus-within:border-[#1F6FEB] focus-within:shadow-[0_0_0_3px_rgba(31,111,235,.13)]">
+                <textarea
+                  ref={inputRef}
+                  id="chat-input"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      onSend();
+                    }
+                  }}
+                  placeholder="Ask in any Indian language… (Enter to send, Shift+Enter for newline)"
+                  rows={1}
+                  className="flex-1 resize-none border-none bg-transparent py-1 text-[14px] leading-[1.5] text-[#0E1116] outline-none placeholder:text-[#9AA2AF]"
+                  style={{ maxHeight: "120px", overflowY: "auto" }}
+                  disabled={loading}
+                />
+                {VOICE_ON && (
+                  <button
+                    onClick={toggleMic}
+                    className={`flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] border transition ${listening ? "animate-pulse border-transparent bg-[#DC2626] text-white" : "border-[#EAECEF] bg-[#F4F5F7] text-[#5A6472] hover:border-[#DCE7FD] hover:bg-[#ECF2FE]"}`}
+                    aria-pressed={listening}
+                    aria-label={listening ? "Stop voice input" : "Start voice input"}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="22" /></svg>
+                  </button>
+                )}
+                <button
+                  onClick={() => onSend()}
+                  disabled={loading || !input.trim()}
+                  className="flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] bg-[#0E1116] text-white transition hover:bg-[#23282F] disabled:opacity-40"
+                  aria-label="Send message"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4Z" /></svg>
+                </button>
+              </div>
+              <p className="mt-2.5 text-center text-[11px] text-[#A6ADB8]">
+                General legal information only · Not a substitute for advice from a licensed advocate
+              </p>
+            </div>
+          </div>
         </div>
-        <p className="mt-1.5 text-center text-[10px] text-slate-400">
-          General legal information only · Not a substitute for professional legal advice
-        </p>
+
+        {/* ── Context rail ─────────────────────────────────────────────────── */}
+        <aside className="vs-scroll hidden w-[304px] flex-shrink-0 flex-col overflow-y-auto border-l border-[#E8EAEE] bg-[#FBFBFC] lg:flex">
+          <div className="px-[18px] pt-[18px]">
+            <div className="font-mono text-[10.5px] uppercase tracking-[.1em] text-[#A6ADB8]">Suggested next steps</div>
+            <div className="mt-3 flex flex-col gap-2.5">
+              <Link href="/documents/new" className="flex items-center gap-[11px] rounded-[11px] border border-[#E8EAEE] bg-white p-3 transition hover:border-[#C9CFD8] hover:shadow-[0_2px_8px_rgba(14,17,22,.05)]">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] border border-[#D2EEDD] bg-[#E9F7EF]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16794A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6" /></svg></div>
+                <div className="min-w-0"><div className="text-[13px] font-semibold text-[#0E1116]">Draft a document</div><div className="text-[11.5px] text-[#8B93A1]">Auto-filled from this chat</div></div>
+              </Link>
+              <Link href="/consultation" className="flex items-center gap-[11px] rounded-[11px] border border-[#E8EAEE] bg-white p-3 transition hover:border-[#C9CFD8] hover:shadow-[0_2px_8px_rgba(14,17,22,.05)]">
+                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] border border-[#DCE7FD] bg-[#ECF2FE]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1856C9" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /></svg></div>
+                <div className="min-w-0"><div className="text-[13px] font-semibold text-[#0E1116]">Talk to a lawyer</div><div className="text-[11.5px] text-[#8B93A1]">Verified advocates · ₹31/min</div></div>
+              </Link>
+            </div>
+          </div>
+
+          <div className="p-[18px]">
+            <div className="font-mono text-[10.5px] uppercase tracking-[.1em] text-[#A6ADB8]">Referenced law</div>
+            <div className="mt-3 flex flex-col gap-2">
+              <div className="rounded-[10px] border border-[#E8EAEE] bg-white px-[13px] py-[11px]">
+                <div className="font-mono text-[11.5px] font-semibold text-[#1856C9]">Model Tenancy Act, 2021 · §16</div>
+                <div className="mt-1 text-[12px] leading-[1.5] text-[#5A6472]">Refund of security deposit within one month of vacating the premises.</div>
+              </div>
+              <div className="rounded-[10px] border border-[#E8EAEE] bg-white px-[13px] py-[11px]">
+                <div className="font-mono text-[11.5px] font-semibold text-[#1856C9]">Consumer Protection Act, 2019</div>
+                <div className="mt-1 text-[12px] leading-[1.5] text-[#5A6472]">Complaint for deficiency of service before the District Commission.</div>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
-    </div>
+    </AppShell>
   );
 }
 
@@ -412,10 +418,10 @@ function ChatPageContent() {
 export default function ChatPage() {
   return (
     <Suspense fallback={
-      <div className="flex h-[calc(100dvh-64px)] items-center justify-center">
+      <div className="flex h-screen items-center justify-center bg-[#F6F7F9]">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-3 border-violet-500 border-t-transparent" />
-          <p className="text-sm text-slate-500">Loading chat...</p>
+          <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-[#1F6FEB] border-t-transparent" />
+          <p className="text-sm text-[#5A6472]">Loading chat…</p>
         </div>
       </div>
     }>

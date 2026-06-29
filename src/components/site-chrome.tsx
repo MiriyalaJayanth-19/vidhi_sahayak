@@ -8,7 +8,7 @@ import type { ReactNode } from "react";
  * the marketing navbar/footer/chat-widget. Grows as each screen is converted to
  * the redesign. Exact matches only — un-converted sub-routes keep the site chrome.
  */
-const APP_ROUTES = new Set<string>(["/dashboard"]);
+const APP_ROUTES = new Set<string>(["/dashboard", "/chat"]);
 
 export function SiteChrome({
   navbar,
