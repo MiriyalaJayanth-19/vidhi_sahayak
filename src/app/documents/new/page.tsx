@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { CATEGORIES } from "@/lib/categories";
 import { supabaseBrowser } from "@/lib/supabase-browser";
+import { AppShell } from "@/components/app-shell";
 
 type CommonFields = {
   applicantName: string;
@@ -212,96 +213,140 @@ function NewDocumentContent() {
     </option>
   ));
 
+  const inputCls =
+    "w-full rounded-[9px] border border-[#E1E4E9] bg-white px-[11px] py-[9px] text-[13.5px] text-[#0E1116] outline-none transition focus:border-[#1F6FEB] focus:shadow-[0_0_0_3px_rgba(31,111,235,.13)]";
+  const labelCls = "mb-1.5 block text-[12px] font-medium text-[#5A6472]";
+  const stepCls = "font-mono text-[10.5px] uppercase tracking-[.08em] text-[#9AA2AF]";
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10">
-      <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Create a Document</h1>
-        <Link href="/documents" className="text-sm underline underline-offset-4">Back to Documents</Link>
-      </div>
-      <p className="mt-1 text-sm text-zinc-600">Select a category and fill in the details. A live preview is shown on the right. Use Print to save as PDF.</p>
+    <AppShell active="documents" title="Documents" desc="Draft, manage and file legal documents">
+      <div className="flex flex-col md:h-full md:flex-row">
+        {/* ── Config panel ───────────────────────────────────────────────── */}
+        <div className="vs-scroll w-full flex-shrink-0 border-b border-[#E8EAEE] bg-white p-[22px] md:w-[340px] md:overflow-y-auto md:border-b-0 md:border-r">
+          <div className={stepCls}>Step 1 · Choose type</div>
+          <select
+            value={slug}
+            onChange={(e) => resetForSlug(e.target.value)}
+            className={`mt-2.5 cursor-pointer ${inputCls}`}
+            aria-label="Document type"
+          >
+            {categoryOptions}
+          </select>
 
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-        {/* Left: Form */}
-        <div className="rounded-lg border bg-white p-4">
-          <div className="grid grid-cols-1 gap-3">
-            <label className="text-sm">Category
-              <select className="mt-1 w-full rounded-md border px-3 py-2" value={slug} onChange={(e) => resetForSlug(e.target.value)}>
-                {categoryOptions}
-              </select>
-            </label>
-
-            <label className="text-sm">Applicant/Party Name
-              <input className="mt-1 w-full rounded-md border px-3 py-2" value={common.applicantName} onChange={(e) => setCommon({ ...common, applicantName: e.target.value })} />
-            </label>
-            <label className="text-sm">Address
-              <input className="mt-1 w-full rounded-md border px-3 py-2" value={common.address} onChange={(e) => setCommon({ ...common, address: e.target.value })} />
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              <label className="text-sm">City
-                <input className="mt-1 w-full rounded-md border px-3 py-2" value={common.city} onChange={(e) => setCommon({ ...common, city: e.target.value })} />
-              </label>
-              <label className="text-sm">Date
-                <input type="date" className="mt-1 w-full rounded-md border px-3 py-2" value={common.date} onChange={(e) => setCommon({ ...common, date: e.target.value })} />
-              </label>
+          <div className={`mt-[22px] ${stepCls}`}>Step 2 · Party details</div>
+          <div className="mt-3 flex flex-col gap-[13px]">
+            <div>
+              <label className={labelCls}>Applicant / Party name</label>
+              <input className={inputCls} value={common.applicantName} onChange={(e) => setCommon({ ...common, applicantName: e.target.value })} />
+            </div>
+            <div>
+              <label className={labelCls}>Address</label>
+              <input className={inputCls} value={common.address} onChange={(e) => setCommon({ ...common, address: e.target.value })} />
+            </div>
+            <div className="flex gap-[11px]">
+              <div className="flex-1">
+                <label className={labelCls}>City</label>
+                <input className={inputCls} value={common.city} onChange={(e) => setCommon({ ...common, city: e.target.value })} />
+              </div>
+              <div className="flex-1">
+                <label className={labelCls}>Date</label>
+                <input type="date" className={inputCls} value={common.date} onChange={(e) => setCommon({ ...common, date: e.target.value })} />
+              </div>
             </div>
 
-            {/* Category-specific */}
-            {fields.length > 0 && <div className="mt-2 border-t pt-3 text-sm">Category fields</div>}
             {fields.map((f) => (
-              <label key={f.key} className="text-sm">
-                {f.label}
+              <div key={f.key}>
+                <label className={labelCls}>{f.label}</label>
                 <input
-                  className="mt-1 w-full rounded-md border px-3 py-2"
+                  className={inputCls}
                   placeholder={f.placeholder}
                   value={specState[f.key] || ""}
                   onChange={(e) => setSpecValue(f.key, e.target.value)}
                 />
-              </label>
+              </div>
             ))}
+          </div>
 
-            <div className="mt-3 flex flex-wrap gap-2 items-center">
-              <button
-                type="button"
-                className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800"
-                onClick={() => window.print()}
-              >
-                Print / Save PDF
-              </button>
-              <button
-                type="button"
-                className="rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-medium hover:bg-slate-50 disabled:opacity-50 transition-colors"
-                onClick={saveDocument}
-                disabled={isSaving}
-              >
-                {isSaving ? "Saving..." : "Save Draft"}
-              </button>
-              <Link href={`/documents/${slug}`} className="ml-auto text-sm underline underline-offset-4 text-zinc-600 hover:text-zinc-900">View details</Link>
+          <div className="mt-[18px] flex items-start gap-2.5 rounded-[11px] border border-[#DCE7FD] bg-[#ECF2FE] px-[13px] py-[11px]">
+            <svg className="mt-px flex-shrink-0" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1856C9" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" /></svg>
+            <div className="text-[12px] leading-[1.5] text-[#1B3A82]">Templates follow Indian legal standards. Edit anything in the preview before downloading.</div>
+          </div>
+
+          <div className="mt-[18px] flex flex-col gap-2.5">
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="flex items-center justify-center gap-2 rounded-[9px] bg-[#0E1116] px-4 py-[11px] text-[14px] font-medium text-white transition hover:bg-[#23282F]"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 15V3" /><path d="m6 11 6 4 6-4" /><path d="M19 21H5" /></svg>
+              Download PDF
+            </button>
+            <button
+              type="button"
+              onClick={saveDocument}
+              disabled={isSaving}
+              className="rounded-[9px] border border-[#E1E4E9] bg-white px-4 py-2.5 text-[13.5px] font-medium text-[#0E1116] transition hover:bg-[#F7F8FA] disabled:opacity-50"
+            >
+              {isSaving ? "Saving…" : "Save to documents"}
+            </button>
+          </div>
+        </div>
+
+        {/* ── Preview ────────────────────────────────────────────────────── */}
+        <div className="vs-scroll flex-1 bg-[#F1F2F4] p-5 md:overflow-y-auto md:p-8">
+          <div className="mx-auto max-w-[660px]">
+            <div className="mb-3.5 flex items-center justify-between">
+              <span className="font-mono text-[11px] text-[#8B93A1]">Live preview · A4</span>
+              <span className="rounded-[6px] border border-[#DCE7FD] bg-[#ECF2FE] px-2 py-[3px] font-mono text-[10.5px] font-semibold text-[#1856C9]">{titleFor(slug)}</span>
+            </div>
+
+            <div className="rounded-[6px] border border-[#E1E3E7] bg-white p-7 shadow-[0_8px_30px_rgba(14,17,22,.10)] sm:p-[52px]">
+              <h1 className="text-center text-[19px] font-bold uppercase tracking-[.02em] text-[#0E1116]">{titleFor(slug)}</h1>
+              <div className="mx-auto my-3 mb-6 h-0.5 w-[42px] bg-[#0E1116]" />
+              <div className="text-[13px] leading-[1.85] text-[#1B2027]">
+                <Template slug={slug} common={common} spec={specState} />
+              </div>
+            </div>
+
+            {/* Filing guidance */}
+            <div className={`mt-5 ${stepCls}`}>Before you file</div>
+            <div className="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+              {[
+                { t: "Stamp paper", x: "Execute on the stamp-paper value required in your state.", tint: "#FBF1E4", border: "#F2E2C9", stroke: "#9A6A1A", icon: <><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M3 9h18" /></> },
+                { t: "Registration", x: "Register at the Sub-Registrar office where applicable.", tint: "#E9F7EF", border: "#D2EEDD", stroke: "#16794A", icon: <><path d="M3 21h18" /><path d="M5 21V7l8-4v18" /><path d="M19 21V11l-6-4" /></> },
+                { t: "Attestation", x: "Notarise or attest as required for this document type.", tint: "#ECF2FE", border: "#DCE7FD", stroke: "#1856C9", icon: <><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="9" /></> },
+              ].map((g) => (
+                <div key={g.t} className="rounded-[11px] border border-[#E8EAEE] bg-white p-[13px]">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-[8px]" style={{ background: g.tint, border: `1px solid ${g.border}` }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={g.stroke} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{g.icon}</svg>
+                  </div>
+                  <div className="mt-2.5 text-[13px] font-semibold text-[#0E1116]">{g.t}</div>
+                  <div className="mt-0.5 text-[12px] leading-[1.45] text-[#8B93A1]">{g.x}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-2.5 flex items-center gap-3.5 rounded-[12px] bg-[#0E1116] px-[18px] py-[15px]">
+              <div className="flex-1">
+                <div className="text-[13.5px] font-semibold text-white">Want a lawyer to review it?</div>
+                <div className="mt-0.5 text-[12px] text-[#9AA2AF]">A verified advocate can vet your draft before you sign.</div>
+              </div>
+              <Link href="/consultation" className="flex-shrink-0 rounded-[8px] bg-white px-[15px] py-[9px] text-[13px] font-medium text-[#0E1116] transition hover:bg-[#F1F3F6]">Get it reviewed · ₹31/min</Link>
             </div>
           </div>
         </div>
-
-        {/* Right: Preview */}
-        <div className="rounded-lg border bg-white p-4">
-          <h2 className="mb-2 text-lg font-medium">Preview — {titleFor(slug)}</h2>
-          <div className="rounded-md border p-3 text-sm leading-6">
-            <Template slug={slug} common={common} spec={specState} />
-          </div>
-          <p className="mt-3 text-xs text-zinc-600">
-            Note: This is a basic template for guidance only. For critical matters, consult a verified lawyer.
-          </p>
-        </div>
       </div>
-    </div>
+    </AppShell>
   );
 }
 
 export default function NewDocumentPage() {
   return (
     <Suspense fallback={
-      <div className="mx-auto max-w-6xl px-4 py-10">
-        <div className="flex items-center gap-2 text-sm text-slate-500">
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" />
-          Loading document builder...
+      <div className="flex h-screen items-center justify-center bg-[#F6F7F9]">
+        <div className="flex items-center gap-2 text-sm text-[#5A6472]">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-[#1F6FEB] border-t-transparent" />
+          Loading document builder…
         </div>
       </div>
     }>

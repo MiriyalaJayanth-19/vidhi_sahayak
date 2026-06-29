@@ -27,7 +27,7 @@ const ICONS: Record<NavKey, ReactNode> = {
 const WORKSPACE: { key: NavKey; href: string; label: string }[] = [
   { key: "dashboard", href: "/dashboard", label: "Dashboard" },
   { key: "chat", href: "/chat", label: "AI Counsel" },
-  { key: "documents", href: "/documents", label: "Documents" },
+  { key: "documents", href: "/documents/new", label: "Documents" },
   { key: "consultation", href: "/consultation", label: "Consultation" },
 ];
 
