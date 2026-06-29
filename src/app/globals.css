@@ -10,8 +10,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), var(--font-plus-jakarta);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -81,6 +81,43 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --transition-base: 200ms var(--ease-out);
 
+  /* ═══════════════════════════════════════════════════════════════════════════
+     REDESIGN PALETTE — "Calm monochrome + blue" (VidhiSahayak.dc.html)
+     Near-black ink primary, blue accent, hairline borders, Geist type.
+     ═══════════════════════════════════════════════════════════════════════════ */
+  --ink: #0E1116;          /* primary text & black surfaces        */
+  --ink-hover: #23282F;    /* hover on black surfaces              */
+  --ink-soft: #1B2027;     /* body text inside cards               */
+  --fg-2: #5A6472;         /* secondary text                      */
+  --fg-3: #8B93A1;         /* tertiary / meta                     */
+  --fg-4: #9AA2AF;         /* faint labels                        */
+  --fg-5: #A6ADB8;         /* mono captions                       */
+  --line: #E8EAEE;         /* card border                         */
+  --line-2: #ECEEF2;       /* section divider                     */
+  --line-3: #EEF0F3;       /* inner hairline                      */
+  --line-strong: #E1E4E9;  /* input / control border              */
+  --surface: #FFFFFF;
+  --surface-2: #FBFBFC;    /* alternating section bg               */
+  --surface-3: #F6F7F9;    /* app shell bg                        */
+  --surface-4: #FCFCFD;    /* card sub-headers                    */
+  --blue: #1F6FEB;         /* primary accent                      */
+  --blue-hover: #195FD6;
+  --blue-ink: #1856C9;     /* accent text / badges                */
+  --blue-soft: #ECF2FE;    /* accent fill                         */
+  --blue-line: #DCE7FD;    /* accent border                       */
+  --ok: #16A34A;
+  --ok-ink: #16794A;
+  --ok-soft: #E9F7EF;
+  --ok-line: #D2EEDD;
+  --amber-ink: #9A6A1A;
+  --amber-soft: #FBF1E4;
+  --amber-line: #F2E2C9;
+  --footer: #0B0D11;
+  /* Redesign elevation */
+  --e1: 0 1px 2px rgba(14, 17, 22, 0.04);
+  --e2: 0 8px 24px rgba(14, 17, 22, 0.07);
+  --e3: 0 18px 50px rgba(14, 17, 22, 0.10), 0 2px 6px rgba(14, 17, 22, 0.04);
+
   --background: hsl(0, 0%, 100%);
   --foreground: hsl(222, 47%, 11%);
   --card: hsl(0, 0%, 100%);
@@ -123,21 +160,23 @@
     box-sizing: border-box;
   }
   body {
-    @apply bg-white text-slate-800 antialiased;
-    font-family: 'Inter', var(--font-plus-jakarta), sans-serif;
-    font-feature-settings: "ss01", "ss02";
+    @apply antialiased;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-geist), system-ui, -apple-system, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
+    line-height: 1.55;
   }
   h1, h2, h3, h4, h5, h6 {
-    color: hsl(222, 47%, 11%);
-    line-height: 1.25;
-    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
   p {
-    color: hsl(220, 15%, 40%);
-    line-height: 1.7;
+    color: var(--fg-2);
+    line-height: 1.6;
   }
   a {
     color: inherit;
@@ -453,7 +492,7 @@
 
 /* Focus — visible keyboard ring on every interactive element */
 *:focus-visible {
-  outline: 2px solid var(--brand);
+  outline: 2px solid var(--blue);
   outline-offset: 2px;
 }
 
@@ -472,3 +511,43 @@
     -webkit-print-color-adjust: exact;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   REDESIGN UTILITIES — VidhiSahayak.dc.html
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Mono label: small uppercase tracked caption (kickers, badges, stat suffixes) */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Dot-grid hero backdrop, fading toward the bottom */
+.dotgrid {
+  background-image: radial-gradient(circle at 1px 1px, #E9EBEF 1px, transparent 0);
+  background-size: 26px 26px;
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 70%);
+  mask-image: linear-gradient(180deg, #000, transparent 70%);
+}
+
+/* Card lift on hover — the redesign's standard interactive surface */
+.lift {
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+.lift:hover {
+  transform: translateY(-3px);
+  border-color: #D3D7DE;
+  box-shadow: var(--e2);
+}
+
+/* Quiet thin scrollbar used inside app panes */
+.vs-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.vs-scroll::-webkit-scrollbar-thumb {
+  background: #dcdfe5; border-radius: 8px;
+  border: 3px solid transparent; background-clip: padding-box;
+}
+.vs-scroll::-webkit-scrollbar-thumb:hover { background: #c4c9d2; background-clip: padding-box; }
