@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import AIChatWidget from "@/components/ai-chat-widget";
+import { SiteChrome } from "@/components/site-chrome";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -54,10 +55,9 @@ export default function RootLayout({
         </a>
 
         <div className="flex min-h-screen flex-col bg-white">
-          <Navbar />
-          <main id="main-content" className="flex-1">{children}</main>
-          <Footer />
-          <AIChatWidget />
+          <SiteChrome navbar={<Navbar />} footer={<Footer />} widget={<AIChatWidget />}>
+            {children}
+          </SiteChrome>
         </div>
       </body>
     </html>
