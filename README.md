@@ -1,95 +1,141 @@
-# VidhiSahayak - Your Legal Assistant
+# VidhiSahayak — AI-Powered Indian Legal Copilot
 
-VidhiSahayak is a modern, AI-powered legal assistance platform built with Next.js (App Router), TypeScript, and Tailwind CSS. It provides users with legal guidance, document generation, and lawyer consultation services through an intuitive interface.
-
-## ✨ Features
-
-- **AI-Powered Legal Assistance**: Get instant answers to your legal queries using advanced AI
-- **Voice Search**: Hands-free search using voice commands
-- **Document Generation**: Create ready-to-print legal documents
-- **Lawyer Consultation**: Connect with verified legal professionals
-- **Category-based Navigation**: Easily find information by legal categories
-- **Dark Mode**: Built-in dark theme support
-- **Responsive Design**: Works seamlessly on all devices
-
-## 🚀 Tech Stack
-
-- **Frontend**: Next.js (App Router)
-- **Styling**: Tailwind CSS with dark mode support
-- **UI Components**: shadcn/ui
-- **Type Safety**: TypeScript
-- **Icons**: Lucide Icons
-- **Form Handling**: React Hook Form
-- **State Management**: React Context API
-- **Backend**: Next.js API Routes
-- **Database**: Supabase (for future authentication and data storage)
-
-## 🛠️ Getting Started
-
-### Prerequisites
-
-- Node.js 18+ and npm 9+
-- Git
-
-### Local Development
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/vidhisahayak.git
-   cd vidhisahayak
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-### Build for Production
-
-```bash
-npm run build
-npm start
-```
-
-### Deploy on Vercel
-
-1. Import the repository in Vercel.
-2. Set the build command to `npm run build` and the output to default (Next.js).
-3. Add the environment variables listed below.
-4. Deploy.
-
-**Required environment variables (minimum):**
-- `GEMINI_API_KEY`
-
-**Optional environment variables (feature-specific):**
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `OPENAI_API_KEY`
-- `PERPLEXITY_API_KEY`
-- `GOOGLE_TTS_API_KEY`
-- `NEXT_PUBLIC_VOICE_ENABLED`
-
-## 🙏 Acknowledgments
-
-- Built with [Next.js](https://nextjs.org/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
-- UI Components by [shadcn/ui](https://ui.shadcn.com/)
-- Icons by [Lucide](https://lucide.dev/)
+India's AI-powered legal assistance platform supporting 12+ Indian languages. Get legal guidance, generate ready-to-print documents, and consult verified lawyers.
 
 ---
 
-💡 **Note**: This project is currently in development. Some features might be placeholders or under active development.
+## 📁 Project Structure
 
-## Roadmap
+```
+vidhi_sahayak/
+├── frontend/          # Next.js 16 application
+│   ├── src/
+│   │   ├── app/       # App Router pages
+│   │   ├── components/
+│   │   ├── contexts/  # AuthContext (JWT auth)
+│   │   └── lib/       # api-client, lang-utils, categories, etc.
+│   ├── public/
+│   ├── Dockerfile
+│   ├── package.json
+│   └── .env.example
+│
+├── backend/           # Node.js + Express API
+│   ├── controllers/   # authController, chatController, lawyerController, ttsController
+│   ├── middleware/    # JWT auth, rate limiting
+│   ├── models/        # Mongoose models (User, ChatSession, Document, Consultation)
+│   ├── routes/        # Express route files
+│   ├── config/        # MongoDB connection
+│   ├── server.js      # Entry point
+│   ├── Dockerfile
+│   └── .env.example
+│
+├── docker-compose.yml # Runs frontend + backend + MongoDB together
+└── README.md
+```
 
-- Auth and roles (user/lawyer/consultant) with onboarding
-- Real database (Supabase) for categories, lawyers, consultations
-- Payments for bookings
-- AI chat integration with retrieval
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 20+
+- MongoDB (local or Atlas)
+- A Gemini / OpenAI API key (for AI chat)
+
+---
+
+### Backend
+
+```bash
+cd backend
+cp .env.example .env    # Fill in MONGODB_URI, JWT_SECRET, GEMINI_API_KEY
+npm install
+npm run dev             # Starts on http://localhost:5000
+```
+
+**Key env vars:**
+| Variable | Description |
+|---|---|
+| `MONGODB_URI` | MongoDB connection string |
+| `JWT_SECRET` | Secret for signing JWTs (use a long random string) |
+| `GEMINI_API_KEY` | Google Gemini API key for AI chat |
+| `GOOGLE_TTS_API_KEY` | Google Text-to-Speech API key |
+| `PORT` | Server port (default: 5000) |
+
+---
+
+### Frontend
+
+```bash
+cd frontend
+cp .env.example .env.local   # Set NEXT_PUBLIC_BACKEND_URL
+npm install
+npm run dev                   # Starts on http://localhost:3000
+```
+
+**Key env vars:**
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_BACKEND_URL` | Express backend URL (e.g. `http://localhost:5000/api`) |
+
+---
+
+### Docker Compose (runs everything)
+
+```bash
+# Create .env at root with your secrets
+JWT_SECRET=your_long_secret
+GEMINI_API_KEY=your_key
+
+docker-compose up --build
+# Frontend → http://localhost:3000
+# Backend  → http://localhost:5000
+# MongoDB  → localhost:27017
+```
+
+---
+
+## 🏗️ Architecture
+
+```
+Browser
+  ↓  HTTPS
+AWS Amplify (Next.js frontend)
+  ↓  HTTP + JWT Bearer token
+AWS Elastic Beanstalk (Express backend :5000)
+  ↓  Mongoose ODM
+MongoDB Atlas
+```
+
+### API Endpoints
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/api/auth/register` | Register user |
+| `POST` | `/api/auth/login` | Login, returns JWT |
+| `GET` | `/api/auth/me` | Get current user (auth required) |
+| `POST` | `/api/chat` | AI legal chat (optional auth) |
+| `GET` | `/api/lawyers` | List lawyers with filters |
+| `GET` | `/api/lawyers/:id` | Single lawyer profile |
+| `POST` | `/api/tts` | Text-to-speech synthesis |
+| `GET` | `/health` | Health check |
+
+---
+
+## ☁️ AWS Deployment
+
+### Backend → Elastic Beanstalk
+1. Zip the `backend/` folder (excluding `node_modules`)
+2. Create a new Node.js Elastic Beanstalk application
+3. Set environment variables in EB configuration
+4. Deploy the ZIP
+
+### Frontend → AWS Amplify
+1. Connect this GitHub repo to Amplify
+2. Set build command: `cd frontend && npm run build`
+3. Set environment variable: `NEXT_PUBLIC_BACKEND_URL=https://your-eb-url.amazonaws.com/api`
+
+### Database → MongoDB Atlas
+1. Create a free cluster at [cloud.mongodb.com](https://cloud.mongodb.com)
+2. Choose AWS as cloud provider, same region as backend
+3. Copy connection string into `MONGODB_URI`
