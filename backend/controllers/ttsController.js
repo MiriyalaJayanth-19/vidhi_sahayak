@@ -1,3 +1,14 @@
+const fetch = require("node-fetch"); // hoisted — imported once, not per request
+const { z } = require("zod");
+
+// ── Validation schema ─────────────────────────────────────────────────────────
+const ttsSchema = z.object({
+  // Hard cap at 1000 chars to prevent runaway Google TTS API costs
+  text: z.string().trim().min(1, "text is required").max(1000, "text must be 1000 characters or fewer"),
+  lang: z.string().max(10).optional(),
+  voiceName: z.string().max(60).optional(),
+});
+
 /**
  * POST /api/tts
  * Body: { text, lang?, voiceName? }
@@ -7,12 +18,16 @@
  */
 async function synthesize(req, res) {
   try {
-    const { text, lang, voiceName } = req.body;
+    const parsed = ttsSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        error: "Validation failed",
+        details: parsed.error.flatten().fieldErrors,
+      });
+    }
+    const { text, lang, voiceName } = parsed.data;
     const apiKey = process.env.GOOGLE_TTS_API_KEY;
 
-    if (!text || typeof text !== "string") {
-      return res.status(400).json({ error: "Missing text" });
-    }
     if (!apiKey) {
       return res.status(400).json({ error: "GOOGLE_TTS_API_KEY not configured on the server." });
     }
@@ -25,7 +40,6 @@ async function synthesize(req, res) {
       audioConfig: { audioEncoding: "MP3" },
     };
 
-    const { default: fetch } = await import("node-fetch");
     const ttsRes = await fetch(
       "https://texttospeech.googleapis.com/v1/text:synthesize",
       {

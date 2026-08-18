@@ -1,12 +1,18 @@
 const User = require("../models/User");
+const logger = require("../config/logger");
 
 /**
  * GET /api/lawyers
- * Query params: q, practice, location, maxFee
+ * Query params: q, practice, location, maxFee, page, limit
  *
  * Returns a list of verified lawyers from MongoDB.
  * Falls back to static seed data if the DB has no verified lawyers yet.
  */
+
+// Escape special regex characters to prevent ReDoS attacks
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
 // Static fallback data (migrated from @/lib/lawyers.ts)
 const STATIC_LAWYERS = [
@@ -19,10 +25,14 @@ const STATIC_LAWYERS = [
 
 async function getLawyers(req, res) {
   try {
-    const q = (req.query.q || "").toLowerCase();
+    const rawQ = (req.query.q || "").trim().slice(0, 100); // cap search string at 100 chars
+    const q = rawQ.toLowerCase();
     const practice = req.query.practice || "all";
     const location = req.query.location || "all";
     const maxFee = req.query.maxFee ? Number(req.query.maxFee) : null;
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 20));
+    const skip = (page - 1) * limit;
 
     // Build MongoDB query for verified lawyers
     const query = {
@@ -36,19 +46,22 @@ async function getLawyers(req, res) {
     if (location !== "all") {
       query["lawyerProfile.officeLocation"] = location;
     }
-    if (maxFee !== null) {
+    if (maxFee !== null && !isNaN(maxFee)) {
       query["lawyerProfile.fee"] = { $lte: maxFee };
     }
-    if (q) {
+    if (rawQ) {
+      // Escape user input before using in regex to prevent ReDoS
+      const safeQ = escapeRegex(rawQ);
       query.$or = [
-        { fullName: { $regex: q, $options: "i" } },
-        { "lawyerProfile.officeLocation": { $regex: q, $options: "i" } },
+        { fullName: { $regex: safeQ, $options: "i" } },
+        { "lawyerProfile.officeLocation": { $regex: safeQ, $options: "i" } },
       ];
     }
 
-    const lawyers = await User.find(query)
-      .select("fullName lawyerProfile createdAt")
-      .lean();
+    const [lawyers, total] = await Promise.all([
+      User.find(query).select("fullName lawyerProfile createdAt").skip(skip).limit(limit).lean(),
+      User.countDocuments(query),
+    ]);
 
     if (lawyers.length > 0) {
       const items = lawyers.map((l) => ({
@@ -61,7 +74,9 @@ async function getLawyers(req, res) {
         photoUrl: l.lawyerProfile?.photoUrl ?? null,
       }));
 
-      return res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300").json({ items });
+      return res
+        .set("Cache-Control", "public, max-age=60, stale-while-revalidate=300")
+        .json({ items, total, page, limit, pages: Math.ceil(total / limit) });
     }
 
     // Fall back to static data if no lawyers in DB yet
@@ -73,9 +88,13 @@ async function getLawyers(req, res) {
       return matchesText && matchesPractice && matchesLocation && matchesFee;
     });
 
-    return res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=300").json({ items: filtered });
+    // Apply basic pagination to static fallback too
+    const paginatedStatic = filtered.slice(skip, skip + limit);
+    return res
+      .set("Cache-Control", "public, max-age=60, stale-while-revalidate=300")
+      .json({ items: paginatedStatic, total: filtered.length, page, limit, pages: Math.ceil(filtered.length / limit) });
   } catch (err) {
-    console.error("[lawyers] error:", err);
+    logger.error({ err }, "[lawyers] getLawyers error");
     res.status(500).json({ message: "Failed to fetch lawyers." });
   }
 }

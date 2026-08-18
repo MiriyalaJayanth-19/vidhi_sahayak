@@ -31,6 +31,28 @@ type AuthState = {
   signOut: () => void;
 };
 
+// ── Cookie helpers ─────────────────────────────────────────────────────────────
+
+const COOKIE_NAME = "vs_token";
+const COOKIE_MAX_AGE = 7 * 24 * 60 * 60; // 7 days in seconds (must match JWT_EXPIRES_IN)
+
+/**
+ * Write the auth token to a cookie with security attributes.
+ * - SameSite=Strict : prevents CSRF — cookie is NOT sent on cross-site requests
+ * - Secure          : cookie only sent over HTTPS in production
+ * The cookie is also read by Next.js middleware (proxy.ts) for SSR route protection.
+ */
+function setAuthCookie(token: string) {
+  const isProduction = process.env.NODE_ENV === "production";
+  const secureFlag = isProduction ? "; Secure" : "";
+  document.cookie = `${COOKIE_NAME}=${token}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Strict${secureFlag}`;
+}
+
+/** Remove the auth cookie on sign-out */
+function clearAuthCookie() {
+  document.cookie = `${COOKIE_NAME}=; path=/; max-age=0; SameSite=Strict`;
+}
+
 // ── Context ───────────────────────────────────────────────────────────────────
 
 const AuthContext = createContext<AuthState>({
@@ -61,8 +83,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .get<{ user: AuthUser }>("/auth/me", { token: storedToken })
       .then(({ user }) => setUser(user))
       .catch(() => {
-        // Token is expired or invalid — clear it
+        // Token is expired or invalid — clear both stores
         localStorage.removeItem("vs_token");
+        clearAuthCookie();
         setToken(null);
       })
       .finally(() => setLoading(false));
@@ -74,7 +97,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email,
         password,
       });
+      // Store in localStorage (for API Bearer header) and in cookie (for SSR middleware)
       localStorage.setItem("vs_token", data.token);
+      setAuthCookie(data.token);
       setToken(data.token);
       setUser(data.user);
       return null;
@@ -92,7 +117,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           password,
           role,
         });
+        // Store in localStorage (for API Bearer header) and in cookie (for SSR middleware)
         localStorage.setItem("vs_token", data.token);
+        setAuthCookie(data.token);
         setToken(data.token);
         setUser(data.user);
         return null;
@@ -105,6 +132,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = useCallback(() => {
     localStorage.removeItem("vs_token");
+    clearAuthCookie();
     setToken(null);
     setUser(null);
   }, []);

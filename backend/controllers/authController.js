@@ -1,5 +1,25 @@
 const jwt = require("jsonwebtoken");
+const { z } = require("zod");
 const User = require("../models/User");
+const logger = require("../config/logger");
+
+// ── Validation schemas ────────────────────────────────────────────────────────
+const registerSchema = z.object({
+  fullName: z.string().trim().min(2, "Full name must be at least 2 characters"),
+  email: z.string().trim().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  role: z.enum(["user", "lawyer"]).optional(),
+});
+
+const loginSchema = z.object({
+  email: z.string().trim().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
+});
+
+const updateMeSchema = z.object({
+  fullName: z.string().trim().min(2).optional(),
+  preferredLanguage: z.string().min(2).max(10).optional(),
+}).strict(); // reject unknown fields
 
 /** Generate a signed JWT for a user id */
 function signToken(id) {
@@ -14,11 +34,14 @@ function signToken(id) {
  */
 async function register(req, res) {
   try {
-    const { fullName, email, password, role } = req.body;
-
-    if (!fullName || !email || !password) {
-      return res.status(400).json({ message: "fullName, email and password are required." });
+    const parsed = registerSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: "Validation failed",
+        errors: parsed.error.flatten().fieldErrors,
+      });
     }
+    const { fullName, email, password, role } = parsed.data;
 
     const existing = await User.findOne({ email: email.toLowerCase() });
     if (existing) {
@@ -45,7 +68,7 @@ async function register(req, res) {
       },
     });
   } catch (err) {
-    console.error("[auth] register error:", err);
+    logger.error({ err }, "[auth] register error");
     res.status(500).json({ message: "Registration failed. Please try again." });
   }
 }
@@ -56,11 +79,14 @@ async function register(req, res) {
  */
 async function login(req, res) {
   try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required." });
+    const parsed = loginSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: "Validation failed",
+        errors: parsed.error.flatten().fieldErrors,
+      });
     }
+    const { email, password } = parsed.data;
 
     // Explicitly select password (it is excluded by default via 'select: false')
     const user = await User.findOne({ email: email.toLowerCase() }).select("+password");
@@ -86,7 +112,7 @@ async function login(req, res) {
       },
     });
   } catch (err) {
-    console.error("[auth] login error:", err);
+    logger.error({ err }, "[auth] login error");
     res.status(500).json({ message: "Login failed. Please try again." });
   }
 }
@@ -114,11 +140,14 @@ async function getMe(req, res) {
  */
 async function updateMe(req, res) {
   try {
-    const allowed = ["fullName", "preferredLanguage"];
-    const updates = {};
-    for (const field of allowed) {
-      if (req.body[field] !== undefined) updates[field] = req.body[field];
+    const parsed = updateMeSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: "Validation failed",
+        errors: parsed.error.flatten().fieldErrors,
+      });
     }
+    const updates = parsed.data;
 
     const user = await User.findByIdAndUpdate(req.user._id, updates, {
       new: true,
@@ -127,6 +156,7 @@ async function updateMe(req, res) {
 
     res.json({ user: { id: user._id, fullName: user.fullName, email: user.email, role: user.role, preferredLanguage: user.preferredLanguage } });
   } catch (err) {
+    logger.error({ err }, "[auth] updateMe error");
     res.status(500).json({ message: "Update failed." });
   }
 }

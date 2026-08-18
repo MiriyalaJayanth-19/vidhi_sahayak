@@ -1,8 +1,18 @@
+// Node 18+ has fetch built-in globally — no import needed
+const { z } = require("zod");
 const ChatSession = require("../models/ChatSession");
+const logger = require("../config/logger");
 
-// ──────────────────────────────────────────────────────────────────────────────
-// Static data (migrated from @/lib/categories and @/lib/guidance)
-// ──────────────────────────────────────────────────────────────────────────────
+// ── Validation schema ─────────────────────────────────────────────────────────
+const chatSchema = z.object({
+  message: z.string().trim().min(1, "message is required").max(2000, "message too long"),
+  sessionId: z.string().optional(),
+  lang: z.string().max(10).optional(),
+});
+
+// AI request timeout in ms
+const AI_TIMEOUT_MS = 15_000;
+
 
 const CATEGORIES = [
   { slug: "land", name: "Land" },
@@ -123,12 +133,15 @@ function buildSystemPrompt(detectedLang, guidanceCtx) {
 
 async function chat(req, res) {
   try {
-    const { message, sessionId, lang: clientLang } = req.body;
-    const userText = String(message ?? "");
-
-    if (!userText) {
-      return res.status(400).json({ message: "message is required" });
+    const parsed = chatSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({
+        message: "Validation failed",
+        errors: parsed.error.flatten().fieldErrors,
+      });
     }
+    const { message, sessionId, lang: clientLang } = parsed.data;
+    const userText = message;
 
     // Resolve language
     const detectedLang = resolveLanguage(userText, clientLang);
@@ -171,7 +184,8 @@ async function chat(req, res) {
       let hit429 = false;
       for (const model of GEMINI_MODELS) {
         try {
-          const { default: fetch } = await import("node-fetch");
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
           const res2 = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
             {
@@ -181,10 +195,12 @@ async function chat(req, res) {
                 systemInstruction: { parts: [{ text: systemPrompt }] },
                 contents: history.map((h) => ({ role: h.role === "user" ? "user" : "model", parts: [{ text: h.content }] })),
                 generationConfig: { temperature: 0.3, maxOutputTokens: 512 },
-                safetySettings: [],
+                // safetySettings intentionally omitted — use Gemini defaults
               }),
+              signal: controller.signal,
             }
           );
+          clearTimeout(timeoutId);
           if (!res2.ok) {
             geminiError = `${model}: HTTP ${res2.status}`;
             if (res2.status === 429) { hit429 = true; await new Promise((r) => setTimeout(r, 1500)); }
@@ -197,7 +213,7 @@ async function chat(req, res) {
           }
           geminiError = `${model}: empty response`;
         } catch (e) {
-          geminiError = `${model}: ${e.message}`;
+          geminiError = e.name === "AbortError" ? `${model}: timeout` : `${model}: ${e.message}`;
         }
       }
       if (!assistantText && hit429) geminiError = "429: rate_limit_exceeded";
@@ -205,12 +221,15 @@ async function chat(req, res) {
 
     if (!assistantText && perplexityKey) {
       try {
-        const { default: fetch } = await import("node-fetch");
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
         const r = await fetch("https://api.perplexity.ai/chat/completions", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${perplexityKey}` },
           body: JSON.stringify({ model: "sonar-small-online", messages: [{ role: "system", content: systemPrompt }, ...history], max_tokens: 512 }),
+          signal: controller.signal,
         });
+        clearTimeout(timeoutId);
         const data = await r.json();
         assistantText = data?.choices?.[0]?.message?.content ?? "";
         if (assistantText) { providerUsed = "perplexity"; modelUsed = "sonar-small-online"; }
@@ -219,12 +238,15 @@ async function chat(req, res) {
 
     if (!assistantText && openaiKey) {
       try {
-        const { default: fetch } = await import("node-fetch");
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), AI_TIMEOUT_MS);
         const r = await fetch("https://api.openai.com/v1/chat/completions", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${openaiKey}` },
           body: JSON.stringify({ model: "gpt-4o-mini", messages: [{ role: "system", content: systemPrompt }, ...history], max_tokens: 512 }),
+          signal: controller.signal,
         });
+        clearTimeout(timeoutId);
         const data = await r.json();
         assistantText = data?.choices?.[0]?.message?.content ?? "";
         if (assistantText) { providerUsed = "openai"; modelUsed = "gpt-4o-mini"; }
@@ -263,7 +285,7 @@ async function chat(req, res) {
       modelUsed,
     });
   } catch (err) {
-    console.error("[chat] error:", err);
+    logger.error({ err }, "[chat] error");
     res.status(500).json({ message: "Chat request failed." });
   }
 }
